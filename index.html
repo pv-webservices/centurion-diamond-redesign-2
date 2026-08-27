@@ -187,39 +187,110 @@
   <div class="spk__handoff" aria-hidden="true"></div>
 </section>
 
-<!-- ============================================ 03 · PILLARS -->
-<section class="section">
-  <div class="wrap">
-    <div class="pillars__head">
-      <h2 class="d2" data-anim="up">Anatomy of<br><em class="serif-i">brilliance</em></h2>
-      <p class="body-sm" style="max-width:34ch" data-anim="up">
-        Four reasons a Centurion stone reads differently across a room —
-        and closer still, in the hand.
-      </p>
+<!-- ============================================ 03 · ANATOMY OF BRILLIANCE
+     A pinned editorial chapter: one benefit owns the viewport at a time,
+     with a single Centurion stone recomposing between them. The four texts
+     live here (not in JS) so the chapter still reads with scripting off;
+     timing and choreography are in assets/js/pillars/scenes.js. -->
+<section class="plr" id="anatomy" aria-labelledby="plrTitle">
+  <div class="plr__stage">
+
+    <div class="plr__sweep" data-plr-sweep aria-hidden="true"></div>
+    <div class="plr__grain" aria-hidden="true"></div>
+
+    <!-- the hero object — one stone, recomposed across the chapter -->
+    <figure class="plr__stone" data-plr-stone aria-hidden="true">
+      <span class="plr__stone-in">
+        <img src="assets/img/brand/cut-centurion-ring-a600.webp"
+             srcset="assets/img/brand/cut-centurion-ring-a380.webp 380w,
+                     assets/img/brand/cut-centurion-ring-a600.webp 600w,
+                     assets/img/brand/cut-centurion-ring-a666.webp 666w"
+             sizes="(max-width:900px) 74vw, 33vw"
+             alt="" width="666" height="275" loading="lazy" decoding="async">
+        <span class="plr__sheen" aria-hidden="true"><i></i></span>
+      </span>
+    </figure>
+
+    <!-- opening -->
+    <div class="plr__intro" data-plr-intro>
+      <p class="plr__eyebrow"><i></i><b>01</b><span>The Centurion Advantage</span></p>
+      <h2 class="plr__h2" id="plrTitle">
+        <span class="plr__ln"><span>Anatomy of</span></span>
+        <span class="plr__ln"><span class="is-em">brilliance</span></span>
+      </h2>
     </div>
 
-    <div class="pillars">
-      <article class="pillar" data-anim="up">
-        <div class="pillar__n">01</div>
-        <h3 class="pillar__t">More facets,<br>more sparkle</h3>
-        <p class="pillar__d">Extra facets mean more light reflections, resulting in a dazzling play of fire and brilliance.</p>
-      </article>
-      <article class="pillar" data-anim="up">
-        <div class="pillar__n">02</div>
-        <h3 class="pillar__t">Unmatched<br>brilliance</h3>
-        <p class="pillar__d">The advanced cut amplifies the diamond&rsquo;s glow, making it shine even in the softest light.</p>
-      </article>
-      <article class="pillar" data-anim="up">
-        <div class="pillar__n">03</div>
-        <h3 class="pillar__t">Refined<br>elegance</h3>
-        <p class="pillar__d">A modern take on classic beauty, crafted for those who desire exceptional sparkle and distinction.</p>
-      </article>
-      <article class="pillar" data-anim="up">
-        <div class="pillar__n">04</div>
-        <h3 class="pillar__t">There is<br>no gimmick</h3>
-        <p class="pillar__d">It is just better brilliance — visible to the naked, untrained eye.</p>
-      </article>
+    <!-- 01 -->
+    <article class="plr__scene" data-plr-scene="0" data-side="left" data-motion="rise">
+      <div class="plr__copy">
+        <p class="plr__n"><b>01</b><i></i><span>&#47; 04</span></p>
+        <h3 class="plr__t">
+          <span class="plr__ln"><span>More facets,</span></span>
+          <span class="plr__ln"><span class="is-em">more sparkle.</span></span>
+        </h3>
+        <p class="plr__b">Extra facets mean more light reflections, resulting in a
+          dazzling play of fire and brilliance.</p>
+      </div>
+    </article>
+
+    <!-- 02 -->
+    <article class="plr__scene" data-plr-scene="1" data-side="right" data-motion="clip">
+      <div class="plr__copy">
+        <p class="plr__n"><b>02</b><i></i><span>&#47; 04</span></p>
+        <h3 class="plr__t">
+          <span class="plr__ln"><span>Unmatched</span></span>
+          <span class="plr__ln"><span class="is-em">brilliance.</span></span>
+        </h3>
+        <p class="plr__b">The advanced cut amplifies the diamond&rsquo;s glow, making
+          it shine even in the softest light.</p>
+      </div>
+    </article>
+
+    <!-- 03 -->
+    <article class="plr__scene" data-plr-scene="2" data-side="left" data-motion="slide">
+      <div class="plr__copy">
+        <p class="plr__n"><b>03</b><i></i><span>&#47; 04</span></p>
+        <h3 class="plr__t">
+          <span class="plr__ln"><span>Refined</span></span>
+          <span class="plr__ln"><span class="is-em">elegance.</span></span>
+        </h3>
+        <p class="plr__b">A modern take on classic beauty, crafted for those who
+          desire exceptional sparkle and distinction.</p>
+      </div>
+    </article>
+
+    <!-- 04 -->
+    <article class="plr__scene" data-plr-scene="3" data-side="center" data-motion="scale">
+      <div class="plr__copy">
+        <p class="plr__n"><b>04</b><i></i><span>&#47; 04</span></p>
+        <h3 class="plr__t">
+          <span class="plr__ln"><span>There is</span></span>
+          <span class="plr__ln"><span>no gimmick.</span></span>
+        </h3>
+        <p class="plr__b">It is just better brilliance &mdash; visible to the naked,
+          untrained eye.</p>
+      </div>
+    </article>
+
+    <!-- closing statement, and the bridge into the Light Study -->
+    <div class="plr__final" data-plr-final>
+      <span class="plr__word" data-plr-word="0">More facets.</span>
+      <span class="plr__word" data-plr-word="1">More brilliance.</span>
+      <span class="plr__word" data-plr-word="2">See the difference.</span>
     </div>
+
+    <div class="plr__beam" data-plr-beam aria-hidden="true"></div>
+    <svg class="plr__iris" data-plr-iris aria-hidden="true" focusable="false"
+         viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+      <mask id="plrIris" maskUnits="userSpaceOnUse" x="-100" y="-100" width="300" height="300">
+        <rect x="-100" y="-100" width="300" height="300" fill="#fff"/>
+        <circle class="plr__ir" cx="50" cy="50" r="50" fill="#000"/>
+      </mask>
+      <rect x="-100" y="-100" width="300" height="300" fill="#0A0A0B" mask="url(#plrIris)"/>
+      <circle class="plr__ir" cx="50" cy="50" r="50" fill="none"
+              stroke="rgba(216,201,182,.5)" stroke-width=".55"/>
+    </svg>
+    <div class="plr__seal" data-plr-seal aria-hidden="true"></div>
   </div>
 </section>
 
@@ -578,6 +649,10 @@
 <script defer src="assets/js/hero/index.js"></script>
 <script defer src="assets/js/sparkle/scenes.js"></script>
 <script defer src="assets/js/sparkle/index.js"></script>
+<script defer src="assets/js/pillars/scenes.js"></script>
+<script defer src="assets/js/pillars/timeline.js"></script>
+<script defer src="assets/js/pillars/visual.js"></script>
+<script defer src="assets/js/pillars/index.js"></script>
 <script defer src="assets/js/main.js"></script>
 </body>
 </html>

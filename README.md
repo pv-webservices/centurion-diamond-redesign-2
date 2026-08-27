@@ -43,7 +43,7 @@ The page is built as an argument, not a brochure — each section advances one c
 | 00 | Preloader | Counts 0→100 — the brand's whole story in one number |
 | 01 | **Hero — cinematic scroll stage** | Pinned 320vh. Video scrubs with scroll; four statements alternate L/R; stone-only finale |
 | 02 | **The Sparkle** | Pinned 330vh. Dark→light passage, then the 100 vs 57 comparison |
-| 03 | Pillars | The four benefits from the deck |
+| 03 | **Anatomy of Brilliance** | Pinned 400vh. The four benefits, one owning the viewport at a time, closing on an aperture into the Light Study |
 | 04 | Light Study | Pinned video — "light enters, light returns" |
 | 05 | Marquee | Oversized horizontal type |
 | 06 | **Collection** | Light zone. All 9 SKUs with real specs |
@@ -128,6 +128,39 @@ left to duplicate it; the `#cut` anchor moved here so the header nav still resol
 On mobile the pair stacks vertically and the gather/split runs on Y instead of X,
 so each cut still reads large rather than shrinking to a pair of thumbnails.
 
+### 03 · Anatomy of Brilliance
+
+A pinned 400vh editorial chapter answering the question the Sparkle section leaves
+open: beyond 100 facets, why does it matter? One benefit owns the viewport at a
+time — never a card grid, never four things on screen at once.
+
+It opens on **exactly the tone the Sparkle section closes on** (`rgb(236,233,228)`),
+so the two share one continuous light rather than dropping back to the hero's ink.
+That is the only edit the Sparkle section needed: its `.spk__handoff` gradient now
+resolves to that ivory instead of `--ink`.
+
+Each benefit gets its own reveal and its own composition — `rise` / `clip` /
+`slide` / `scale`, and left / right / left / centred — so the chapter never settles
+into a rhythm. A single Centurion stone (the alpha-keyed ring shot) recomposes
+between them, driven by a keyframe list rather than per-scene code. Its internal
+light sweep is a bar masked to the stone's own silhouette, so the highlight travels
+across the facets rather than across a rectangle.
+
+The handoff into the Light Study is an **aperture**, not a page fade: a circle
+scaled inside an SVG mask cuts a shrinking hole out of a covering ink rect, with a
+light beam crossing the stone as it closes. (A very large `box-shadow` spread does
+the same thing more cheaply in principle, but tiles into rectangles once scaled up.)
+The last frame is pure `--ink`, which is the Light Study's own ground — no seam.
+
+Content lives in `index.html` so the chapter still reads with scripting off;
+choreography lives in `assets/js/pillars/scenes.js` (beat windows and stone
+keyframes in 0..1 progress space). `timeline.js` is pure maths — progress in, a
+frame description out — and `visual.js` is the only thing that touches the DOM.
+
+Mobile drops the left/right composition for a centred column: type above, stone
+below, one benefit at a time. Reduced motion drops the pin entirely and renders the
+chapter as an ordinary bright editorial run, stone included, in document order.
+
 ## Motion
 
 GSAP 3.15 + ScrollTrigger + Lenis smooth scroll, all vendored into
@@ -135,7 +168,7 @@ GSAP 3.15 + ScrollTrigger + Lenis smooth scroll, all vendored into
 
 `assets/js/main.js` covers the remaining sections: preloader, cursor, scroll reveals,
 marquee, image parallax, stat counters, video play-in-view and the header menu. The
-hero and the Sparkle section each own their own modules.
+hero, the Sparkle section and Anatomy of Brilliance each own their own modules.
 
 Reveals are declarative — add `data-anim="up|fade|left|right|scale|clip"` to any
 element and it animates in on scroll, with siblings staggering automatically.

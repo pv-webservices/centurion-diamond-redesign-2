@@ -516,10 +516,12 @@
 .spk__rule i{ display:block; height:100%; background:var(--spk-champagne);
   transform:scaleX(0); transform-origin:left; }
 
-/* hands the bright world back to the dark sections below */
+/* carries the bright ground into section 03, which opens on the same tone */
 .spk__handoff{
   position:absolute; left:0; right:0; bottom:0; height:44vh; pointer-events:none;
-  background:linear-gradient(to bottom, rgba(236,233,228,0), var(--ink));
+  /* section 03 opens on this exact tone — the passage stays in the light
+     rather than dropping back to the hero ground */
+  background:linear-gradient(to bottom, rgba(236,233,228,0), rgb(236,233,228));
 }
 
 /* ---------------------------------------------- responsive
@@ -578,35 +580,285 @@
 .spk.is-reduced .spk__grain{ animation:none; }
 .spk.is-reduced .spk__handoff{ height:22vh; }
 
-/* ---------------------------------------------- PILLARS */
+/* ------------------------------------- shared section head (Metals section) */
 .pillars__head{ display:flex; align-items:flex-end; justify-content:space-between; gap:2rem;
   flex-wrap:wrap; margin-bottom:clamp(44px,6vw,96px); }
-.pillar{
-  position:relative; padding-block:clamp(26px,3.2vw,42px);
-  border-top:1px solid var(--rule);
-  display:grid; grid-template-columns:auto 1fr 1.15fr; gap:clamp(18px,3.4vw,60px);
-  align-items:start;
+
+/* ============================================================
+   03 · ANATOMY OF BRILLIANCE — pinned editorial chapter.
+   The stage background is driven from JS across the ramp, so nothing here
+   sets it; these rules own layout, type and the light details only.
+   ============================================================ */
+.plr{
+  --plr-ink:#1A1917;                    /* deep graphite on the mineral ground */
+  --plr-dim:rgba(26,25,23,.62);
+  --plr-faint:rgba(26,25,23,.34);
+  --plr-rule:rgba(26,25,23,.15);
+  --plr-champagne:#B9A88C;
+  position:relative; height:400vh; background:var(--ink);
 }
-.pillar:last-child{ border-bottom:1px solid var(--rule); }
-.pillar__n{
-  font-family:var(--display); font-size:clamp(.85rem,1.05vw,1.05rem);
-  color:var(--accent); font-variant-numeric:tabular-nums; padding-top:.4em;
+.plr__stage{
+  position:relative; height:100svh; width:100%; overflow:hidden;
+  background:rgb(236,233,228);          /* the Sparkle section's last frame */
+  display:grid; place-items:center;
+  color:var(--plr-ink);
 }
-.pillar__t{
+
+/* --- light passing through the frame --- */
+.plr__sweep{
+  position:absolute; top:-30%; bottom:-30%; left:0; width:42%;
+  z-index:1; pointer-events:none; opacity:0; will-change:transform,opacity;
+  background:linear-gradient(100deg,
+    transparent 0%, rgba(255,255,255,.12) 26%,
+    rgba(255,255,255,.78) 50%, rgba(255,255,255,.12) 74%, transparent 100%);
+  filter:blur(24px);
+}
+.plr__grain{
+  position:absolute; inset:-120%; z-index:2; pointer-events:none;
+  opacity:.085; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='.5'/></svg>");
+  animation:grain 7s steps(6) infinite;
+}
+
+/* --- the hero object --- */
+.plr__stone{
+  position:absolute; inset:0; z-index:3; margin:0;
+  display:grid; place-items:center; pointer-events:none;
+}
+.plr__stone-in{
+  position:relative; display:block;
+  width:clamp(230px,33vw,510px); aspect-ratio:666/275;
+  opacity:0; will-change:transform,opacity;
+}
+.plr__stone-in img{
+  width:100%; height:100%; object-fit:contain;
+  filter:drop-shadow(0 26px 44px rgba(26,25,23,.22));
+}
+/* internal light sweep, masked to the stone's own silhouette so the highlight
+   travels across the facets rather than across a rectangle */
+.plr__sheen{
+  position:absolute; inset:0; overflow:hidden; pointer-events:none;
+  mix-blend-mode:screen;
+  -webkit-mask-image:url("../img/brand/cut-centurion-ring-a380.webp");
+          mask-image:url("../img/brand/cut-centurion-ring-a380.webp");
+  -webkit-mask-size:contain;     mask-size:contain;
+  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  -webkit-mask-position:center;  mask-position:center;
+}
+.plr__sheen i{
+  position:absolute; top:-45%; bottom:-45%; left:0; width:34%;
+  background:linear-gradient(100deg, transparent, rgba(255,252,246,.92) 50%, transparent);
+  filter:blur(9px); opacity:0; will-change:transform,opacity;
+}
+
+/* --- opening title --- */
+.plr__intro{
+  position:absolute; z-index:5; text-align:center; width:min(92vw,1200px);
+  opacity:0; will-change:transform,opacity;
+  padding-inline:calc(var(--rail) + var(--gut));
+}
+.plr__eyebrow{
+  display:flex; align-items:center; justify-content:center; gap:.85em;
+  font-size:clamp(9px,.66vw,10.5px); font-weight:500;
+  letter-spacing:.42em; text-transform:uppercase; color:var(--plr-faint);
+  margin-bottom:clamp(20px,3vh,40px);
+}
+.plr__eyebrow i{ width:clamp(22px,3vw,54px); height:1px; background:currentColor; opacity:.45; }
+.plr__eyebrow b{ font-weight:500; color:var(--plr-champagne); }
+.plr__h2{
   font-family:var(--display); font-weight:400;
-  font-size:clamp(1.5rem,3.1vw,2.9rem); line-height:1.04; letter-spacing:-.015em;
+  font-size:clamp(3rem,8.4vw,8.4rem); line-height:.93;
+  letter-spacing:-.035em; text-transform:uppercase;
 }
-.pillar__d{ color:var(--fg-dim); font-size:clamp(.92rem,1.05vw,1.05rem); line-height:1.68; max-width:44ch; }
-.pillar::after{
-  content:""; position:absolute; left:0; right:0; top:-1px; height:1px;
-  background:var(--accent); transform:scaleX(0); transform-origin:left;
-  transition:transform .7s var(--ease);
+.plr__ln{ display:block; padding-block:.06em; margin-block:-.06em; }
+.plr__ln > span{ display:block; will-change:transform,opacity; }
+.plr__h2 .is-em,
+.plr__t .is-em{ font-style:italic; color:var(--rose-dp); text-transform:none; }
+
+/* --- the four benefits --- */
+.plr__scene{
+  position:absolute; inset:0; z-index:4; opacity:0; visibility:hidden;
+  display:grid; align-items:center;
+  padding-inline:calc(var(--rail) + var(--gut));
+  pointer-events:none; will-change:opacity;
 }
-.pillar:hover::after{ transform:scaleX(1); }
-@media (max-width:860px){
-  .pillar{ grid-template-columns:auto 1fr; }
-  .pillar__d{ grid-column:2; }
+.plr__scene[data-side="left"]  { justify-items:start; }
+.plr__scene[data-side="right"] { justify-items:end; text-align:right; }
+.plr__scene[data-side="center"]{ justify-items:center; text-align:center; }
+.plr__copy{ width:min(46vw,760px); will-change:transform; }
+.plr__scene[data-side="center"] .plr__copy{ width:min(94vw,1180px); }
+
+/* the number is a small tracked label, never a badge */
+.plr__n{
+  display:flex; align-items:center; gap:.9em; opacity:0;
+  font-size:clamp(9px,.68vw,10.5px); font-weight:500;
+  letter-spacing:.4em; text-transform:uppercase; color:var(--plr-faint);
+  margin-bottom:clamp(18px,2.6vh,34px); will-change:transform,opacity;
 }
+.plr__scene[data-side="right"]  .plr__n{ justify-content:flex-end; }
+.plr__scene[data-side="center"] .plr__n{ justify-content:center; }
+.plr__n b{
+  font-family:var(--display); font-weight:500; font-size:1.9em;
+  letter-spacing:.04em; color:var(--rose-dp);
+}
+.plr__n i{ width:clamp(26px,3.4vw,62px); height:1px; background:currentColor; opacity:.5; }
+
+.plr__t{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(2.6rem,7.2vw,7.2rem); line-height:.94;
+  letter-spacing:-.038em; text-transform:uppercase;
+}
+/* scene 04 is the boldest typographic frame in the chapter */
+.plr__scene[data-side="center"] .plr__t{ font-size:clamp(3rem,8.8vw,8.6rem); }
+
+/* only the masked reveal needs the clip; slide/scale must overflow freely */
+.plr__scene[data-motion="rise"] .plr__ln{ overflow:hidden; }
+
+.plr__b{
+  margin-top:clamp(22px,3.2vh,42px); opacity:0;
+  font-size:clamp(.92rem,1.05vw,1.08rem); line-height:1.72;
+  color:var(--plr-dim); max-width:40ch; text-wrap:pretty;
+  will-change:transform,opacity;
+}
+.plr__scene[data-side="right"]  .plr__b{ margin-left:auto; }
+.plr__scene[data-side="center"] .plr__b{ margin-inline:auto; max-width:44ch; }
+
+/* --- closing statement --- */
+.plr__final{
+  position:absolute; z-index:5; display:grid; place-items:center; visibility:hidden;
+  width:min(94vw,1200px); text-align:center; pointer-events:none;
+}
+.plr__word{
+  grid-area:1/1; opacity:0; will-change:transform,opacity;
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(2.4rem,7.6vw,8.4rem); line-height:.96;
+  letter-spacing:-.04em; text-transform:uppercase;
+  color:var(--plr-ink); white-space:nowrap;
+}
+.plr__word[data-plr-word="1"]{ color:var(--rose-dp); font-style:italic; text-transform:none; }
+.plr__word[data-plr-word="2"]{ font-size:clamp(1.8rem,5vw,5.4rem); }
+
+/* --- handoff into the Light Study: a beam, then an aperture closing --- */
+.plr__beam{
+  position:absolute; z-index:6; top:-22%; bottom:-22%; left:50%;
+  width:clamp(80px,10vw,180px); margin-left:calc(clamp(80px,10vw,180px) / -2);
+  opacity:0; pointer-events:none; will-change:transform,opacity;
+  background:linear-gradient(100deg, transparent, rgba(255,251,243,.95) 50%, transparent);
+  filter:blur(15px);
+}
+/* the aperture is cut out of a covering rect with an SVG mask: one circle
+   scaled per frame, and coverage that holds at every ratio. (A huge
+   box-shadow spread tiles into rectangles once it is scaled up.) */
+.plr__iris{
+  position:absolute; inset:0; z-index:7; width:100%; height:100%;
+  pointer-events:none; overflow:visible;
+}
+.plr__iris .plr__ir{
+  transform-box:view-box; transform-origin:50% 50%;
+  transform:scale(1.4); will-change:transform;
+}
+/* seals the last few per-cent, once the aperture is already all but shut */
+.plr__seal{
+  position:absolute; inset:0; z-index:8; background:var(--ink);
+  opacity:0; pointer-events:none;
+}
+
+/* ---------------------------------------------- responsive
+   Narrow viewports drop the left/right composition for a centred column:
+   type above, stone below, one benefit at a time. Not a shrunken desktop. */
+@media (max-width:900px){
+  .plr{ height:460vh; }
+  .plr__scene{
+    align-items:start; padding-top:15vh;
+    justify-items:center; text-align:center;
+  }
+  .plr__scene[data-side="right"]{ text-align:center; }
+  .plr__copy,
+  .plr__scene[data-side="center"] .plr__copy{ width:min(88vw,560px); }
+  .plr__n{ justify-content:center; }
+  .plr__t,
+  .plr__scene[data-side="center"] .plr__t{ font-size:clamp(2.4rem,10.4vw,4.4rem); }
+  .plr__h2{ font-size:clamp(2.3rem,10.6vw,4.6rem); }
+  .plr__b,
+  .plr__scene[data-side="center"] .plr__b{ margin-inline:auto; max-width:34ch; }
+  .plr__scene[data-side="right"] .plr__b{ margin-inline:auto; }
+  .plr__stone-in{ width:min(74vw,420px); }
+  .plr__word{ white-space:normal; font-size:clamp(2.1rem,10.8vw,3.8rem); }
+  .plr__word[data-plr-word="2"]{ font-size:clamp(1.6rem,7.4vw,2.6rem); }
+  .plr__intro,.plr__scene{ padding-inline:var(--gut); }
+}
+@media (max-width:560px){
+  .plr__scene{ padding-top:12vh; }
+  .plr__b,
+  .plr__scene[data-side="center"] .plr__b{ font-size:.9rem; max-width:30ch; }
+  .plr__stone-in{ width:min(84vw,360px); }
+}
+/* short-and-wide (1366x768, laptop landscape): keep the stone clear of the
+   type instead of letting the two share the middle band */
+@media (min-width:901px) and (max-height:760px){
+  .plr__t{ font-size:clamp(2.4rem,5.6vw,4.6rem); }
+  .plr__h2{ font-size:clamp(2.8rem,6.6vw,5.6rem); }
+  .plr__stone-in{ width:clamp(220px,27vw,400px); }
+  .plr__word{ font-size:clamp(2.2rem,6vw,5.4rem); }
+}
+
+/* ---------------------------------------------- reduced motion / no JS
+   No pin, no scrub: the chapter becomes an ordinary bright editorial run
+   with every benefit in document order and the stone kept. */
+.plr.is-reduced,
+.no-js .plr{ height:auto; }
+.plr.is-reduced .plr__stage,
+.no-js .plr .plr__stage{
+  /* the stone sits before the title in source order (it is a backdrop while
+     pinned), so in flow the column re-orders it to follow the title */
+  height:auto; min-height:auto; display:flex; flex-direction:column;
+  padding:clamp(70px,12vh,140px) calc(var(--rail) + var(--gut));
+  background:rgb(243,241,238) !important;
+}
+.plr.is-reduced .plr__intro,   .no-js .plr .plr__intro,
+.plr.is-reduced .plr__scene,   .no-js .plr .plr__scene,
+.plr.is-reduced .plr__final,   .no-js .plr .plr__final,
+.plr.is-reduced .plr__stone,   .no-js .plr .plr__stone{
+  position:relative; inset:auto; display:block; width:auto; padding-inline:0;
+  opacity:1 !important; visibility:visible !important; transform:none !important;
+}
+.plr.is-reduced .plr__intro,   .no-js .plr .plr__intro{ text-align:left; }
+.plr.is-reduced .plr__eyebrow, .no-js .plr .plr__eyebrow{ justify-content:flex-start; }
+.plr.is-reduced .plr__ln > span, .no-js .plr .plr__ln > span{
+  transform:none !important; clip-path:none !important; opacity:1 !important;
+}
+.plr.is-reduced .plr__scene,   .no-js .plr .plr__scene{
+  margin-top:clamp(52px,8vh,96px); padding-top:clamp(28px,4vh,52px);
+  text-align:left; border-top:1px solid var(--plr-rule);
+}
+.plr.is-reduced .plr__copy,    .no-js .plr .plr__copy{ width:auto; }
+.plr.is-reduced .plr__n,       .no-js .plr .plr__n{
+  opacity:1 !important; transform:none !important;
+  justify-content:flex-start !important;
+}
+.plr.is-reduced .plr__b,       .no-js .plr .plr__b{
+  opacity:1 !important; transform:none !important; margin-inline:0 !important;
+}
+.plr.is-reduced .plr__intro,   .no-js .plr .plr__intro{ order:1; }
+.plr.is-reduced .plr__stone,   .no-js .plr .plr__stone{ order:2; margin-top:clamp(40px,6vh,80px); }
+.plr.is-reduced .plr__scene,   .no-js .plr .plr__scene{ order:3; }
+.plr.is-reduced .plr__final,   .no-js .plr .plr__final{ order:4; }
+.plr.is-reduced .plr__stone-in,.no-js .plr .plr__stone-in{
+  opacity:1 !important; width:min(70vw,460px); margin-inline:auto;
+}
+.plr.is-reduced .plr__final,   .no-js .plr .plr__final{
+  margin-top:clamp(48px,8vh,96px); text-align:left;
+}
+.plr.is-reduced .plr__word,    .no-js .plr .plr__word{
+  display:block; grid-area:auto; white-space:normal; margin-block:.08em;
+  opacity:1 !important; transform:none !important;
+}
+.plr.is-reduced .plr__sweep,   .no-js .plr .plr__sweep,
+.plr.is-reduced .plr__beam,    .no-js .plr .plr__beam,
+.plr.is-reduced .plr__iris,    .no-js .plr .plr__iris,
+.plr.is-reduced .plr__seal,    .no-js .plr .plr__seal,
+.plr.is-reduced .plr__sheen,   .no-js .plr .plr__sheen{ display:none; }
+.plr.is-reduced .plr__grain,   .no-js .plr .plr__grain{ animation:none; }
 
 /* ---------------------------------------------- LIGHT STUDY */
 .study{ position:relative; height:100svh; overflow:hidden; background:var(--ink); }

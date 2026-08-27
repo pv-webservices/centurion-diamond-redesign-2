@@ -241,6 +241,7 @@
     initVideos();
     initHeader();
     if (window.CD && CD.initSparkle) CD.initSparkle();
+    if (window.CD && CD.initPillars) CD.initPillars();
     ScrollTrigger.refresh();
   }
 
