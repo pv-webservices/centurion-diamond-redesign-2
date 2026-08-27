@@ -41,7 +41,7 @@ The page is built as an argument, not a brochure — each section advances one c
 | # | Section | Job |
 |---|---|---|
 | 00 | Preloader | Counts 0→100 — the brand's whole story in one number |
-| 01 | **Hero — "Field of Light"** | Faceted ground, the stone contained as a jewel, per-character headline |
+| 01 | **Hero — cinematic scroll stage** | Pinned 320vh. Video scrubs with scroll; four statements alternate L/R; stone-only finale |
 | 02 | Manifesto | Word-by-word reveal on scroll |
 | 03 | **The Proof** | Pinned. 57 → 100 counter with the facet diagram drawing in |
 | 04 | Pillars | The four benefits from the deck |
@@ -58,46 +58,56 @@ The page is built as an argument, not a brochure — each section advances one c
 
 ## Header & hero
 
-**Header** is two floating capsules, not a bar. The wordmark sits left; nav links and a
-rose *Enquire* pill sit right. Both shrink on scroll and auto-hide when scrolling down.
-Under 1000px the links collapse into a diamond toggle that rotates 135° and opens a
-full-screen sheet with numbered links revealed on a stagger. Esc and any link close it.
+**Header** is transparent over the film — logo left, nav centre, `Inquire Now` right,
+no opaque container. It dims and lifts with hero progress (`--hdr-dim` / `--hdr-y`)
+rather than restyling into a solid navbar. Under 1000px the nav collapses to a burger
+that opens the full-screen sheet.
 
-**Hero — "Field of Light".** The faceted ground carries the atmosphere; the stone is
-a **contained jewel** in a rotated-square vitrine, never full-bleed wallpaper. An earlier
-build used `object-fit: cover` on the video, which blew the stone up until it swallowed
-the layout — the vitrine fixes that by giving the stone a fixed, art-directed size.
-A ring of exactly 100 tick marks turns around it, and the vitrine's corners fade via a
-radial mask so the stone floats rather than sitting in a black box.
+**Hero** is a 320vh scroll track with a pinned stage inside it. One master progress
+value from a single ScrollTrigger feeds four independent timelines — video, narrative,
+header, progress — which is what keeps the scrub and the typography exactly in step.
 
-The headline is split into individual characters and masked upward on a stagger, followed
-by a specular sweep across the words.
+Four editorial statements alternate left → right → left → right while the film scrubs
+underneath, then all typography clears for the closing frame so the stone owns the
+screen with one restrained CTA.
 
-**Intro timing matters here.** The first build ran a 3.3s preloader *then* a 1.7s iris
-wipe — five seconds of black before anything appeared, which reads as a broken page. The
-preloader is now ~1.3s and the hero begins revealing while the curtain is still lifting,
-so there is no dead frame.
+```
+assets/js/hero/
+  scenes.js      narrative content + progress windows (data-driven)
+  video.js       scroll-scrubbed video timeline
+  narrative.js   statement choreography
+  header.js      header timeline
+  progress.js    progress rule + scroll hint
+  index.js       orchestrator — owns the single ScrollTrigger
+```
 
-## Interaction
+Tune the choreography in `scenes.js` (`inA/inB/outA/outB` in 0..1 progress space).
+Nothing else needs touching to re-time or re-word the hero.
 
-- **Jewel** — tilts in 3D toward the pointer (`rotationX/rotationY`, note: GSAP's
-  canonical names; `quickTo` does not alias `rotateX/rotateY`). On touch devices it
-  breathes on a slow yoyo and answers a tap with a spring.
-- **Buttons** — the primary CTA is magnetic on pointer, and takes an `.is-tap` state on
-  touch so mobile gets the same feedback.
-- **Ground** — drifts slightly counter to the pointer for parallax depth.
-- **Header** — capsules shrink past 80px of scroll and hide on scroll-down.
+### Scrubbing
+
+Seek cost is dominated by distance from a keyframe, so the hero clip is re-encoded
+with a **4-frame GOP** (`dev/encode-scrub.sh`). The supplied master had no keyframes
+past the first, which makes scrubbing unusable. On top of that the engine:
+
+- never queues a seek while the decoder is still `seeking`
+- damps the target so a fast flick cannot pile up seeks
+- runs on GSAP's ticker, not on raw scroll events
+- primes the video (muted play→pause) on first interaction, so iOS paints
+
+**Mobile gets a dedicated portrait master.** Cropping the 16:9 master to 9:16 shows
+only ~26% of its width — a slice of the stone. Instead the full composition is
+composited into a 720×1280 canvas over a blurred, darkened self-extension with a
+feathered edge, so it reads full-bleed while the framing survives.
 
 ## Motion
 
 GSAP 3.15 + ScrollTrigger + Lenis smooth scroll, all vendored into
 `assets/js/vendor/` — no CDN, no network dependency.
 
-Everything is wired in `assets/js/main.js`, one small function per behaviour:
-preloader, cursor, the hero entrance, character splitting, the 100-tick ring,
-pointer tilt, magnetic buttons, scroll reveals, the pinned 57→100 proof,
-ghost-text drift, marquee, image parallax, stat counters, video play-in-view,
-and the header capsules.
+`assets/js/main.js` covers everything below the hero: preloader, cursor, scroll
+reveals, the pinned 57→100 proof, ghost-text drift, marquee, image parallax, stat
+counters, video play-in-view and the header menu. The hero owns its own modules.
 
 Reveals are declarative — add `data-anim="up|fade|left|right|scale|clip"` to any
 element and it animates in on scroll, with siblings staggering automatically.
@@ -117,27 +127,27 @@ which drops their white studio ground onto the plinth without any cut-out artefa
 Videos are encoded to MP4 (H.264) + WebM (VP9) at 720 / 1280 / 1920, served by
 `media` queries, with WebP posters. They only play while in view.
 
-The hero stone is a bespoke clip generated with Magnific (Seedance 2.0 Pro): a
-brilliant-cut diamond centred on pure black, raked by a moving beam. Black corners
-were a hard requirement — the hero type sits in them. Because the frame is almost
-entirely black it compresses extremely well, which is why the page got lighter after
-the redesign. Master kept at `dev/stone-master.mp4`.
-
-The rainbow-dispersion clip from the client folder now drives the Light Study section.
-The hero's faceted ground is a supplied still, re-cropped and emitted at four widths
-(48KB at 1920).
+The hero film is the supplied `hero_video_for_scrolling.mp4` (1280×720, 10s), re-encoded
+for scrubbing at 1280 / 960 / 720 plus a portrait master. The rainbow-dispersion clip
+drives the Light Study section; an earlier Magnific-generated stone clip is kept at
+`dev/stone-master.mp4` and the faceted still at `assets/img/brand/facet-bg-*` — both
+unused by the current hero but retained for reuse.
 
 **Fonts are self-hosted** (`assets/fonts/`, latin + latin-ext only). The page makes
 **zero third-party requests** — no Google Fonts, no CDN.
 
-**Page weight:** ~0.75 MB mobile, ~1.2 MB desktop (first viewport, video included).
+**Page weight:** the hero film dominates and must fully buffer to be seekable —
+~1.9 MB portrait / ~4.8 MB at 1280. That is the deliberate cost of a tight GOP; a
+long-GOP file is a third the size and scrubs badly. Everything else on the page is
+~0.7 MB.
 
 On a warm cache the page paints in ~500 ms. A cold load against the `serve` dev server
 measures far slower (~2.7 s), but that is the dev server itself — it costs ~80 ms per
 request across 19 files. Any real host with HTTP/2 and compression will not show this;
 worth re-measuring on staging rather than trusting the local number.
 
-To re-encode: `dev/encode.sh` (client masters), `dev/encode2.sh` (hero stone).
+To re-encode: `dev/encode-scrub.sh` (hero scrub masters), `dev/encode.sh` and
+`dev/encode2.sh` (the section videos).
 
 ---
 
@@ -147,7 +157,8 @@ To re-encode: `dev/encode.sh` (client masters), `dev/encode2.sh` (hero stone).
 index.html              the whole page
 assets/css/base.css     tokens, reset, type scale
 assets/css/sections.css components & sections
-assets/js/main.js       motion system
+assets/js/main.js       motion system (everything below the hero)
+assets/js/hero/         the cinematic hero, one module per timeline
 assets/js/vendor/       gsap, ScrollTrigger, SplitText, lenis
 assets/fonts/           self-hosted Bodoni Moda + Jost (woff2)
 assets/img/{model,ring,brand}/   responsive WebP

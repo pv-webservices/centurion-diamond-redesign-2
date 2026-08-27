@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Centurion Diamond — 100 Facets of Brilliance">
 <meta property="og:description" content="Cut with 100 facets. Engineered for light. More facets, more brilliance.">
-<meta property="og:image" content="assets/video/stone-poster.webp">
+<meta property="og:image" content="assets/video/hero-scrub-poster.webp">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/bodoni-moda-normal-400-latin.woff2" crossorigin>
@@ -21,9 +21,7 @@
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/sections.css">
 
-<link rel="preload" as="image" href="assets/img/brand/facet-bg-1440.webp"
-      imagesrcset="assets/img/brand/facet-bg-720.webp 720w, assets/img/brand/facet-bg-1024.webp 1024w, assets/img/brand/facet-bg-1440.webp 1440w, assets/img/brand/facet-bg-1920.webp 1920w"
-      imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" href="assets/video/hero-scrub-poster.webp" fetchpriority="high">
 <script>document.documentElement.className = document.documentElement.className.replace('no-js','js');</script>
 </head>
 <body>
@@ -47,125 +45,75 @@
 <div class="rail rail--l" aria-hidden="true"><span>Centurion Diamond &nbsp;/&nbsp; More Facets, More Brilliance</span></div>
 <div class="rail rail--r" aria-hidden="true"><span>Est. Brilliance &nbsp;/&nbsp; 100 Facet Cut</span></div>
 
-<!-- ============================================ HEADER — split floating capsules -->
+<!-- ============================================ HEADER
+     Transparent over the cinematic stage. No opaque container; it recedes
+     with hero progress rather than turning into a solid navbar. -->
 <header class="hdr" id="hdr">
-
-  <a class="cap cap--mark" href="#top" aria-label="Centurion Diamond — home">
-    <svg class="cap__gem" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 2.6 21.4 12 12 21.4 2.6 12Z"/>
-      <path d="M2.6 12h18.8M12 2.6 7.6 12 12 21.4 16.4 12Z" class="gem-in"/>
-    </svg>
-    <span class="cap__word"><b>Centurion</b><i>Diamond</i></span>
+  <a class="hdr__mark" href="#top" aria-label="Centurion Diamond — home">
+    <img src="assets/img/brand/logo-light-320.webp"
+         srcset="assets/img/brand/logo-light-320.webp 320w, assets/img/brand/logo-light-520.webp 520w"
+         sizes="200px" alt="Centurion Diamond" width="820" height="207" decoding="async">
   </a>
 
-  <div class="cap cap--nav" data-open="false">
-    <nav class="cap__links" aria-label="Primary">
-      <a href="#cut"><span>The Cut</span></a>
-      <a href="#collection"><span>Collection</span></a>
-      <a href="#metals"><span>Metals</span></a>
-      <a href="#worn"><span>Worn</span></a>
-    </nav>
-    <a class="cap__cta" href="#contact"><span>Enquire</span></a>
-    <button class="cap__toggle" id="navToggle" aria-expanded="false" aria-controls="navSheet">
-      <span class="sr-only">Open menu</span>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6 21.4 12 12 21.4 2.6 12Z"/></svg>
+  <nav class="hdr__nav" aria-label="Primary">
+    <a href="#cut">About Us</a>
+    <a href="#collection">Collection</a>
+    <a href="#worn">Craftsmanship</a>
+    <a href="#metals">Sustainability</a>
+    <a href="#display">Our Legacy</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="hdr__end">
+    <a class="hdr__cta" href="#contact"><span>Inquire Now</span></a>
+    <button class="hdr__burger" id="navToggle" aria-expanded="false" aria-controls="navSheet">
+      <span class="sr-only">Open menu</span><i></i><i></i>
     </button>
   </div>
-
 </header>
 
-<!-- mobile / expanded sheet -->
 <div class="sheet" id="navSheet" aria-hidden="true">
   <nav class="sheet__nav" aria-label="Mobile">
-    <a href="#cut"><em>01</em><span>The Cut</span></a>
+    <a href="#cut"><em>01</em><span>About Us</span></a>
     <a href="#collection"><em>02</em><span>Collection</span></a>
-    <a href="#worn"><em>03</em><span>Worn</span></a>
-    <a href="#metals"><em>04</em><span>Metals</span></a>
-    <a href="#contact"><em>05</em><span>Enquire</span></a>
+    <a href="#worn"><em>03</em><span>Craftsmanship</span></a>
+    <a href="#metals"><em>04</em><span>Sustainability</span></a>
+    <a href="#display"><em>05</em><span>Our Legacy</span></a>
+    <a href="#contact"><em>06</em><span>Contact</span></a>
   </nav>
   <p class="sheet__foot">More facets, more brilliance.</p>
 </div>
 
 <main id="top">
 
-<!-- ============================================ 01 · HERO — "Field of Light"
-     Faceted ground for atmosphere; the stone is CONTAINED as a jewel on display
-     rather than used as wallpaper. Type owns the left, the gem owns the right. -->
-<section class="hero" id="hero">
+<!-- ============================================ 01 · HERO — cinematic scroll stage
+     A tall scroll track with a pinned stage inside it. One master progress value
+     drives the video scrub, the alternating statements, the header and the
+     progress rule. Scenes come from assets/js/hero/scenes.js. -->
+<section class="chero" id="chero">
+  <div class="chero__stage">
 
-  <!-- faceted ground -->
-  <div class="hero__bg" id="heroBg" aria-hidden="true">
-    <img src="assets/img/brand/facet-bg-1440.webp"
-         srcset="assets/img/brand/facet-bg-720.webp 720w,
-                 assets/img/brand/facet-bg-1024.webp 1024w,
-                 assets/img/brand/facet-bg-1440.webp 1440w,
-                 assets/img/brand/facet-bg-1920.webp 1920w"
-         sizes="100vw" alt="" fetchpriority="high" decoding="async" width="1920" height="1689">
-  </div>
-  <div class="hero__veil" aria-hidden="true"></div>
-  <div class="hero__grain" aria-hidden="true"></div>
-
-  <div class="hero__inner">
-
-    <!-- ---------- type column ---------- -->
-    <div class="hero__type">
-      <img class="hero__logo" data-h="0"
-           src="assets/img/brand/logo-light-520.webp"
-           srcset="assets/img/brand/logo-light-320.webp 320w,
-                   assets/img/brand/logo-light-520.webp 520w,
-                   assets/img/brand/logo-light-820.webp 820w"
-           sizes="(max-width:760px) 62vw, 26vw"
-           alt="Centurion Diamond — 100 Facets of Brilliance"
-           width="820" height="207" decoding="async">
-
-      <h1 class="hero__h1" id="heroH1">
-        <span class="ln"><span class="ch-wrap" data-split-chars>More facets.</span></span>
-        <span class="ln ln--rose"><span class="ch-wrap" data-split-chars>More brilliance.</span></span>
-      </h1>
-
-      <p class="hero__copy" data-h="1">
-        Cut with nearly twice the facets of a traditional stone —
-        engineered to catch light and give it back.
-      </p>
-
-      <div class="hero__acts" data-h="2">
-        <a class="mag" href="#cut" data-mag>
-          <span class="mag__fill"></span>
-          <span class="mag__label"><i></i>See the cut</span>
-        </a>
-        <a class="hero__ghost" href="#collection">The collection</a>
-      </div>
-
-      <div class="hero__spec" data-h="3" aria-hidden="true">
-        <span>Centurion Cut</span><em>/</em>
-        <span>Patent Pending</span><em>/</em>
-        <span>Platinum &amp; 14K</span>
-      </div>
+    <div class="chero__media">
+      <video data-hero-video muted playsinline preload="auto"
+             poster="assets/video/hero-scrub-poster.webp"
+             aria-hidden="true" tabindex="-1"></video>
     </div>
 
-    <!-- ---------- the jewel ---------- -->
-    <div class="hero__jewel" id="heroJewel">
-      <div class="jewel__tilt" id="jewelTilt">
-        <div class="jewel__glow" aria-hidden="true"></div>
-        <div class="jewel__frame">
-          <video id="heroVid" autoplay muted loop playsinline preload="metadata"
-                 poster="assets/video/stone-poster.webp" fetchpriority="low">
-            <source src="assets/video/stone-1280.webm" type="video/webm" media="(min-width:900px)">
-            <source src="assets/video/stone-1280.mp4"  type="video/mp4"  media="(min-width:900px)">
-            <source src="assets/video/stone-720.webm"  type="video/webm">
-            <source src="assets/video/stone-720.mp4"   type="video/mp4">
-          </video>
-        </div>
-        <div class="jewel__ring" id="heroRing" aria-hidden="true">
-          <svg viewBox="0 0 400 400"><g id="ringTicks"></g></svg>
-        </div>
-        <span class="jewel__cap" aria-hidden="true">100 facets</span>
-      </div>
+    <div class="chero__vig" aria-hidden="true"></div>
+    <div class="chero__grain" aria-hidden="true"></div>
+
+    <div class="chero__narrative" data-hero-narrative></div>
+
+    <div class="chero__hint" data-hero-hint aria-hidden="true">
+      <span>Scroll to discover</span><i></i>
+    </div>
+
+    <div class="chero__prog" data-hero-progress aria-hidden="true">
+      <span data-prog-num>01 / 04</span>
+      <span class="chero__rule"><i data-prog-bar></i></span>
     </div>
 
   </div>
-
-  <a class="hero__scroll" href="#cut" data-h="4"><i></i><span>Scroll</span></a>
 </section>
 
 <!-- ============================================ 02 · MANIFESTO -->
@@ -603,6 +551,12 @@
 <script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
 <script defer src="assets/js/vendor/SplitText.min.js"></script>
 <script defer src="assets/js/vendor/lenis.min.js"></script>
+<script defer src="assets/js/hero/scenes.js"></script>
+<script defer src="assets/js/hero/video.js"></script>
+<script defer src="assets/js/hero/narrative.js"></script>
+<script defer src="assets/js/hero/header.js"></script>
+<script defer src="assets/js/hero/progress.js"></script>
+<script defer src="assets/js/hero/index.js"></script>
 <script defer src="assets/js/main.js"></script>
 </body>
 </html>
