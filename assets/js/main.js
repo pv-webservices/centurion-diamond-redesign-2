@@ -61,25 +61,6 @@
     });
   }
 
-  /* ---------------------------------------------- facet diagram */
-  function buildFacets() {
-    var old = document.getElementById('fOld');
-    var neu = document.getElementById('fNew');
-    if (!old || !neu) return;
-    var cx = 100, cy = 100, rIn = 44, rOut = 78;
-    function spoke(i, total, group) {
-      var a = (i / total) * Math.PI * 2 - Math.PI / 2;
-      var ln = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      ln.setAttribute('x1', (cx + Math.cos(a) * rIn).toFixed(2));
-      ln.setAttribute('y1', (cy + Math.sin(a) * rIn).toFixed(2));
-      ln.setAttribute('x2', (cx + Math.cos(a) * rOut).toFixed(2));
-      ln.setAttribute('y2', (cy + Math.sin(a) * rOut).toFixed(2));
-      group.appendChild(ln);
-    }
-    // 57 baseline spokes, then 43 more interleaved => 100
-    for (var i = 0; i < 57; i++) spoke(i + 0.5, 57, old);
-    for (var j = 0; j < 43; j++) spoke(j, 43, neu);
-  }
 
   /* ---------------------------------------------- preloader
      Deliberately brief. The old build showed ~5s of black before the hero
@@ -152,51 +133,7 @@
     });
   }
 
-  /* ---------------------------------------------- word-split manifesto */
-  function initSplit() {
-    var el = document.querySelector('[data-split]');
-    if (!el) return;
-    if (REDUCED || !window.SplitText) { gsap.set(el, { opacity: 1 }); return; }
 
-    var split = new SplitText(el, { type: 'words' });
-    gsap.set(split.words, { opacity: 0.12 });
-    gsap.to(split.words, {
-      opacity: 1, stagger: 0.08, ease: 'none',
-      scrollTrigger: { trigger: el, start: 'top 78%', end: 'bottom 52%', scrub: 0.8 }
-    });
-  }
-
-  /* ---------------------------------------------- pinned proof: 57 -> 100 */
-  function initProof() {
-    var stage = document.getElementById('proofStage');
-    var count = document.getElementById('facetCount');
-    var neu = document.getElementById('fNew');
-    if (!stage || !count) return;
-
-    // draw-on effect via dash offset (line length = rOut - rIn = 34 user units)
-    var LEN = 34;
-    var lines = neu ? neu.querySelectorAll('line') : [];
-    gsap.set(lines, { strokeDasharray: LEN, strokeDashoffset: LEN, opacity: 1 });
-
-    if (REDUCED) { count.textContent = '100'; gsap.set(lines, { strokeDashoffset: 0 }); return; }
-
-    var o = { v: 57 };
-    var tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: stage, start: 'top top', end: '+=140%',
-        pin: true, scrub: 0.9, anticipatePin: 1
-      }
-    });
-
-    // counter duration matches the staggered draw so both land together
-    var DRAW = 0.5 + lines.length * 0.014;
-    tl.to(o, {
-      v: 100, duration: DRAW, ease: 'none',
-      onUpdate: function () { count.textContent = Math.round(o.v); }
-    }, 0)
-      .to(lines, { strokeDashoffset: 0, stagger: { each: 0.014, from: 'random' }, ease: 'none' }, 0)
-      .to('#facetDiagram', { rotate: 22, ease: 'none' }, 0);
-  }
 
   /* ---------------------------------------------- ghost text drift */
   function initGhost() {
@@ -294,18 +231,16 @@
 
   /* ---------------------------------------------- boot */
   function start() {
-    buildFacets();
     initSmoothScroll();
     initCursor();
     initReveals();
-    initSplit();
-    initProof();
     initGhost();
     initMarquee();
     initParallax();
     initCounters();
     initVideos();
     initHeader();
+    if (window.CD && CD.initSparkle) CD.initSparkle();
     ScrollTrigger.refresh();
   }
 

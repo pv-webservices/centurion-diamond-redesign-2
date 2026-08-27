@@ -42,17 +42,16 @@ The page is built as an argument, not a brochure — each section advances one c
 |---|---|---|
 | 00 | Preloader | Counts 0→100 — the brand's whole story in one number |
 | 01 | **Hero — cinematic scroll stage** | Pinned 320vh. Video scrubs with scroll; four statements alternate L/R; stone-only finale |
-| 02 | Manifesto | Word-by-word reveal on scroll |
-| 03 | **The Proof** | Pinned. 57 → 100 counter with the facet diagram drawing in |
-| 04 | Pillars | The four benefits from the deck |
-| 05 | Light Study | Pinned video — "light enters, light returns" |
-| 06 | Marquee | Oversized horizontal type |
-| 07 | **Collection** | Light zone. All 9 SKUs with real specs |
-| 08 | Worn | Alternating editorial spreads |
-| 09 | Metals | Platinum / 14K Yellow / Two Tone |
-| 10 | Display | The periwinkle retail case |
-| 11 | Exclusivity | Patent-pending, unshoppable — the retailer argument |
-| 12 | CTA | centuriondiamond.com |
+| 02 | **The Sparkle** | Pinned 330vh. Dark→light passage, then the 100 vs 57 comparison |
+| 03 | Pillars | The four benefits from the deck |
+| 04 | Light Study | Pinned video — "light enters, light returns" |
+| 05 | Marquee | Oversized horizontal type |
+| 06 | **Collection** | Light zone. All 9 SKUs with real specs |
+| 07 | Worn | Alternating editorial spreads |
+| 08 | Metals | Platinum / 14K Yellow / Two Tone |
+| 09 | Display | The periwinkle retail case |
+| 10 | Exclusivity | Patent-pending, unshoppable — the retailer argument |
+| 11 | CTA | centuriondiamond.com |
 
 ---
 
@@ -100,14 +99,43 @@ only ~26% of its width — a slice of the stone. Instead the full composition is
 composited into a 720×1280 canvas over a blurred, darkened self-extension with a
 feathered edge, so it reads full-bleed while the framing survives.
 
+## The Sparkle section
+
+The deliberate reset after the dark hero. A 330vh track with a pinned stage; one
+master progress value drives five timelines — transition, intro, facet reveal,
+comparison, outro.
+
+The stage's background ramps `#0A0A0B → #151515 → charcoal → silver → #F3F1EE`
+while a blurred light bar sweeps across, so it reads as passing *through* the light
+the diamond refracts. It starts on the hero's exact ink value, so there is no seam.
+
+The comparison uses the deck's own cut diagrams (each is half photograph, half
+technical wireframe), keyed off their white paper to alpha. **`mix-blend-mode:
+multiply` cannot be used here** — the animated `transform`/`filter` on each figure
+creates a stacking context that isolates it from the page backdrop. Around each
+diagram an SVG rail draws one tick per facet: 100 against 57, which is the claim
+made visible. The numbers count up as their ticks draw.
+
+Copy is the deck's own; no invented performance statistics.
+
+Content and timing live in `assets/js/sparkle/scenes.js` — beat windows in 0..1
+progress space, plus the background stops. Retiming needs nothing else.
+
+**This section supersedes the old Manifesto and Proof sections**, which told the
+same 57-vs-100 story and carried this same headline. Both were removed rather than
+left to duplicate it; the `#cut` anchor moved here so the header nav still resolves.
+
+On mobile the pair stacks vertically and the gather/split runs on Y instead of X,
+so each cut still reads large rather than shrinking to a pair of thumbnails.
+
 ## Motion
 
 GSAP 3.15 + ScrollTrigger + Lenis smooth scroll, all vendored into
 `assets/js/vendor/` — no CDN, no network dependency.
 
-`assets/js/main.js` covers everything below the hero: preloader, cursor, scroll
-reveals, the pinned 57→100 proof, ghost-text drift, marquee, image parallax, stat
-counters, video play-in-view and the header menu. The hero owns its own modules.
+`assets/js/main.js` covers the remaining sections: preloader, cursor, scroll reveals,
+marquee, image parallax, stat counters, video play-in-view and the header menu. The
+hero and the Sparkle section each own their own modules.
 
 Reveals are declarative — add `data-anim="up|fade|left|right|scale|clip"` to any
 element and it animates in on scroll, with siblings staggering automatically.
@@ -159,6 +187,7 @@ assets/css/base.css     tokens, reset, type scale
 assets/css/sections.css components & sections
 assets/js/main.js       motion system (everything below the hero)
 assets/js/hero/         the cinematic hero, one module per timeline
+assets/js/sparkle/      the dark-to-light comparison section
 assets/js/vendor/       gsap, ScrollTrigger, SplitText, lenis
 assets/fonts/           self-hosted Bodoni Moda + Jost (woff2)
 assets/img/{model,ring,brand}/   responsive WebP

@@ -116,59 +116,78 @@
   </div>
 </section>
 
-<!-- ============================================ 02 · MANIFESTO -->
-<section class="section manifesto">
-  <div class="ghost" data-ghost aria-hidden="true">FIRE</div>
-  <div class="wrap">
-    <p class="manifesto__q d2" data-split>
-      More facets. <em class="serif-i hl">More brilliance.</em> A stone that refuses to sit quietly.
+<!-- ============================================ 02 · THE SPARKLE — dark-to-light passage
+     Supersedes the old Manifesto + Proof sections, which told this same
+     57-vs-100 story (and carried this same headline). Keeps the #cut anchor. -->
+<section class="spk" id="cut">
+  <div class="spk__stage">
+
+    <div class="spk__sweep" data-spk-sweep aria-hidden="true"></div>
+    <div class="spk__grain" aria-hidden="true"></div>
+
+    <!-- 01 · intro -->
+    <div class="spk__intro" data-spk-intro>
+      <p class="spk__eyebrow"><i></i><b>01</b><span>The Centurion Cut</span></p>
+      <h2 class="spk__h2">
+        <span class="spk__ln"><span>It&rsquo;s all about</span></span>
+        <span class="spk__ln"><span class="is-em">the sparkle.</span></span>
+      </h2>
+    </div>
+
+    <!-- 02 · the cut, and 03 · the two worlds (same objects, repositioned) -->
+    <div class="spk__field" data-spk-field>
+      <figure class="cut" data-cut="centurion">
+        <span class="cut__disc">
+          <span class="cut__rail" aria-hidden="true"><svg viewBox="0 0 400 400"><g data-ticks></g></svg></span>
+          <img src="assets/img/brand/cut-centurion-face-a257.webp"
+               alt="The Centurion Diamond cut, shown with its 100-facet geometry"
+               width="257" height="258" loading="lazy" decoding="async">
+        </span>
+        <figcaption class="cut__meta">
+          <span class="cut__label" data-cut-label>Centurion</span>
+          <span class="cut__num"><b data-count-to="100">0</b></span>
+          <span class="cut__unit">Facets</span>
+          <span class="cut__note">Patent-pending geometry</span>
+        </figcaption>
+      </figure>
+
+      <figure class="cut" data-cut="traditional">
+        <span class="cut__disc">
+          <span class="cut__rail" aria-hidden="true"><svg viewBox="0 0 400 400"><g data-ticks></g></svg></span>
+          <img src="assets/img/brand/cut-traditional-face-a245.webp"
+               alt="A traditional round brilliant cut, shown with its 57-facet geometry"
+               width="245" height="244" loading="lazy" decoding="async">
+        </span>
+        <figcaption class="cut__meta">
+          <span class="cut__label" data-cut-label>Traditional</span>
+          <span class="cut__num"><b data-count-to="57">0</b></span>
+          <span class="cut__unit">Facets</span>
+          <span class="cut__note">The industry standard</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- supporting line, deck copy -->
+    <p class="spk__lede" data-spk-lede>
+      The Centurion Diamond is designed with 100 facets, creating a distinctive
+      play of light and sparkle.
     </p>
+
+    <!-- 04 · outro -->
+    <div class="spk__outro" data-spk-outro aria-hidden="true">
+      <span class="spk__word" data-spk-word="0">More facets.</span>
+      <span class="spk__word" data-spk-word="1">More sparkle.</span>
+      <span class="spk__word" data-spk-word="2">See the difference.</span>
+    </div>
+
+    <div class="spk__rule" data-spk-rule aria-hidden="true"><i></i></div>
   </div>
+
+  <!-- hands the bright world back to the dark sections below -->
+  <div class="spk__handoff" aria-hidden="true"></div>
 </section>
 
-<!-- ============================================ 03 · THE PROOF (pinned) -->
-<section class="section section--flush proof" id="cut">
-  <div class="proof__stage" id="proofStage">
-    <div class="wrap">
-      <div class="proof__grid">
-
-        <div class="proof__side" data-anim="left">
-          <div class="label">Traditional Cut</div>
-          <div class="proof__big proof__old">57<small>Facets — the industry standard</small></div>
-        </div>
-
-        <div class="facets" id="facetDiagram">
-          <svg viewBox="0 0 200 200" aria-hidden="true">
-            <circle cx="100" cy="100" r="78" class="f-ring"/>
-            <circle cx="100" cy="100" r="44" class="f-ring"/>
-            <g id="fOld"></g>
-            <g id="fNew" class="f-new"></g>
-          </svg>
-          <div class="facets__core">The Cut</div>
-        </div>
-
-        <div class="proof__side" data-anim="right">
-          <div class="label"><b>Centurion</b> Cut</div>
-          <div class="proof__big proof__new"><span class="u" id="facetCount">57</span><small>Facets — patent-pending geometry</small></div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="wrap" style="padding-bottom:var(--sec)">
-    <div class="grid g-2" style="align-items:end">
-      <h2 class="d3" data-anim="up">It is all about the sparkle.</h2>
-      <p class="lede" data-anim="up">
-        The Centurion Diamond is cut with twice as many facets as the normal stone,
-        making it shine unlike any other. Every additional plane is another chance
-        for light to enter, bend, and return to the eye.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ 04 · PILLARS -->
+<!-- ============================================ 03 · PILLARS -->
 <section class="section">
   <div class="wrap">
     <div class="pillars__head">
@@ -204,7 +223,7 @@
   </div>
 </section>
 
-<!-- ============================================ 05 · LIGHT STUDY (pinned video) -->
+<!-- ============================================ 04 · LIGHT STUDY (pinned video) -->
 <section class="study" id="study">
   <div class="study__media">
     <video id="studyVid" muted loop playsinline preload="none" poster="assets/video/light-poster.webp">
@@ -227,7 +246,7 @@
   </div>
 </section>
 
-<!-- ============================================ 06 · MARQUEE -->
+<!-- ============================================ 05 · MARQUEE -->
 <div class="marq" aria-hidden="true">
   <div class="marq__track" id="marq">
     <span>More Facets <b>&#9670;</b> <em>More Brilliance</em> <b>&#9670;</b></span>
@@ -235,7 +254,7 @@
   </div>
 </div>
 
-<!-- ============================================ 07 · COLLECTION (light zone) -->
+<!-- ============================================ 06 · COLLECTION (light zone) -->
 <section class="section zone-light" id="collection">
   <div class="wrap">
     <div class="coll__head">
@@ -363,7 +382,7 @@
   </div>
 </section>
 
-<!-- ============================================ 08 · WORN -->
+<!-- ============================================ 07 · WORN -->
 <section class="section" id="worn">
   <div class="wrap">
 
@@ -405,7 +424,7 @@
   </div>
 </section>
 
-<!-- ============================================ 09 · METALS -->
+<!-- ============================================ 08 · METALS -->
 <section class="section" id="metals">
   <div class="wrap">
     <div class="pillars__head">
@@ -439,7 +458,7 @@
   </div>
 </section>
 
-<!-- ============================================ 10 · DISPLAY -->
+<!-- ============================================ 09 · DISPLAY -->
 <section class="section" id="display">
   <div class="wrap">
     <div class="disp__grid">
@@ -473,7 +492,7 @@
   </div>
 </section>
 
-<!-- ============================================ 11 · EXCLUSIVE -->
+<!-- ============================================ 10 · EXCLUSIVE -->
 <section class="section" id="exclusive">
   <div class="wrap">
     <div class="stats">
@@ -514,7 +533,7 @@
   </div>
 </section>
 
-<!-- ============================================ 12 · CTA -->
+<!-- ============================================ 11 · CTA -->
 <section class="section cta" id="contact">
   <div class="ghost" data-ghost aria-hidden="true">100</div>
   <div class="wrap" style="position:relative;z-index:2">
@@ -557,6 +576,8 @@
 <script defer src="assets/js/hero/header.js"></script>
 <script defer src="assets/js/hero/progress.js"></script>
 <script defer src="assets/js/hero/index.js"></script>
+<script defer src="assets/js/sparkle/scenes.js"></script>
+<script defer src="assets/js/sparkle/index.js"></script>
 <script defer src="assets/js/main.js"></script>
 </body>
 </html>
