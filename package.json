@@ -1,0 +1,23 @@
+{
+  "name": "centurion-diamond",
+  "version": "1.0.0",
+  "description": "Centurion Diamond — 100 Facets of Brilliance. Scroll-driven luxury homepage.",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx -y serve -l 4321 .",
+    "shots": "node dev/shot.js ./dev/shots 1440 900 d",
+    "perf": "node dev/perf.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.26"
+  },
+  "private": true,
+  "devDependencies": {
+    "puppeteer": "^25.9.0"
+  }
+}

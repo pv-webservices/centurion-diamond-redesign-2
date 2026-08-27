@@ -1,0 +1,175 @@
+/* ============================================================
+   CENTURION DIAMOND — Design tokens & base
+   Aesthetic: dark cinematic luxury editorial
+   Type: Bodoni Moda (Didone display) + Jost (geometric sans)
+   ============================================================ */
+
+:root{
+  /* --- ink / ground --- */
+  --ink:        #0A0A0B;
+  --ink-2:      #101012;
+  --ink-3:      #17171A;
+  --ink-4:      #202027;
+
+  /* --- light zone --- */
+  --bone:       #F4F1EA;
+  --bone-2:     #EAE5DB;
+  --bone-3:     #DCD5C8;
+
+  /* --- brand --- */
+  --rose:       #CC9C9C;
+  --rose-lt:    #E3BFBB;
+  --rose-dp:    #A87A7A;
+  --periwinkle: #A9AECF;
+  --platinum:   #C6CBD2;
+  --gold:       #C9A876;
+
+  /* --- semantic (dark default) --- */
+  --bg:         var(--ink);
+  --fg:         var(--bone);
+  --fg-dim:     rgba(244,241,234,.60);
+  --fg-faint:   rgba(244,241,234,.30);
+  --rule:       rgba(244,241,234,.14);
+  --accent:     var(--rose);
+
+  /* --- type --- */
+  --display: "Bodoni Moda", "Didot", "Bodoni MT", Georgia, serif;
+  --sans:    "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
+
+  /* --- rhythm --- */
+  --gut:  clamp(20px, 4.2vw, 64px);
+  --rail: clamp(34px, 4.4vw, 58px);   /* fixed side-rail width */
+  --sec:  clamp(90px, 13vh, 170px);   /* section vertical pad  */
+  --maxw: 1560px;
+
+  /* --- motion --- */
+  --ease:     cubic-bezier(.22,.61,.36,1);
+  --ease-io:  cubic-bezier(.65,.05,.36,1);
+}
+
+/* light zone inversion */
+.zone-light{
+  --bg: var(--bone); --fg: var(--ink); 
+  --fg-dim: rgba(10,10,11,.62); --fg-faint: rgba(10,10,11,.32);
+  --rule: rgba(10,10,11,.15); --accent: var(--rose-dp);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+body,h1,h2,h3,h4,p,figure,blockquote,ul,ol,dl,dd{ margin:0; }
+ul[role="list"],ol[role="list"]{ list-style:none; padding:0; }
+img,picture,video,svg{ display:block; max-width:100%; }
+button,input,select,textarea{ font:inherit; color:inherit; }
+a{ color:inherit; text-decoration:none; }
+
+html{ scroll-behavior:auto; }
+body{
+  background:var(--ink);
+  color:var(--bone);
+  font-family:var(--sans);
+  font-size:clamp(15px,1.02vw,17px);
+  font-weight:300;
+  line-height:1.62;
+  letter-spacing:.005em;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+body.is-locked{ overflow:hidden; height:100vh; }
+
+/* ============================================================ TYPE */
+.d1,.d2,.d3{
+  font-family:var(--display);
+  font-weight:400;
+  line-height:.92;
+  letter-spacing:-.02em;
+  text-wrap:balance;
+}
+.d1{ font-size:clamp(3.4rem, 11.5vw, 12.5rem); line-height:.86; letter-spacing:-.03em; }
+.d2{ font-size:clamp(2.6rem, 6.6vw, 6.4rem);  line-height:.94; }
+.d3{ font-size:clamp(1.9rem, 3.5vw, 3.4rem);  line-height:1.02; }
+
+.serif-i{ font-style:italic; font-weight:400; }
+
+/* small tracked label — "001 / THE CUT" */
+.label{
+  font-family:var(--sans);
+  font-size:clamp(9.5px,.72vw,11px);
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:.26em;
+  color:var(--fg-faint);
+  display:flex; align-items:center; gap:.85em;
+}
+.label::before{
+  content:""; width:clamp(18px,2.4vw,42px); height:1px;
+  background:currentColor; opacity:.85; flex:none;
+}
+.label--plain::before{ display:none; }
+.label b{ font-weight:500; color:var(--accent); }
+
+.lede{
+  font-size:clamp(1.02rem,1.32vw,1.28rem);
+  line-height:1.68; font-weight:300;
+  color:var(--fg-dim); max-width:46ch; text-wrap:pretty;
+}
+.body-sm{ font-size:clamp(.9rem,1.02vw,1rem); line-height:1.72; color:var(--fg-dim); }
+
+.hl{ color:var(--accent); }
+.num{ font-family:var(--display); font-weight:500; font-variant-numeric:tabular-nums; }
+
+/* ============================================================ LAYOUT */
+.wrap{ width:100%; max-width:var(--maxw); margin-inline:auto; padding-inline:var(--gut); }
+.section{ position:relative; padding-block:var(--sec); background:var(--bg); color:var(--fg); }
+.section--flush{ padding-block:0; }
+
+.grid{ display:grid; gap:clamp(24px,3.4vw,64px); }
+.g-2{ grid-template-columns:repeat(2,1fr); }
+.g-3{ grid-template-columns:repeat(3,1fr); }
+.g-12{ grid-template-columns:repeat(12,1fr); }
+
+@media (max-width:900px){
+  .g-2,.g-3{ grid-template-columns:1fr; }
+  .g-12{ grid-template-columns:repeat(6,1fr); }
+}
+
+/* ============================================================ RULE / DIVIDER */
+.rule{ height:1px; background:var(--rule); width:100%; transform-origin:left center; }
+
+/* ============================================================ BUTTON */
+.btn{
+  --bd: currentColor;
+  position:relative; display:inline-flex; align-items:center; gap:1em;
+  padding:1.05em 2.1em;
+  font-size:clamp(10px,.78vw,11.5px); font-weight:500;
+  text-transform:uppercase; letter-spacing:.22em;
+  border:1px solid var(--rule); border-radius:100px;
+  color:var(--fg); background:transparent;
+  cursor:pointer; overflow:hidden; isolation:isolate;
+  transition:color .5s var(--ease), border-color .5s var(--ease);
+}
+.btn::after{
+  content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit;
+  background:var(--accent);
+  transform:scaleY(0); transform-origin:bottom center;
+  transition:transform .55s var(--ease);
+}
+.btn:hover{ color:var(--ink); border-color:var(--accent); }
+.btn:hover::after{ transform:scaleY(1); transform-origin:top center; }
+.btn .dot{ width:5px; height:5px; border-radius:50%; background:currentColor; flex:none; }
+
+/* ============================================================ A11Y / MOTION */
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+:focus-visible{ outline:2px solid var(--rose); outline-offset:3px; }
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important; animation-iteration-count:1 !important;
+    transition-duration:.01ms !important; scroll-behavior:auto !important;
+  }
+  [data-anim]{ opacity:1 !important; transform:none !important; clip-path:none !important; }
+}
