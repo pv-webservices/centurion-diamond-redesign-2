@@ -716,154 +716,337 @@
   </div>
 </section>
 
-<!-- ============================================ 07 · WORN -->
-<section class="section" id="worn">
-  <div class="wrap">
+<!-- ============================================ 07 · WORN — the diamond, in life
+     A pinned chapter between two ink sections. The Collection above ramps
+     its ground to `--ink`; the Metals chapter below opens on it, so this
+     one simply holds it.
 
-    <article class="ed ed--a">
-      <figure class="ed__fig" data-anim="clip">
-        <img data-parallax src="assets/img/model/ed-radiant-cheek-900.webp"
+     Its one idea: the photographs arrive in the page's own monochrome and
+     find their colour as the chapter goes, then gather into a spread of
+     every moment it has shown. The colour arrives in the pictures rather
+     than in the room — this is studio photography, and pretending the
+     ground is candlelight would be inventing something the imagery does
+     not contain.
+
+     Copy lives here so the chapter still reads with scripting off;
+     choreography is in assets/js/worn/scenes.js. -->
+<section class="wrn" id="worn" aria-labelledby="wrnTitle">
+  <div class="wrn__stage">
+
+    <!-- every plate lives in this layer, which carries the one filter that
+         takes the chapter from monochrome to colour -->
+    <div class="wrn__film" data-wrn-film aria-hidden="true">
+
+      <figure class="wrn__plate" data-wrn-plate style="--ar:900/1242">
+        <img src="assets/img/model/ed-radiant-cheek-900.webp"
              srcset="assets/img/model/ed-radiant-cheek-600.webp 600w, assets/img/model/ed-radiant-cheek-900.webp 900w, assets/img/model/ed-radiant-cheek-1400.webp 1400w"
-             sizes="(max-width:900px) 92vw, 46vw"
-             alt="Model wearing a radiant-cut Centurion Diamond ring" loading="lazy" decoding="async" width="1400" height="1932">
+             sizes="(max-width:900px) 66vw, 28vw"
+             alt="" width="1400" height="1932" loading="lazy" decoding="async">
       </figure>
-      <div class="ed__txt">
-        <div class="label" data-anim="fade"><b>003</b> Worn</div>
-        <h2 class="d3" style="margin-top:.5em" data-anim="up">Made to be<br><em class="serif-i">looked at twice</em></h2>
-        <p class="lede" style="margin-top:1.2em" data-anim="up">
-          Perfect for bridal rings and timeless jewellery, the Centurion collection
-          transforms light into an extraordinary spectacle.
-        </p>
-        <p class="body-sm" style="margin-top:1.4em" data-anim="up">See the difference. Feel the radiance.</p>
-      </div>
-    </article>
 
-    <article class="ed ed--b">
-      <figure class="ed__fig" data-anim="clip">
-        <img data-parallax src="assets/img/model/ed-black-coat-hands-1200.webp"
+      <figure class="wrn__plate" data-wrn-plate style="--ar:760/349">
+        <img src="assets/img/model/ed-hands-silk-1200.webp"
+             srcset="assets/img/model/ed-hands-silk-760.webp 760w, assets/img/model/ed-hands-silk-1200.webp 1200w, assets/img/model/ed-hands-silk-1800.webp 1800w"
+             sizes="(max-width:900px) 66vw, 27vw"
+             alt="" width="1800" height="827" loading="lazy" decoding="async">
+      </figure>
+
+      <figure class="wrn__plate" data-wrn-plate style="--ar:760/587">
+        <img src="assets/img/model/ed-black-coat-hands-1200.webp"
              srcset="assets/img/model/ed-black-coat-hands-760.webp 760w, assets/img/model/ed-black-coat-hands-1200.webp 1200w, assets/img/model/ed-black-coat-hands-1800.webp 1800w"
-             sizes="(max-width:900px) 92vw, 46vw"
-             alt="Two hands wearing Centurion Diamond engagement rings" loading="lazy" decoding="async" width="1800" height="1391">
+             sizes="(max-width:900px) 66vw, 30vw"
+             alt="" width="1800" height="1391" loading="lazy" decoding="async">
       </figure>
-      <div class="ed__txt">
-        <div class="label" data-anim="fade">In the softest light</div>
-        <h2 class="d3" style="margin-top:.5em" data-anim="up">A stone that<br><em class="serif-i">works indoors</em></h2>
-        <p class="lede" style="margin-top:1.2em" data-anim="up">
-          Most diamonds need a spotlight. The Centurion cut was engineered for
-          restaurant light, window light, candlelight — the light people actually live in.
-        </p>
+
+      <figure class="wrn__plate" data-wrn-plate style="--ar:900/1317">
+        <img src="assets/img/model/ed-oval-shirt-900.webp"
+             srcset="assets/img/model/ed-oval-shirt-600.webp 600w, assets/img/model/ed-oval-shirt-900.webp 900w, assets/img/model/ed-oval-shirt-1400.webp 1400w"
+             sizes="(max-width:900px) 34vw, 14vw"
+             alt="" width="1400" height="2049" loading="lazy" decoding="async">
+      </figure>
+
+      <figure class="wrn__plate" data-wrn-plate style="--ar:760/587">
+        <img src="assets/img/model/ed-portrait-red-1200.webp"
+             srcset="assets/img/model/ed-portrait-red-760.webp 760w, assets/img/model/ed-portrait-red-1200.webp 1200w, assets/img/model/ed-portrait-red-1800.webp 1800w"
+             sizes="(max-width:900px) 34vw, 16vw"
+             alt="" width="1800" height="1391" loading="lazy" decoding="async">
+      </figure>
+
+      <figure class="wrn__plate" data-wrn-plate style="--ar:900/1295">
+        <img src="assets/img/model/ed-cushion-pinch-900.webp"
+             srcset="assets/img/model/ed-cushion-pinch-600.webp 600w, assets/img/model/ed-cushion-pinch-900.webp 900w, assets/img/model/ed-cushion-pinch-1400.webp 1400w"
+             sizes="(max-width:900px) 34vw, 12vw"
+             alt="" width="1400" height="2015" loading="lazy" decoding="async">
+      </figure>
+
+    </div>
+
+    <!-- opening -->
+    <div class="wrn__intro" data-wrn-intro>
+      <p class="wrn__eyebrow"><i></i><b>04</b><span>Worn</span></p>
+      <h2 class="wrn__h2" id="wrnTitle">
+        <span class="wrn__ln"><span>The diamond,</span></span>
+        <span class="wrn__ln"><span class="is-em">in life.</span></span>
+      </h2>
+    </div>
+
+    <!-- 01 · the claim -->
+    <article class="wrn__scene" data-wrn-scene="0" data-side="right">
+      <div class="wrn__copy">
+        <h3 class="wrn__t">
+          <span class="wrn__ln"><span>Made to be</span></span>
+          <span class="wrn__ln"><span class="is-em">looked at twice</span></span>
+        </h3>
+        <p class="wrn__b">Perfect for bridal rings and timeless jewellery, the
+          Centurion collection transforms light into an extraordinary spectacle.</p>
+      </div>
+    </article>
+
+    <!-- 02 · the light people actually live in -->
+    <article class="wrn__scene" data-wrn-scene="1" data-side="left">
+      <div class="wrn__copy">
+        <h3 class="wrn__t">
+          <span class="wrn__ln"><span>A stone that</span></span>
+          <span class="wrn__ln"><span class="is-em">works indoors</span></span>
+        </h3>
+        <p class="wrn__b">Most diamonds need a spotlight. The Centurion cut was
+          engineered for restaurant light, window light, candlelight &mdash; the
+          light people actually live in.</p>
+      </div>
+    </article>
+
+    <!-- the spread: every moment the chapter has shown, at once, in colour -->
+    <div class="wrn__gather" data-wrn-gather>
+      <p class="wrn__final">
+        <span class="wrn__ln"><span>See the difference.</span></span>
+        <span class="wrn__ln"><span class="is-em">Feel the radiance.</span></span>
+      </p>
+      <span class="wrn__rule" data-wrn-rule aria-hidden="true"></span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================ 08 · METALS — the ground becomes the metal
+     Worn above ends on ink and this stage opens on it; it drains back to
+     the same ink for Display below.
+
+     Two full-bleed panels wipe across on a shared diagonal — platinum,
+     then yellow gold over it. For the third beat the gold panel retreats
+     rather than a third panel arriving, so the two metals end up side by
+     side with the two-tone ring standing on the seam. That is the deck's
+     claim made visible: three settings, only ever two metals.
+
+     Copy lives here so the chapter still reads with scripting off;
+     choreography is in assets/js/metals/scenes.js. -->
+<section class="mtl" id="metals" aria-labelledby="mtlTitle">
+  <div class="mtl__stage">
+
+    <!-- the ground -->
+    <div class="mtl__panel mtl__panel--pt" data-mtl-panel="pt" aria-hidden="true"></div>
+    <div class="mtl__panel mtl__panel--yg" data-mtl-panel="yg" aria-hidden="true"></div>
+    <div class="mtl__veil" aria-hidden="true"></div>
+
+    <!-- one ring per metal, alpha-keyed so it stands on the metal itself -->
+    <figure class="mtl__ring" data-mtl-ring style="--ar:722/925">
+      <img src="assets/img/ring/ring-radiant-3-pt-cut-722.webp"
+           srcset="assets/img/ring/ring-radiant-3-pt-cut-600.webp 600w, assets/img/ring/ring-radiant-3-pt-cut-722.webp 722w"
+           sizes="(max-width:900px) 52vw, 22vw"
+           alt="" width="722" height="925" loading="lazy" decoding="async">
+    </figure>
+    <figure class="mtl__ring" data-mtl-ring style="--ar:660/804">
+      <img src="assets/img/ring/ring-radiant-25-yg-cut-660.webp"
+           srcset="assets/img/ring/ring-radiant-25-yg-cut-600.webp 600w, assets/img/ring/ring-radiant-25-yg-cut-660.webp 660w"
+           sizes="(max-width:900px) 52vw, 20vw"
+           alt="" width="660" height="804" loading="lazy" decoding="async">
+    </figure>
+    <figure class="mtl__ring" data-mtl-ring style="--ar:657/912">
+      <img src="assets/img/ring/ring-cushion-3-tt-cut-657.webp"
+           srcset="assets/img/ring/ring-cushion-3-tt-cut-600.webp 600w, assets/img/ring/ring-cushion-3-tt-cut-657.webp 657w"
+           sizes="(max-width:900px) 52vw, 21vw"
+           alt="" width="657" height="912" loading="lazy" decoding="async">
+    </figure>
+
+    <!-- opening -->
+    <div class="mtl__intro" data-mtl-intro>
+      <p class="mtl__eyebrow"><i></i><b>05</b><span>Materials</span></p>
+      <h2 class="mtl__h2" id="mtlTitle">
+        <span class="mtl__ln"><span>Two metals.</span></span>
+        <span class="mtl__ln"><span class="is-em">One standard.</span></span>
+      </h2>
+    </div>
+
+    <!-- 01 · platinum -->
+    <article class="mtl__scene" data-mtl-scene="0" data-side="right">
+      <div class="mtl__copy">
+        <h3 class="mtl__t"><span class="mtl__ln"><span>Platinum</span></span></h3>
+        <p class="mtl__b">Denser, rarer, and naturally white. With gold at a historic
+          high, platinum now sits close to 14K white gold &mdash; while holding a far
+          higher perceived value.</p>
+      </div>
+    </article>
+
+    <!-- 02 · 14K yellow -->
+    <article class="mtl__scene" data-mtl-scene="1" data-side="left">
+      <div class="mtl__copy">
+        <h3 class="mtl__t"><span class="mtl__ln"><span>14K Yellow</span></span></h3>
+        <p class="mtl__b">A warm ground that pushes the stone forward. The contrast
+          between yellow metal and a colourless centre reads brighter to the eye.</p>
+      </div>
+    </article>
+
+    <!-- 03 · two tone — the ring stands on the seam between the other two -->
+    <article class="mtl__scene" data-mtl-scene="2" data-side="right">
+      <div class="mtl__copy">
+        <h3 class="mtl__t"><span class="mtl__ln"><span>Two Tone</span></span></h3>
+        <p class="mtl__b">A white head cradling the centre stone, carried on a yellow
+          shank. The setting disappears; the diamond does not.</p>
+      </div>
+    </article>
+
+    <!-- the closing claim, as the room drains back to ink -->
+    <div class="mtl__statement" data-mtl-statement>
+      <p>The entire collection is built in Platinum and 14K&nbsp;Yellow &mdash;
+        no exceptions, no substitutions.</p>
+    </div>
+
+    <div class="mtl__drain" data-mtl-drain aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ============================================ 09 · DISPLAY — the Centurion experience
+     The one chromatic room on the page. Metals above drains to ink and
+     Exclusivity below opens on it, so this chapter can take the deck's
+     periwinkle without either seam having to negotiate a colour.
+
+     Its idea is that the colour arrives as light: a periwinkle source
+     rises behind the case, spreads to fill the room, and falls away. What
+     the walls hold is only ever what the light leaves there.
+
+     Copy lives here so the chapter still reads with scripting off;
+     choreography is in assets/js/display/scenes.js. -->
+<section class="dsp" id="display" aria-labelledby="dspTitle">
+  <div class="dsp__stage">
+
+    <div class="dsp__glow" data-dsp-glow aria-hidden="true"></div>
+
+    <figure class="dsp__case" data-dsp-case style="--ar:1200/1480">
+      <img src="assets/img/model/display-case-a-800.webp"
+           srcset="assets/img/model/display-case-a-560.webp 560w, assets/img/model/display-case-a-800.webp 800w, assets/img/model/display-case-a-1200.webp 1200w"
+           sizes="(max-width:900px) 56vw, 27vw"
+           alt="The Centurion Diamond retail display case, angled view"
+           width="1200" height="1480" loading="lazy" decoding="async">
+    </figure>
+    <figure class="dsp__case" data-dsp-case style="--ar:1200/1479">
+      <img src="assets/img/model/display-case-b-800.webp"
+           srcset="assets/img/model/display-case-b-560.webp 560w, assets/img/model/display-case-b-800.webp 800w, assets/img/model/display-case-b-1200.webp 1200w"
+           sizes="(max-width:900px) 56vw, 19vw"
+           alt="The Centurion Diamond retail display case, overhead view"
+           width="1200" height="1479" loading="lazy" decoding="async">
+    </figure>
+
+    <!-- opening -->
+    <div class="dsp__intro" data-dsp-intro>
+      <p class="dsp__eyebrow"><i></i><b>06</b><span>At Retail</span></p>
+      <h2 class="dsp__h2" id="dspTitle">
+        <span class="dsp__ln"><span>The Centurion</span></span>
+        <span class="dsp__ln"><span class="is-em">experience.</span></span>
+      </h2>
+    </div>
+
+    <!-- 01 · the case -->
+    <article class="dsp__scene" data-dsp-scene="0" data-side="right">
+      <div class="dsp__copy">
+        <h3 class="dsp__t">
+          <span class="dsp__ln"><span>A case built</span></span>
+          <span class="dsp__ln"><span class="is-em">to be noticed</span></span>
+        </h3>
+        <p class="dsp__b">The Centurion Collection comes with a thoughtfully crafted
+          display, distinguished by its sophisticated design and a striking
+          periwinkle colour.</p>
+      </div>
+    </article>
+
+    <!-- 02 · what arrives -->
+    <article class="dsp__scene" data-dsp-scene="1" data-side="left">
+      <div class="dsp__copy">
+        <h3 class="dsp__t">
+          <span class="dsp__ln"><span>Delivered ready</span></span>
+          <span class="dsp__ln"><span class="is-em">to merchandise</span></span>
+        </h3>
+        <p class="dsp__b">The collection arrives as a complete statement,
+          not a loose assortment.</p>
       </div>
     </article>
 
   </div>
 </section>
 
-<!-- ============================================ 08 · METALS -->
-<section class="section" id="metals">
-  <div class="wrap">
-    <div class="pillars__head">
-      <div>
-        <div class="label" data-anim="fade"><b>004</b> Materials</div>
-        <h2 class="d2" style="margin-top:.4em" data-anim="up">Two metals.<br><em class="serif-i">One standard.</em></h2>
+<!-- ============================================ 10 · EXCLUSIVITY — a different kind of standard
+     The trade argument, and the only chapter on the page with no
+     photography in it at all. Three figures arrive one row at a time and
+     stay, each with its own rule drawing under it, while the case for
+     stocking builds beside them — a ledger, not a stat card.
+
+     Display above falls back to ink and the CTA below is already ink, so
+     both seams hold without doing anything.
+
+     Every figure and every sentence is the deck's own. Copy lives here so
+     the chapter still reads with scripting off; choreography is in
+     assets/js/exclusive/scenes.js. -->
+<section class="exc" id="exclusive" aria-labelledby="excTitle">
+  <div class="exc__stage">
+
+    <!-- opening -->
+    <div class="exc__intro" data-exc-intro>
+      <p class="exc__eyebrow"><i></i><b>07</b><span>Exclusivity</span></p>
+      <h2 class="exc__h2" id="excTitle">
+        <span class="exc__ln"><span>A different kind</span></span>
+        <span class="exc__ln"><span class="is-em">of standard.</span></span>
+      </h2>
+    </div>
+
+    <!-- the ledger -->
+    <div class="exc__ledger" data-exc-ledger>
+      <div class="exc__row" data-exc-row>
+        <span class="exc__rule" aria-hidden="true"></span>
+        <p class="exc__n">100</p>
+        <p class="exc__l">Facets per centre stone</p>
       </div>
-      <p class="body-sm" style="max-width:36ch" data-anim="up">
-        The entire collection is built in Platinum and 14K Yellow — no exceptions,
-        no substitutions.
+      <div class="exc__row" data-exc-row>
+        <span class="exc__rule" aria-hidden="true"></span>
+        <p class="exc__n">43<sup>+</sup></p>
+        <p class="exc__l">More facets than a traditional cut</p>
+      </div>
+      <div class="exc__row" data-exc-row>
+        <span class="exc__rule" aria-hidden="true"></span>
+        <p class="exc__n">9</p>
+        <p class="exc__l">Settings in the debut collection</p>
+      </div>
+    </div>
+
+    <!-- the case for stocking, one claim at a time -->
+    <div class="exc__claims">
+      <p class="exc__claim" data-exc-claim>Because the Centurion Diamond is
+        patent-pending, the collection is exclusive to you. Customers cannot
+        price-shop it against other retailers or online sellers &mdash; nothing
+        like it exists elsewhere.</p>
+      <p class="exc__claim" data-exc-claim>The result is a protected margin on a
+        piece that sells itself across the counter, and a premium collection that
+        lifts the average ticket rather than discounting it.</p>
+    </div>
+
+    <!-- the last frame -->
+    <div class="exc__close" data-exc-close>
+      <p class="exc__closeT">
+        <span class="exc__ln"><span>Unshoppable</span></span>
+        <span class="exc__ln"><span class="is-em">by design.</span></span>
       </p>
+      <a class="btn exc__cta" href="#contact" data-exc-cta>
+        <span class="dot"></span> Enquire about stocking
+      </a>
     </div>
 
-    <div class="metals">
-      <div class="metal" data-anim="up">
-        <div class="metal__sw sw--pt"></div>
-        <h3>Platinum</h3>
-        <p>Denser, rarer, and naturally white. With gold at a historic high, platinum now sits close to 14K white gold — while holding a far higher perceived value.</p>
-      </div>
-      <div class="metal" data-anim="up">
-        <div class="metal__sw sw--yg"></div>
-        <h3>14K Yellow</h3>
-        <p>A warm ground that pushes the stone forward. The contrast between yellow metal and a colourless centre reads brighter to the eye.</p>
-      </div>
-      <div class="metal" data-anim="up">
-        <div class="metal__sw sw--tt"></div>
-        <h3>Two Tone</h3>
-        <p>A white head cradling the centre stone, carried on a yellow shank. The setting disappears; the diamond does not.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ 09 · DISPLAY -->
-<section class="section" id="display">
-  <div class="wrap">
-    <div class="disp__grid">
-      <div>
-        <div class="label" data-anim="fade"><b>005</b> At Retail</div>
-        <h2 class="d2" style="margin-top:.4em" data-anim="up">A case built<br><em class="serif-i peri">to be noticed</em></h2>
-        <p class="lede" style="margin-top:1.4em" data-anim="up">
-          The Centurion Collection comes with a thoughtfully crafted display,
-          distinguished by its sophisticated design and a striking periwinkle colour.
-        </p>
-        <p class="body-sm" style="margin-top:1.4em" data-anim="up">
-          Delivered ready to merchandise — the collection arrives as a complete
-          statement, not a loose assortment.
-        </p>
-      </div>
-      <div class="disp__figs">
-        <figure data-anim="clip">
-          <img data-parallax src="assets/img/model/display-case-a-800.webp"
-               srcset="assets/img/model/display-case-a-560.webp 560w, assets/img/model/display-case-a-800.webp 800w, assets/img/model/display-case-a-1200.webp 1200w"
-               sizes="(max-width:900px) 46vw, 22vw"
-               alt="Centurion Diamond retail display case, angled view" loading="lazy" decoding="async" width="1200" height="1480">
-        </figure>
-        <figure data-anim="clip">
-          <img data-parallax src="assets/img/model/display-case-b-800.webp"
-               srcset="assets/img/model/display-case-b-560.webp 560w, assets/img/model/display-case-b-800.webp 800w, assets/img/model/display-case-b-1200.webp 1200w"
-               sizes="(max-width:900px) 46vw, 22vw"
-               alt="Centurion Diamond retail display case, overhead view" loading="lazy" decoding="async" width="1200" height="1479">
-        </figure>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ 10 · EXCLUSIVE -->
-<section class="section" id="exclusive">
-  <div class="wrap">
-    <div class="stats">
-      <div class="stat" data-anim="up">
-        <div class="stat__n"><span data-count="100">0</span></div>
-        <div class="stat__l">Facets per centre stone</div>
-      </div>
-      <div class="stat" data-anim="up">
-        <div class="stat__n"><span data-count="43">0</span><sup>+</sup></div>
-        <div class="stat__l">More facets than a traditional cut</div>
-      </div>
-      <div class="stat" data-anim="up">
-        <div class="stat__n"><span data-count="9">0</span></div>
-        <div class="stat__l">Settings in the debut collection</div>
-      </div>
-    </div>
-
-    <div class="excl__grid" style="margin-top:clamp(48px,6vw,110px)">
-      <div>
-        <div class="label" data-anim="fade"><b>006</b> Exclusivity</div>
-        <h2 class="d2" style="margin-top:.4em" data-anim="up">Unshoppable<br><em class="serif-i">by design</em></h2>
-      </div>
-      <div>
-        <p class="lede" data-anim="up">
-          Because the Centurion Diamond is patent-pending, the collection is
-          exclusive to you. Customers cannot price-shop it against other retailers
-          or online sellers — nothing like it exists elsewhere.
-        </p>
-        <p class="body-sm" style="margin-top:1.5em" data-anim="up">
-          The result is a protected margin on a piece that sells itself across the counter,
-          and a premium collection that lifts the average ticket rather than discounting it.
-        </p>
-        <a class="btn" href="#contact" style="margin-top:2.4em" data-anim="up">
-          <span class="dot"></span> Enquire about stocking
-        </a>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -925,6 +1108,22 @@
 <script defer src="assets/js/collection/timeline.js"></script>
 <script defer src="assets/js/collection/visual.js"></script>
 <script defer src="assets/js/collection/index.js"></script>
+<script defer src="assets/js/worn/scenes.js"></script>
+<script defer src="assets/js/worn/timeline.js"></script>
+<script defer src="assets/js/worn/visual.js"></script>
+<script defer src="assets/js/worn/index.js"></script>
+<script defer src="assets/js/metals/scenes.js"></script>
+<script defer src="assets/js/metals/timeline.js"></script>
+<script defer src="assets/js/metals/visual.js"></script>
+<script defer src="assets/js/metals/index.js"></script>
+<script defer src="assets/js/display/scenes.js"></script>
+<script defer src="assets/js/display/timeline.js"></script>
+<script defer src="assets/js/display/visual.js"></script>
+<script defer src="assets/js/display/index.js"></script>
+<script defer src="assets/js/exclusive/scenes.js"></script>
+<script defer src="assets/js/exclusive/timeline.js"></script>
+<script defer src="assets/js/exclusive/visual.js"></script>
+<script defer src="assets/js/exclusive/index.js"></script>
 <script defer src="assets/js/main.js"></script>
 </body>
 </html>

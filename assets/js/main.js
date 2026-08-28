@@ -247,6 +247,10 @@
     if (window.CD && CD.initPillars) CD.initPillars();
     if (window.CD && CD.initStudy) CD.initStudy();
     if (window.CD && CD.initCollection) CD.initCollection();
+    if (window.CD && CD.initWorn) CD.initWorn();
+    if (window.CD && CD.initMetals) CD.initMetals();
+    if (window.CD && CD.initDisplay) CD.initDisplay();
+    if (window.CD && CD.initExclusive) CD.initExclusive();
     ScrollTrigger.refresh();
   }
 

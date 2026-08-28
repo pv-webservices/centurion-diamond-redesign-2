@@ -580,10 +580,6 @@
 .spk.is-reduced .spk__grain{ animation:none; }
 .spk.is-reduced .spk__handoff{ height:22vh; }
 
-/* ------------------------------------- shared section head (Metals section) */
-.pillars__head{ display:flex; align-items:flex-end; justify-content:space-between; gap:2rem;
-  flex-wrap:wrap; margin-bottom:clamp(44px,6vw,96px); }
-
 /* ============================================================
    03 · ANATOMY OF BRILLIANCE — pinned editorial chapter.
    The stage background is driven from JS across the ramp, so nothing here
@@ -1570,60 +1566,722 @@
   .coll__metals{ gap:.9em; }
 }
 
-/* ---------------------------------------------- EDITORIAL SPLIT */
-.ed{ display:grid; grid-template-columns:repeat(12,1fr); gap:clamp(20px,3vw,54px); align-items:center; }
-.ed + .ed{ margin-top:clamp(60px,8vw,140px); }
-.ed__fig{ position:relative; overflow:hidden; }
-.ed__fig img{ width:100%; height:100%; object-fit:cover; will-change:transform; }
-.ed--a .ed__fig{ grid-column:1/7; aspect-ratio:4/5; }
-.ed--a .ed__txt{ grid-column:8/13; }
-.ed--b .ed__fig{ grid-column:7/13; aspect-ratio:4/5; }
-.ed--b .ed__txt{ grid-column:1/6; }
-@media (max-width:900px){
-  .ed--a .ed__fig,.ed--b .ed__fig,.ed--a .ed__txt,.ed--b .ed__txt{ grid-column:1/-1; }
-  .ed--b .ed__fig{ order:-1; }
+/* ============================================================
+   07 · WORN — the diamond, in life.
+
+   Held on `--ink` at both ends, so the Collection above and the Metals
+   chapter below both meet it without a seam. The colour of this chapter
+   arrives in the photographs, not in the room: one `filter` on .wrn__film
+   takes every plate from the page's own monochrome to full colour.
+
+   A plate is sized from `--w` and its own `--ar`, so the renderer only
+   ever writes a custom property and a transform — never a width, which
+   would re-flow the figure on every frame.
+   ============================================================ */
+.wrn{ position:relative; height:340vh; background:var(--ink); }
+.wrn__stage{
+  position:relative; height:100svh; width:100%; overflow:hidden;
+  background:var(--ink); color:var(--bone);
 }
 
-/* ---------------------------------------------- METALS */
-.metals{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(18px,2.6vw,48px); }
-@media (max-width:840px){ .metals{ grid-template-columns:1fr; } }
-.metal{ padding-top:clamp(20px,2.4vw,32px); border-top:1px solid var(--rule); }
-.metal__sw{ width:100%; aspect-ratio:16/7; margin-bottom:clamp(16px,2vw,26px); position:relative; overflow:hidden; }
-.metal__sw::after{
-  content:""; position:absolute; inset:0;
-  background:linear-gradient(115deg, transparent 34%, rgba(255,255,255,.45) 50%, transparent 66%);
-  transform:translateX(-110%); transition:transform 1.1s var(--ease);
+/* --- the plates ------------------------------------------------------- */
+.wrn__film{
+  position:absolute; inset:0; z-index:1;
+  pointer-events:none; will-change:filter;
 }
-.metal:hover .metal__sw::after{ transform:translateX(110%); }
-.sw--pt{ background:linear-gradient(140deg,#EDF0F3,#B9C0C8 46%,#8F979F 74%,#D6DBE0); }
-.sw--yg{ background:linear-gradient(140deg,#F6E4BC,#D8B570 44%,#B08F45 74%,#EBD3A2); }
-.sw--tt{ background:linear-gradient(110deg,#EDF0F3 0%,#C3CAD1 38%,#D8B570 62%,#F1E0B8 100%); }
-.metal h3{ font-family:var(--display); font-weight:400; font-size:clamp(1.35rem,2.1vw,2rem); line-height:1.06; }
-.metal p{ color:var(--fg-dim); font-size:clamp(.88rem,1vw,1rem); margin-top:.75em; line-height:1.68; }
+.wrn__plate{
+  --w:14vw;
+  position:absolute; top:50%; left:50%; margin:0;
+  width:var(--w); aspect-ratio:var(--ar, 4/5);
+  translate:-50% -50%;
+  opacity:0; overflow:hidden; will-change:transform,opacity;
+  background:var(--ink-2);
+  box-shadow:0 22px 60px rgba(0,0,0,.5);
+}
+.wrn__plate img{ width:100%; height:100%; object-fit:cover; }
 
-/* ---------------------------------------------- DISPLAY */
-.disp__grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(20px,3vw,56px); align-items:center; }
-@media (max-width:900px){ .disp__grid{ grid-template-columns:1fr; } }
-.disp__figs{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,1.4vw,20px); }
-.disp__figs figure{ overflow:hidden; aspect-ratio:4/5; }
-.disp__figs img{ width:100%; height:100%; object-fit:cover; }
-.peri{ color:var(--periwinkle); }
+/* --- copy ------------------------------------------------------------- */
+.wrn__intro,
+.wrn__scene,
+.wrn__gather{
+  position:absolute; inset:0; z-index:4;
+  display:grid; align-items:center;
+  padding-inline:calc(var(--rail) + var(--gut));
+  pointer-events:none; will-change:opacity,transform;
+}
+/* eyebrow and headline are two grid children: without align-content they
+   spread to the top and bottom of a full-inset grid instead of stacking */
+.wrn__intro{
+  justify-items:center; align-content:center; grid-auto-rows:max-content;
+  text-align:center; opacity:0;
+}
+/* the statement and its rule are two grid children — without this they
+   spread to the top and bottom of a full-inset grid instead of stacking */
+.wrn__gather{
+  justify-items:center; align-content:center; grid-auto-rows:max-content;
+  text-align:center; opacity:0; visibility:hidden;
+}
+.wrn__scene{ opacity:0; visibility:hidden; }
+.wrn__scene[data-side="left"] { justify-items:start; }
+.wrn__scene[data-side="right"]{ justify-items:end; text-align:right; }
 
-/* ---------------------------------------------- STATS / EXCLUSIVE */
-.excl__grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(28px,4vw,80px); align-items:start; }
-@media (max-width:860px){ .excl__grid{ grid-template-columns:1fr; } }
-.stat__n{
+.wrn__eyebrow{
+  display:flex; align-items:center; justify-content:center; gap:.85em;
+  font-size:clamp(9px,.66vw,10.5px); font-weight:500;
+  letter-spacing:.42em; text-transform:uppercase; color:var(--fg-faint);
+  margin-bottom:clamp(20px,3vh,40px);
+}
+.wrn__eyebrow i{ width:clamp(22px,3vw,54px); height:1px; background:currentColor; opacity:.5; }
+.wrn__eyebrow b{ font-weight:500; color:var(--rose); }
+
+.wrn__ln{ display:block; padding-block:.08em; margin-block:-.08em; overflow:hidden; }
+.wrn__ln > span{ display:block; will-change:transform; }
+
+.wrn__h2{
   font-family:var(--display); font-weight:400;
-  font-size:clamp(3.6rem,8.2vw,7.5rem); line-height:.9; letter-spacing:-.03em;
-  font-variant-numeric:tabular-nums; display:flex; align-items:baseline; gap:.04em;
+  font-size:clamp(2.8rem,8vw,8rem); line-height:.93;
+  letter-spacing:-.035em; text-transform:uppercase;
 }
-.stat__n sup{ font-size:.26em; color:var(--accent); vertical-align:super; }
-.stat__l{ font-size:10.5px; letter-spacing:.26em; text-transform:uppercase;
-  color:var(--fg-faint); margin-top:1.2em; }
-.stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,52px);
-  padding-block:clamp(40px,5vw,80px); border-block:1px solid var(--rule); }
-@media (max-width:760px){ .stats{ grid-template-columns:1fr; gap:36px; } }
+.wrn__h2 .is-em,
+.wrn__t .is-em,
+.wrn__final .is-em{ font-style:italic; color:var(--rose); text-transform:none; }
 
+/* the copy sits in the column the plates leave open */
+.wrn__copy{ width:min(30vw,440px); will-change:transform; }
+.wrn__t{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(1.9rem,3.6vw,3.6rem); line-height:1.02;
+  letter-spacing:-.025em;
+}
+.wrn__b{
+  margin-top:clamp(18px,2.4vh,32px); max-width:32ch;
+  font-size:clamp(.88rem,1vw,1rem); line-height:1.72; color:var(--fg-dim);
+}
+.wrn__scene[data-side="right"] .wrn__b{ margin-left:auto; }
+
+.wrn__final{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(1.9rem,4.4vw,4.4rem); line-height:1.0;
+  letter-spacing:-.03em;
+}
+.wrn__rule{
+  display:block; width:min(38vw,460px); height:1px; margin:clamp(22px,3vh,40px) auto 0;
+  background:var(--rule); opacity:0; transform:scaleX(0); will-change:transform,opacity;
+}
+
+/* ---------------------------------------------- responsive
+   One plate at a time, centred, and the spread gathers into a column —
+   the desktop poses are lateral by design and would shrink to thumbnails. */
+@media (max-width:900px){
+  .wrn{ height:320vh; }
+  .wrn__scene{ justify-items:center !important; text-align:center !important; }
+  .wrn__copy{ width:min(100%,520px); }
+  .wrn__b{ margin-inline:auto !important; max-width:30ch; }
+  /* type takes the space below the plates rather than overlapping them */
+  .wrn__scene .wrn__copy{ align-self:end; padding-bottom:clamp(26px,6vh,64px); }
+  /* and the closing statement sits above the stack, not inside it */
+  .wrn__gather{ align-content:start !important; padding-top:12vh; }
+  .wrn__h2{ font-size:clamp(2.5rem,11.5vw,4.6rem); }
+  .wrn__t{ font-size:clamp(1.7rem,7.4vw,2.6rem); }
+  .wrn__final{ font-size:clamp(1.7rem,7.6vw,2.8rem); }
+  .wrn__plate{ box-shadow:0 14px 36px rgba(0,0,0,.45); }
+}
+@media (max-width:560px){
+  .wrn__b{ font-size:.88rem; max-width:28ch; }
+}
+/* short-and-wide laptops: keep the headline clear of the plates */
+@media (min-width:901px) and (max-height:760px){
+  .wrn__h2{ font-size:clamp(2.6rem,6.4vw,5.6rem); }
+  .wrn__t{ font-size:clamp(1.7rem,3vw,2.8rem); }
+  .wrn__final{ font-size:clamp(1.7rem,3.6vw,3.4rem); }
+}
+
+/* ---------------------------------------------- reduced motion / no JS
+   No pin, no scrub: an ordinary editorial run, every photograph at its
+   natural size and in colour, copy in document order. */
+.wrn.is-reduced,
+.no-js .wrn{ height:auto; }
+.wrn.is-reduced .wrn__stage,
+.no-js .wrn .wrn__stage{
+  height:auto; min-height:auto; display:flex; flex-direction:column;
+  gap:clamp(30px,5vh,68px);
+  padding:clamp(70px,12vh,140px) calc(var(--rail) + var(--gut));
+}
+.wrn.is-reduced .wrn__film,
+.no-js .wrn .wrn__film{
+  /* columns, not a grid: the plates carry four different aspect ratios, and
+     grid rows would align them into voids */
+  position:relative; inset:auto; order:2; filter:none !important;
+  columns:2; column-gap:clamp(14px,2vw,28px);
+}
+.wrn.is-reduced .wrn__plate,
+.no-js .wrn .wrn__plate{
+  position:relative; top:auto; left:auto; width:auto; translate:none;
+  margin-bottom:clamp(14px,2vw,28px); break-inside:avoid;
+  opacity:1 !important; visibility:visible !important; transform:none !important;
+}
+@media (max-width:640px){
+  .wrn.is-reduced .wrn__film, .no-js .wrn .wrn__film{ columns:1; }
+}
+.wrn.is-reduced .wrn__intro,  .no-js .wrn .wrn__intro{ order:1; }
+.wrn.is-reduced .wrn__scene[data-wrn-scene="0"],
+.no-js .wrn .wrn__scene[data-wrn-scene="0"]{ order:3; }
+.wrn.is-reduced .wrn__scene[data-wrn-scene="1"],
+.no-js .wrn .wrn__scene[data-wrn-scene="1"]{ order:4; }
+.wrn.is-reduced .wrn__gather, .no-js .wrn .wrn__gather{ order:5; }
+.wrn.is-reduced .wrn__intro,  .no-js .wrn .wrn__intro,
+.wrn.is-reduced .wrn__scene,  .no-js .wrn .wrn__scene,
+.wrn.is-reduced .wrn__gather, .no-js .wrn .wrn__gather{
+  position:relative; inset:auto; width:auto;
+  display:grid !important; grid-template-columns:minmax(0,1fr) !important;
+  justify-items:stretch !important; align-content:start !important;
+  padding-inline:0; text-align:left !important;
+  opacity:1 !important; visibility:visible !important; transform:none !important;
+}
+.wrn.is-reduced .wrn__eyebrow, .no-js .wrn .wrn__eyebrow{ justify-content:flex-start; }
+.wrn.is-reduced .wrn__copy,    .no-js .wrn .wrn__copy{
+  width:auto !important; max-width:none !important;
+  align-self:auto !important; padding:0 !important; transform:none !important;
+}
+.wrn.is-reduced .wrn__ln > span, .no-js .wrn .wrn__ln > span,
+.wrn.is-reduced .wrn__b,         .no-js .wrn .wrn__b{
+  opacity:1 !important; transform:none !important; margin-inline:0 !important;
+}
+.wrn.is-reduced .wrn__rule,    .no-js .wrn .wrn__rule{
+  opacity:1 !important; transform:none !important; margin-inline:0;
+}
+
+/* ============================================================
+   08 · METALS — the ground becomes the metal.
+
+   Two panels laid out 200vw wide and translated rather than clipped: a
+   clip-path is not compositor work, and these are full-bleed layers moving
+   every frame. `pt` is anchored left and `yg` right, so each arrives from
+   its own side; both carry the same skew, which makes the seam between
+   them one continuous diagonal.
+
+   The metal is lit, not flooded. A static veil holds it at a level where
+   bone type stays legible on every part of both gradients, so nothing on
+   the page has to change colour mid-chapter.
+   ============================================================ */
+.mtl{ position:relative; height:400vh; background:var(--ink); }
+.mtl__stage{
+  position:relative; height:100svh; width:100%; overflow:hidden;
+  background:var(--ink); color:var(--bone);
+}
+
+.mtl__panel{
+  position:absolute; top:-14%; bottom:-14%; width:200vw;
+  z-index:1; pointer-events:none; will-change:transform;
+  /* the skew lives in the renderer, appended to the per-frame transform —
+     see assets/js/metals/visual.js and `rake` in scenes.js */
+}
+/* the swatch gradients the Materials section already used, full bleed */
+.mtl__panel--pt{
+  left:0; transform:translate3d(-200vw,0,0) skewX(-9deg);
+  background:linear-gradient(140deg,#EDF0F3,#B9C0C8 46%,#8F979F 74%,#D6DBE0);
+}
+.mtl__panel--yg{
+  right:0; transform:translate3d(200vw,0,0) skewX(-9deg);
+  background:linear-gradient(140deg,#F6E4BC,#D8B570 44%,#B08F45 74%,#EBD3A2);
+}
+/* the specular edge that leads each wipe — free, it rides the panel */
+.mtl__panel::after{
+  content:""; position:absolute; top:0; bottom:0; width:14vw;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.62));
+  filter:blur(8px);
+}
+.mtl__panel--pt::after{ right:0; }
+.mtl__panel--yg::after{ left:0; transform:scaleX(-1); }
+
+/* the room the metal is lit in */
+.mtl__veil{
+  position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:
+    radial-gradient(120% 92% at 50% 44%,
+      rgba(10,10,11,.30) 0%, rgba(10,10,11,.66) 52%, rgba(10,10,11,.93) 100%);
+}
+/* drains the room back to ink for Display below */
+.mtl__drain{
+  position:absolute; inset:0; z-index:8; background:var(--ink);
+  opacity:0; pointer-events:none;
+}
+
+/* --- the rings -------------------------------------------------------- */
+.mtl__ring{
+  --w:20vw;
+  position:absolute; top:50%; left:50%; margin:0; z-index:3;
+  width:var(--w); aspect-ratio:var(--ar, 3/4);
+  translate:-50% -50%;
+  opacity:0; pointer-events:none; will-change:transform,opacity;
+}
+.mtl__ring img{
+  width:100%; height:100%; object-fit:contain;
+  filter:drop-shadow(0 30px 44px rgba(0,0,0,.55));
+}
+
+/* --- copy ------------------------------------------------------------- */
+.mtl__intro,
+.mtl__scene,
+.mtl__statement{
+  position:absolute; inset:0; z-index:5;
+  display:grid; align-items:center;
+  padding-inline:calc(var(--rail) + var(--gut));
+  pointer-events:none; will-change:opacity,transform;
+}
+.mtl__intro{
+  justify-items:center; align-content:center; grid-auto-rows:max-content;
+  text-align:center; opacity:0;
+}
+/* The closing line lands wherever the seam happens to be, and the seam
+   carries a specular highlight. Its own soft scrim guarantees the contrast
+   instead of relying on which metal is behind it. */
+.mtl__statement{
+  justify-items:center; align-content:center;
+  text-align:center; opacity:0; visibility:hidden;
+  background:radial-gradient(58% 40% at 50% 50%,
+    rgba(10,10,11,.62) 0%, rgba(10,10,11,.42) 55%, transparent 78%);
+}
+.mtl__scene{ opacity:0; visibility:hidden; }
+.mtl__scene[data-side="left"] { justify-items:start; }
+.mtl__scene[data-side="right"]{ justify-items:end; text-align:right; }
+
+.mtl__eyebrow{
+  display:flex; align-items:center; justify-content:center; gap:.85em;
+  font-size:clamp(9px,.66vw,10.5px); font-weight:500;
+  letter-spacing:.42em; text-transform:uppercase; color:var(--fg-faint);
+  margin-bottom:clamp(20px,3vh,40px);
+}
+.mtl__eyebrow i{ width:clamp(22px,3vw,54px); height:1px; background:currentColor; opacity:.5; }
+.mtl__eyebrow b{ font-weight:500; color:var(--rose); }
+
+.mtl__ln{ display:block; padding-block:.08em; margin-block:-.08em; overflow:hidden; }
+.mtl__ln > span{ display:block; will-change:transform; }
+
+.mtl__h2{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(2.6rem,7.2vw,7.2rem); line-height:.94;
+  letter-spacing:-.035em; text-transform:uppercase;
+}
+.mtl__h2 .is-em{ font-style:italic; color:var(--rose); text-transform:none; }
+
+.mtl__copy{ width:min(30vw,440px); will-change:transform; }
+.mtl__t{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(2.1rem,4.4vw,4.6rem); line-height:1.0;
+  letter-spacing:-.03em;
+}
+.mtl__b{
+  margin-top:clamp(18px,2.4vh,32px); max-width:32ch;
+  font-size:clamp(.88rem,1vw,1rem); line-height:1.72;
+  color:rgba(244,241,234,.74);
+}
+.mtl__scene[data-side="right"] .mtl__b{ margin-left:auto; }
+
+.mtl__statement p{
+  max-width:22ch;
+  font-family:var(--display); font-weight:400; font-style:italic;
+  font-size:clamp(1.4rem,3vw,3rem); line-height:1.22;
+  letter-spacing:-.02em; text-wrap:balance;
+}
+
+/* ---------------------------------------------- responsive
+   The ring takes the upper half and the copy the lower — the desktop
+   composition is lateral and the panels leave no side column on a phone. */
+@media (max-width:900px){
+  .mtl{ height:360vh; }
+  .mtl__scene{ justify-items:center !important; text-align:center !important; }
+  .mtl__copy{ width:min(100%,520px); align-self:end; padding-bottom:clamp(26px,7vh,72px); }
+  .mtl__b{ margin-inline:auto !important; max-width:30ch; }
+  .mtl__h2{ font-size:clamp(2.4rem,11vw,4.4rem); }
+  .mtl__t{ font-size:clamp(1.9rem,8.4vw,3rem); }
+  .mtl__statement p{ font-size:clamp(1.25rem,5.6vw,2rem); max-width:20ch; }
+  .mtl__panel::after{ width:22vw; filter:blur(6px); }
+}
+@media (max-width:560px){
+  .mtl__b{ font-size:.88rem; max-width:28ch; }
+}
+@media (min-width:901px) and (max-height:760px){
+  .mtl__h2{ font-size:clamp(2.4rem,5.8vw,5rem); }
+  .mtl__t{ font-size:clamp(1.9rem,3.6vw,3.4rem); }
+  .mtl__statement p{ font-size:clamp(1.3rem,2.4vw,2.3rem); }
+}
+
+/* ---------------------------------------------- reduced motion / no JS
+   No pin, no wipe: three material entries in document order, each with its
+   ring and its paragraph, on the page's own ground. */
+.mtl.is-reduced,
+.no-js .mtl{ height:auto; }
+.mtl.is-reduced .mtl__stage,
+.no-js .mtl .mtl__stage{
+  height:auto; min-height:auto; display:flex; flex-direction:column;
+  gap:clamp(30px,5vh,68px);
+  padding:clamp(70px,12vh,140px) calc(var(--rail) + var(--gut));
+}
+.mtl.is-reduced .mtl__panel,   .no-js .mtl .mtl__panel,
+.mtl.is-reduced .mtl__veil,    .no-js .mtl .mtl__veil,
+.mtl.is-reduced .mtl__drain,   .no-js .mtl .mtl__drain{ display:none; }
+.mtl.is-reduced .mtl__ring,    .no-js .mtl .mtl__ring{
+  position:relative; top:auto; left:auto; width:min(52vw,300px); translate:none;
+  margin:0 auto; opacity:1 !important; visibility:visible !important;
+  transform:none !important;
+}
+/* each ring sits with the material it belongs to */
+.mtl.is-reduced .mtl__intro,  .no-js .mtl .mtl__intro{ order:1; }
+.mtl.is-reduced .mtl__ring:nth-of-type(1),  .no-js .mtl .mtl__ring:nth-of-type(1){ order:2; }
+.mtl.is-reduced .mtl__scene[data-mtl-scene="0"],
+.no-js .mtl .mtl__scene[data-mtl-scene="0"]{ order:3; }
+.mtl.is-reduced .mtl__ring:nth-of-type(2),  .no-js .mtl .mtl__ring:nth-of-type(2){ order:4; }
+.mtl.is-reduced .mtl__scene[data-mtl-scene="1"],
+.no-js .mtl .mtl__scene[data-mtl-scene="1"]{ order:5; }
+.mtl.is-reduced .mtl__ring:nth-of-type(3),  .no-js .mtl .mtl__ring:nth-of-type(3){ order:6; }
+.mtl.is-reduced .mtl__scene[data-mtl-scene="2"],
+.no-js .mtl .mtl__scene[data-mtl-scene="2"]{ order:7; }
+.mtl.is-reduced .mtl__statement, .no-js .mtl .mtl__statement{ order:8; }
+.mtl.is-reduced .mtl__intro,     .no-js .mtl .mtl__intro,
+.mtl.is-reduced .mtl__scene,     .no-js .mtl .mtl__scene,
+.mtl.is-reduced .mtl__statement, .no-js .mtl .mtl__statement{
+  position:relative; inset:auto; width:auto;
+  display:grid !important; grid-template-columns:minmax(0,1fr) !important;
+  justify-items:stretch !important; align-content:start !important;
+  padding-inline:0; text-align:left !important;
+  opacity:1 !important; visibility:visible !important; transform:none !important;
+}
+.mtl.is-reduced .mtl__eyebrow, .no-js .mtl .mtl__eyebrow{ justify-content:flex-start; }
+.mtl.is-reduced .mtl__copy,    .no-js .mtl .mtl__copy{
+  width:auto !important; max-width:none !important;
+  align-self:auto !important; padding:0 !important; transform:none !important;
+}
+.mtl.is-reduced .mtl__ln > span, .no-js .mtl .mtl__ln > span,
+.mtl.is-reduced .mtl__b,         .no-js .mtl .mtl__b{
+  opacity:1 !important; transform:none !important; margin-inline:0 !important;
+}
+.mtl.is-reduced .mtl__statement p, .no-js .mtl .mtl__statement p{ max-width:34ch; }
+/* ============================================================
+   09 · DISPLAY — the Centurion experience.
+
+   The page's one chromatic room. The ground is written from JS as the
+   ramp the light leaves on the walls; every stop stays dark enough that
+   bone type clears AA on it, so nothing here ever changes colour.
+
+   The bloom is one element — a radial periwinkle scaled and faded — which
+   is the whole lighting rig.
+   ============================================================ */
+.dsp{
+  --peri-lit:#A9AECF;
+  position:relative; height:360vh; background:var(--ink);
+}
+.dsp__stage{
+  position:relative; height:100svh; width:100%; overflow:hidden;
+  background:var(--ink); color:var(--bone);
+}
+
+.dsp__glow{
+  position:absolute; top:50%; left:50%; z-index:1;
+  width:112vw; aspect-ratio:1/1;
+  transform:translate3d(-50%,-50%,0) scale(.1);
+  opacity:0; pointer-events:none; will-change:transform,opacity;
+  /* the light source itself. Its hue is the same decision as `room.tint`
+     in assets/js/display/scenes.js — change both together. */
+  background:radial-gradient(circle at 50% 50%,
+    rgba(169,174,207,.50) 0%, rgba(146,152,196,.28) 34%,
+    rgba(96,102,152,.12) 58%, transparent 74%);
+}
+
+.dsp__case{
+  --w:24vw;
+  position:absolute; top:50%; left:50%; margin:0; z-index:2;
+  width:var(--w); aspect-ratio:var(--ar, 4/5);
+  translate:-50% -50%;
+  opacity:0; pointer-events:none; will-change:transform,opacity;
+  overflow:hidden;
+  box-shadow:0 34px 80px rgba(0,0,0,.52);
+}
+.dsp__case img{ width:100%; height:100%; object-fit:cover; }
+
+/* --- copy ------------------------------------------------------------- */
+.dsp__intro,
+.dsp__scene{
+  position:absolute; inset:0; z-index:4;
+  display:grid; align-items:center;
+  padding-inline:calc(var(--rail) + var(--gut));
+  pointer-events:none; will-change:opacity,transform;
+}
+.dsp__intro{
+  justify-items:center; align-content:center; grid-auto-rows:max-content;
+  text-align:center; opacity:0;
+}
+.dsp__scene{ opacity:0; visibility:hidden; }
+.dsp__scene[data-side="left"] { justify-items:start; }
+.dsp__scene[data-side="right"]{ justify-items:end; text-align:right; }
+
+.dsp__eyebrow{
+  display:flex; align-items:center; justify-content:center; gap:.85em;
+  font-size:clamp(9px,.66vw,10.5px); font-weight:500;
+  letter-spacing:.42em; text-transform:uppercase; color:var(--fg-faint);
+  margin-bottom:clamp(20px,3vh,40px);
+}
+.dsp__eyebrow i{ width:clamp(22px,3vw,54px); height:1px; background:currentColor; opacity:.5; }
+.dsp__eyebrow b{ font-weight:500; color:var(--peri-lit); }
+
+.dsp__ln{ display:block; padding-block:.08em; margin-block:-.08em; overflow:hidden; }
+.dsp__ln > span{ display:block; will-change:transform; }
+
+.dsp__h2{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(2.6rem,7.2vw,7.2rem); line-height:.94;
+  letter-spacing:-.035em; text-transform:uppercase;
+}
+.dsp__h2 .is-em,
+.dsp__t .is-em{ font-style:italic; color:var(--peri-lit); text-transform:none; }
+
+.dsp__copy{ width:min(30vw,440px); will-change:transform; }
+.dsp__t{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(1.9rem,3.6vw,3.6rem); line-height:1.02;
+  letter-spacing:-.025em;
+}
+.dsp__b{
+  margin-top:clamp(18px,2.4vh,32px); max-width:32ch;
+  font-size:clamp(.88rem,1vw,1rem); line-height:1.72;
+  color:rgba(244,241,234,.76);
+}
+.dsp__scene[data-side="right"] .dsp__b{ margin-left:auto; }
+
+/* ---------------------------------------------- responsive
+   One case at a time above the copy; the last beat sits the pair low. */
+@media (max-width:900px){
+  .dsp{ height:330vh; }
+  .dsp__scene{ justify-items:center !important; text-align:center !important; }
+  .dsp__copy{ width:min(100%,520px); align-self:end; padding-bottom:clamp(26px,7vh,72px); }
+  .dsp__b{ margin-inline:auto !important; max-width:30ch; }
+  .dsp__h2{ font-size:clamp(2.4rem,11vw,4.4rem); }
+  .dsp__t{ font-size:clamp(1.7rem,7.4vw,2.6rem); }
+  .dsp__glow{ width:150vw; }
+}
+@media (max-width:560px){
+  .dsp__b{ font-size:.88rem; max-width:28ch; }
+}
+@media (min-width:901px) and (max-height:760px){
+  .dsp__h2{ font-size:clamp(2.4rem,5.8vw,5rem); }
+  .dsp__t{ font-size:clamp(1.7rem,3vw,2.8rem); }
+}
+
+/* ---------------------------------------------- reduced motion / no JS
+   No pin, no light: the case, its two photographs and its copy in
+   document order, on the lit ground held still. */
+.dsp.is-reduced,
+.no-js .dsp{ height:auto; }
+.dsp.is-reduced .dsp__stage,
+.no-js .dsp .dsp__stage{
+  height:auto; min-height:auto; display:flex; flex-direction:column;
+  gap:clamp(30px,5vh,68px);
+  padding:clamp(70px,12vh,140px) calc(var(--rail) + var(--gut));
+  background:rgb(42,46,76);
+}
+.dsp.is-reduced .dsp__glow, .no-js .dsp .dsp__glow{ display:none; }
+.dsp.is-reduced .dsp__case, .no-js .dsp .dsp__case{
+  position:relative; top:auto; left:auto; width:auto; translate:none;
+  opacity:1 !important; visibility:visible !important; transform:none !important;
+}
+.dsp.is-reduced .dsp__intro,  .no-js .dsp .dsp__intro{ order:1; }
+.dsp.is-reduced .dsp__case:nth-of-type(1), .no-js .dsp .dsp__case:nth-of-type(1){ order:2; }
+.dsp.is-reduced .dsp__scene[data-dsp-scene="0"],
+.no-js .dsp .dsp__scene[data-dsp-scene="0"]{ order:3; }
+.dsp.is-reduced .dsp__case:nth-of-type(2), .no-js .dsp .dsp__case:nth-of-type(2){ order:4; }
+.dsp.is-reduced .dsp__scene[data-dsp-scene="1"],
+.no-js .dsp .dsp__scene[data-dsp-scene="1"]{ order:5; }
+.dsp.is-reduced .dsp__intro,  .no-js .dsp .dsp__intro,
+.dsp.is-reduced .dsp__scene,  .no-js .dsp .dsp__scene{
+  position:relative; inset:auto; width:auto;
+  display:grid !important; grid-template-columns:minmax(0,1fr) !important;
+  justify-items:stretch !important; align-content:start !important;
+  padding-inline:0; text-align:left !important;
+  opacity:1 !important; visibility:visible !important; transform:none !important;
+}
+.dsp.is-reduced .dsp__eyebrow, .no-js .dsp .dsp__eyebrow{ justify-content:flex-start; }
+.dsp.is-reduced .dsp__copy,    .no-js .dsp .dsp__copy{
+  width:auto !important; max-width:none !important;
+  align-self:auto !important; padding:0 !important; transform:none !important;
+}
+.dsp.is-reduced .dsp__ln > span, .no-js .dsp .dsp__ln > span,
+.dsp.is-reduced .dsp__b,         .no-js .dsp .dsp__b{
+  opacity:1 !important; transform:none !important; margin-inline:0 !important;
+}
+/* ============================================================
+   10 · EXCLUSIVITY — a different kind of standard.
+
+   Type only. On ink at both ends: Display above falls back to it and the
+   CTA below is already there.
+
+   The ledger is one grid of three rows; the renderer moves the block, not
+   the rows, so a row arriving never re-flows the ones already standing.
+   ============================================================ */
+.exc{ position:relative; height:340vh; background:var(--ink); }
+.exc__stage{
+  position:relative; height:100svh; width:100%; overflow:hidden;
+  background:var(--ink); color:var(--bone);
+}
+
+.exc__intro,
+.exc__ledger,
+.exc__claims,
+.exc__close{
+  position:absolute; inset:0; z-index:2;
+  display:grid; align-items:center;
+  padding-inline:calc(var(--rail) + var(--gut));
+  pointer-events:none; will-change:opacity,transform;
+}
+.exc__intro{
+  justify-items:center; align-content:center; grid-auto-rows:max-content;
+  text-align:center; opacity:0;
+}
+.exc__close{
+  justify-items:center; align-content:center; grid-auto-rows:max-content;
+  text-align:center; opacity:0; visibility:hidden; z-index:4;
+}
+
+.exc__eyebrow{
+  display:flex; align-items:center; justify-content:center; gap:.85em;
+  font-size:clamp(9px,.66vw,10.5px); font-weight:500;
+  letter-spacing:.42em; text-transform:uppercase; color:var(--fg-faint);
+  margin-bottom:clamp(20px,3vh,40px);
+}
+.exc__eyebrow i{ width:clamp(22px,3vw,54px); height:1px; background:currentColor; opacity:.5; }
+.exc__eyebrow b{ font-weight:500; color:var(--rose); }
+
+.exc__ln{ display:block; padding-block:.08em; margin-block:-.08em; overflow:hidden; }
+.exc__ln > span{ display:block; will-change:transform; }
+
+.exc__h2,
+.exc__closeT{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(2.6rem,7vw,7rem); line-height:.94;
+  letter-spacing:-.035em; text-transform:uppercase;
+}
+.exc__h2 .is-em,
+.exc__closeT .is-em{ font-style:italic; color:var(--rose); text-transform:none; }
+
+/* --- the ledger ------------------------------------------------------- */
+.exc__ledger{
+  justify-items:start; align-content:center; grid-auto-rows:max-content;
+  gap:0;
+}
+.exc__row{
+  position:relative; width:min(46vw,660px);
+  padding-top:clamp(16px,2.2vh,30px);
+  padding-bottom:clamp(20px,3vh,42px);
+  opacity:0;
+}
+.exc__rule{
+  position:absolute; top:0; left:0; right:0; height:1px;
+  background:var(--rule); transform:scaleX(0); transform-origin:left center;
+  will-change:transform;
+}
+.exc__n{
+  font-family:var(--display); font-weight:500; font-variant-numeric:tabular-nums;
+  font-size:clamp(3rem,6.6vw,6.6rem); line-height:.94; letter-spacing:-.04em;
+  will-change:transform;
+}
+/* `vertical-align:super` on a .3em child barely lifts it off the
+   baseline of a 6rem numeral — set the offset directly instead */
+.exc__n sup{
+  font-size:.28em; color:var(--rose); vertical-align:baseline;
+  position:relative; top:-1.9em; left:.06em;
+}
+.exc__l{
+  margin-top:.5em;
+  font-size:clamp(9.5px,.74vw,11px); font-weight:500;
+  letter-spacing:.26em; text-transform:uppercase; color:var(--fg-faint);
+  will-change:transform,opacity;
+}
+
+/* --- the case for stocking -------------------------------------------- */
+.exc__claims{
+  justify-items:end; align-content:center; grid-auto-rows:minmax(0,0);
+  z-index:3;
+}
+.exc__claim{
+  grid-area:1/1; width:min(30vw,430px);
+  text-align:right; opacity:0;
+  font-family:var(--display); font-weight:400; font-style:italic;
+  font-size:clamp(1.1rem,1.66vw,1.62rem); line-height:1.5;
+  letter-spacing:-.008em; color:rgba(244,241,234,.86);
+  will-change:transform,opacity;
+}
+
+.exc__cta{
+  margin-top:clamp(26px,4vh,52px);
+  opacity:0; pointer-events:none; will-change:transform,opacity;
+}
+
+/* ---------------------------------------------- responsive
+   One column: the ledger centred, the claims beneath it. */
+@media (max-width:900px){
+  .exc{ height:320vh; }
+  .exc__ledger{ justify-items:stretch; }
+  .exc__row{ width:100%; text-align:center; }
+  .exc__rule{ transform-origin:center; }
+  /* the ledger has cleared by the time a claim shows, so it takes the
+     middle of the frame rather than being pushed under a ledger */
+  .exc__claims{ justify-items:center; align-content:center; }
+  .exc__claim{ width:min(100%,520px); text-align:center; }
+  .exc__h2,.exc__closeT{ font-size:clamp(2.3rem,10.6vw,4.2rem); }
+  .exc__n{ font-size:clamp(2.8rem,17vw,5.4rem); }
+}
+@media (max-width:560px){
+  .exc__claim{ font-size:1.02rem; }
+  .exc__l{ letter-spacing:.2em; }
+}
+@media (min-width:901px) and (max-height:760px){
+  .exc__h2,.exc__closeT{ font-size:clamp(2.4rem,5.6vw,5rem); }
+  .exc__n{ font-size:clamp(2.6rem,5.2vw,5rem); }
+  .exc__row{ padding-bottom:clamp(14px,2.2vh,28px); }
+}
+
+/* ---------------------------------------------- reduced motion / no JS
+   No pin: the figures, the claims and the call in document order, with the
+   button in the flow where it cannot be missed. */
+.exc.is-reduced,
+.no-js .exc{ height:auto; }
+.exc.is-reduced .exc__stage,
+.no-js .exc .exc__stage{
+  height:auto; min-height:auto; display:flex; flex-direction:column;
+  gap:clamp(30px,5vh,68px);
+  padding:clamp(70px,12vh,140px) calc(var(--rail) + var(--gut));
+}
+.exc.is-reduced .exc__intro,   .no-js .exc .exc__intro,
+.exc.is-reduced .exc__ledger,  .no-js .exc .exc__ledger,
+.exc.is-reduced .exc__claims,  .no-js .exc .exc__claims,
+.exc.is-reduced .exc__close,   .no-js .exc .exc__close{
+  position:relative; inset:auto; width:auto;
+  display:grid !important; grid-template-columns:minmax(0,1fr) !important;
+  grid-auto-rows:auto !important;
+  justify-items:stretch !important; align-content:start !important;
+  padding-inline:0; text-align:left !important;
+  opacity:1 !important; visibility:visible !important; transform:none !important;
+  pointer-events:auto;
+}
+.exc.is-reduced .exc__eyebrow, .no-js .exc .exc__eyebrow{ justify-content:flex-start; }
+.exc.is-reduced .exc__row,     .no-js .exc .exc__row{
+  width:auto; opacity:1 !important; text-align:left;
+}
+.exc.is-reduced .exc__rule,    .no-js .exc .exc__rule{
+  transform:none !important; transform-origin:left center;
+}
+.exc.is-reduced .exc__n,       .no-js .exc .exc__n,
+.exc.is-reduced .exc__l,       .no-js .exc .exc__l,
+.exc.is-reduced .exc__ln > span, .no-js .exc .exc__ln > span{
+  opacity:1 !important; transform:none !important;
+}
+.exc.is-reduced .exc__claim,   .no-js .exc .exc__claim{
+  grid-area:auto; width:auto; max-width:56ch; text-align:left;
+  opacity:1 !important; transform:none !important; margin-bottom:1.2em;
+}
+.exc.is-reduced .exc__cta,     .no-js .exc .exc__cta{
+  justify-self:start; opacity:1 !important; transform:none !important;
+  pointer-events:auto !important;
+}
 /* ---------------------------------------------- CTA / FOOTER */
 .cta{ position:relative; text-align:center; overflow:hidden; }
 .foot{ border-top:1px solid var(--rule); }

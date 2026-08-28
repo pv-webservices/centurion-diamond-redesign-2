@@ -47,10 +47,10 @@ The page is built as an argument, not a brochure — each section advances one c
 | 04 | **A Study in Light** | Pinned 360vh. An aperture opens the light-study film out of the dark, makes room for the type, and closes it back into the beam that hands off to the marquee |
 | 05 | Marquee | Oversized horizontal type |
 | 06 | **The Collection** | Pinned 480vh light zone. The aperture reopens onto a horizontal gallery of all 9 SKUs |
-| 07 | Worn | Alternating editorial spreads |
-| 08 | Metals | Platinum / 14K Yellow / Two Tone |
-| 09 | Display | The periwinkle retail case |
-| 10 | Exclusivity | Patent-pending, unshoppable — the retailer argument |
+| 07 | **Worn** | Pinned 340vh. The photographs arrive in monochrome and find their colour, then gather into a spread |
+| 08 | **Metals** | Pinned 400vh. The ground becomes the metal; the gold panel retreats so Two Tone stands on the seam |
+| 09 | **Display** | Pinned 360vh. The page's one chromatic room — periwinkle arriving as light |
+| 10 | **Exclusivity** | Pinned 340vh. The retailer argument as a ledger. No photography at all |
 | 11 | CTA | centuriondiamond.com |
 
 ---
@@ -261,6 +261,92 @@ column: type above the band of light, supporting line below. Reduced motion and
 no-JS drop the pin and render the chapter as an ordinary dark editorial run,
 the clip parked on one representative frame, every line in document order.
 
+### 07 · Worn
+
+A pinned 340vh chapter between two ink sections — the Collection above ramps its
+ground to `--ink`, the Metals chapter below opens on it, so this one just holds it.
+
+Its idea: **the photographs arrive in the page's own monochrome and find their
+colour as the chapter goes**, then gather into a spread of every moment it has
+shown. One `filter` on `.wrn__film` takes all six plates from grey to full
+colour together, so it reads as one idea rather than six.
+
+The colour arrives in the pictures, not in the room. The supplied photography is
+bright studio work; there is no candlelight or window light in any of it, so
+tinting the ground to match the section's copy would have been inventing
+something the imagery does not contain.
+
+A plate is present for its own moment and for the gather, and for nothing in
+between. Leaving them resting behind the copy was the obvious idea and the wrong
+one — a red plate at 30% still fights a paragraph. They keep travelling toward
+their `home` pose as they fade, so a slow scroll still shows them settling into
+the place the gather finds them.
+
+Mobile shows a lead plate and its partner offset above the copy, and gathers into
+a 2-wide stack under the closing statement rather than ringing it.
+
+### 08 · Metals
+
+A pinned 400vh chapter where **the ground becomes the metal**. Two full-bleed
+panels wipe across on a shared diagonal — platinum, then yellow gold over it.
+They are laid out 200vw wide and translated rather than clipped: a `clip-path`
+is not compositor work, and these are full-bleed layers moving every frame.
+
+For the third beat the gold panel simply **retreats** instead of a third panel
+arriving, so the two metals end up side by side with the two-tone ring standing
+on the seam. That is the deck's claim made visible: three settings, only ever
+two metals — which is also why *"Two metals. One standard."* is left alone. It
+reads like a contradiction next to three cards, and stops reading like one the
+moment Two Tone is shown to *be* the two.
+
+The metal is lit, not flooded: a static veil holds it where bone type stays
+legible on every part of both gradients, so nothing in the chapter has to change
+colour. Rings are the alpha-keyed `-cut` variants, which is what lets them stand
+on the metal instead of on white.
+
+### 09 · Display
+
+The page's one chromatic room. Metals above drains to ink and Exclusivity below
+opens on it, so this chapter can take the deck's periwinkle without either seam
+having to negotiate a colour.
+
+Its idea is that **the colour arrives as light**: a periwinkle source rises
+behind the case, spreads to fill the room, and falls away. What the walls hold is
+only ever what the light leaves there — deliberately not another ground ramp,
+since the Sparkle section already ramps one and Metals already wipes one.
+
+> **Worth confirming.** The deck says the display is *"a striking periwinkle
+> colour"*. The photographed prototype is not periwinkle — it samples at about
+> `rgb(183,123,126)`, a blush rose, which is all but the brand's own `--rose`.
+> The deck's word is treated as authoritative here and the room is lit
+> periwinkle; the pink case under it reads as complementary rather than wrong.
+> If the case is really rose, `room.tint` in `assets/js/display/scenes.js` and
+> the matching rgba in `.dsp__glow` are the whole change — the stop list is
+> expressed as fractions of that one triple precisely so it stays a one-line
+> decision.
+
+### 10 · Exclusivity
+
+The trade argument, and the only chapter on the page with **no photography in it
+at all** — stark type after three image-led chapters, which is the tonal shift
+the page needs before the CTA.
+
+Three figures arrive one row at a time and *stay*, each with its own rule drawing
+under it, while the case for stocking builds beside them. Rows accumulate rather
+than replacing one another, which is the whole point of a ledger: by the end the
+argument is on the page in one piece. Nothing counts up — the Sparkle section
+already owns that gesture.
+
+The block is shifted by half a row for every row still to come, so the revealed
+rows stay optically centred instead of the stack growing downward from a fixed
+top. On a phone the ledger clears as the first claim arrives: there is no room
+for three ruled rows and a claim at once, and the ledger has made its point by
+then.
+
+The closing button is the one control on any of these pinned stages that has to
+stay pressable, so its layer takes pointer events back as it arrives — and the
+last frame does not fade, because the button has to still be there to be pressed.
+
 ## Motion
 
 GSAP 3.15 + ScrollTrigger + Lenis smooth scroll, all vendored into
@@ -268,8 +354,12 @@ GSAP 3.15 + ScrollTrigger + Lenis smooth scroll, all vendored into
 
 `assets/js/main.js` covers the remaining sections: preloader, cursor, scroll reveals,
 marquee, image parallax, stat counters, video play-in-view and the header menu. The
-hero, the Sparkle section, Anatomy of Brilliance, A Study in Light and the Collection
-each own their own modules.
+the hero, the Sparkle section, Anatomy of Brilliance, A Study in Light, the
+Collection, Worn, Metals, Display and Exclusivity each own their own module —
+nine chapters, all the same shape: `scenes.js` (timing), `timeline.js` (pure
+maths), `visual.js` (the only thing that touches the DOM), `index.js` (one
+ScrollTrigger). `main.js` keeps the preloader, cursor, marquee, reveals and
+header menu.
 
 Reveals are declarative — add `data-anim="up|fade|left|right|scale|clip"` to any
 element and it animates in on scroll, with siblings staggering automatically.
@@ -328,6 +418,10 @@ assets/js/sparkle/      the dark-to-light comparison section
 assets/js/pillars/      Anatomy of Brilliance
 assets/js/study/        A Study in Light
 assets/js/collection/   the gallery
+assets/js/worn/         the diamond, in life
+assets/js/metals/       the ground becomes the metal
+assets/js/display/      the periwinkle room
+assets/js/exclusive/    the trade argument, as a ledger
 assets/js/vendor/       gsap, ScrollTrigger, SplitText, lenis
 assets/fonts/           self-hosted Bodoni Moda + Jost (woff2)
 assets/img/{model,ring,brand}/   responsive WebP
