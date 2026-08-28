@@ -50,6 +50,26 @@ CD.collection = {
     lifeFalloff: 2.4
   },
 
+  /* Narrow viewports run the same rail, not a column: vertical scroll still
+     travels the gallery horizontally, and the piece either side stays
+     partly in frame so the depth of the desktop composition survives.
+     Only the falloff changes — a phone shows one large piece and a slice of
+     its neighbour, where a desktop shows one and two whole neighbours. */
+  mobileRail: {
+    scale:   { at1: 0.58, at2: 0.30 },
+    opacity: { at1: 0.34, at2: 0.00 },
+    drop:    2.0,
+    tilt:    1.0,
+    /* the title card owns a phone's frame outright, so the rail waits
+       further down the stage than it does on a desktop */
+    introDrop: 27,
+    /* the plate belongs to whichever piece actually holds the frame — at
+       this pitch the neighbour overlaps, and two legible plates would read
+       as one wrong caption */
+    plate:   0.55,
+    lifeFalloff: 2.8
+  },
+
   /* museum-plate stagger: reference, then shape, then carat, then the
      specification line — the catalogue rhythm, not everything at once */
   plate: [0, 0.16, 0.30, 0.44],
@@ -58,6 +78,11 @@ CD.collection = {
      viewport corners on every tested ratio */
   iris: { from: 0.02, to: 1.45 },
 
-  /* narrow viewports run the gallery as a vertical column instead */
-  narrowAt: '(max-width: 900px)'
+  /* narrow viewports keep the rail, on the falloff above */
+  narrowAt: '(max-width: 900px)',
+
+  /* The one case the rail cannot serve: a phone held sideways has no
+     vertical room for a piece, its plate and the controls at once. There the
+     gallery falls back to the column it used to run on every phone. */
+  stackAt: '(max-width: 900px) and (orientation: landscape) and (max-height: 520px)'
 };

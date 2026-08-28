@@ -121,15 +121,9 @@ CD.pillarsTimeline = (function () {
       sc.v    = sc.vin * (1 - sc.vout);
     }
 
-    poseInto(cfg.stone, p, st.stone);
-    if (narrow) {
-      /* one column: no lateral drift, and the stone sits below the type */
-      var m = cfg.mobileStone;
-      st.stone.x = m.x;
-      st.stone.y = st.stone.y * m.yScale + m.yBase;
-      st.stone.s = st.stone.s * m.sScale;
-      st.stone.r = st.stone.r * 0.5;
-    }
+    /* Narrow viewports run their own pose track — a portrait composition
+       written out in scenes.js rather than the desktop poses rescaled. */
+    poseInto(narrow && cfg.mobileStone ? cfg.mobileStone : cfg.stone, p, st.stone);
 
     /* one statement at a time, each clearing before the next arrives — the
        last one clears too, so the beam and the aperture play against the

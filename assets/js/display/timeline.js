@@ -68,7 +68,9 @@ CD.displayTimeline = (function () {
     };
     var i;
     for (i = 0; i < cfg.beats.scenes.length; i++) st.scenes.push({ vin: 0, vout: 0, v: 0 });
-    for (i = 0; i < cfg.cases.length; i++) st.cases.push({ x: 0, y: 0, w: 20, o: 0 });
+    /* `k` and `push` are written on narrow viewports only, and read there only */
+    for (i = 0; i < cfg.cases.length; i++) st.cases.push({ x: 0, y: 0, w: 20, o: 0, k: 1, push: 1 });
+    st.narrow = false;
     return st;
   }
 
@@ -91,18 +93,29 @@ CD.displayTimeline = (function () {
       sc.v    = sc.vin * (1 - sc.vout);
     }
 
+    st.narrow = !!narrow;
     for (i = 0; i < st.cases.length; i++) {
-      poseInto(cfg.cases[i].poses, p, CASE_FIELDS, st.cases[i]);
+      var c = st.cases[i];
+      poseInto(cfg.cases[i].poses, p, CASE_FIELDS, c);
       if (narrow) {
-        /* one case at a time above the copy, except the last beat where the
-           two sit side by side low in the frame */
+        /* one case at a time, large, alternating with the copy — then the
+           two together for the closing frame */
         var m = cfg.mobile;
-        var pairV = smooth(range(p, 0.700, 0.815));
+        var pairV = smooth(range(p, m.pairAt.inA, m.pairAt.inB));
         var solo = m[cfg.cases[i].key];
         var side = i === 0 ? -1 : 1;
-        st.cases[i].x = lerp(solo.x, side * m.pair.x, pairV);
-        st.cases[i].y = lerp(solo.y, m.pair.y, pairV);
-        st.cases[i].w = lerp(solo.w, m.pair.w, pairV);
+        c.x = lerp(solo.x, side * m.pair.x, pairV);
+        c.y = lerp(solo.y, m.pair.y + side * m.pair.step, pairV);
+        c.w = lerp(solo.w, m.pair.w, pairV);
+        /* the first case hands the frame over rather than sitting behind
+           the second, and comes back for the pair */
+        if (i === 0) {
+          var gone = smooth(range(p, m.swap.inA, m.swap.inB));
+          c.o *= Math.max(1 - gone, pairV);
+        }
+        var k = easeOut(range(p, cfg.cases[i].in, cfg.cases[i].in + m.reveal));
+        c.k = k;
+        c.push = lerp(m.push.from, m.push.to, smooth(k)) + m.push.pair * pairV;
       }
     }
 

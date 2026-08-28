@@ -114,6 +114,19 @@
   .hdr__burger{ display:flex; }
 }
 @media (max-width:520px){ .hdr__cta{ display:none; } }
+/* notched phones: the header and the menu sheet keep clear of the cutout and
+   the home indicator. No effect where the insets resolve to 0. */
+@media (max-width:900px){
+  .hdr{
+    padding-top:calc(clamp(18px,2.2vw,32px) + env(safe-area-inset-top));
+    padding-left:calc(clamp(20px,4vw,68px) + env(safe-area-inset-left));
+    padding-right:calc(clamp(20px,4vw,68px) + env(safe-area-inset-right));
+  }
+  .sheet{
+    padding-top:calc(clamp(70px,14vh,140px) + env(safe-area-inset-top));
+    padding-bottom:calc(clamp(30px,6vh,60px) + env(safe-area-inset-bottom));
+  }
+}
 
 /* ---------------------------------------------- HERO — cinematic scroll stage */
 .chero{
@@ -260,35 +273,80 @@
 }
 @media (max-width:860px){
   .chero{ height:300vh; }
+  /* The portrait master is the 16:9 composition laid into a 9:16 canvas: its
+     picture occupies roughly 21–53% of the frame and the rest is the hero's
+     own near-black. Dropped 8% down the stage, that band lands at 29–61% —
+     which is what opens a type zone above it as well as below, so the
+     narrative can alternate top / bottom without ever crossing the facets.
+     The clip runs past the foot of the stage; what is clipped is its black. */
+  .chero__media{ top:8%; bottom:auto; height:100%; }
   .chero__vig{
     background:
-      radial-gradient(72% 42% at 50% 34%, transparent 26%, rgba(10,10,11,.30) 72%, rgba(10,10,11,.68) 100%),
-      linear-gradient(to bottom, rgba(10,10,11,.70) 0%, transparent 20%, rgba(10,10,11,.55) 52%, rgba(10,10,11,.95) 78%);
+      radial-gradient(76% 26% at 50% 45%, transparent 22%, rgba(10,10,11,.24) 68%, rgba(10,10,11,.58) 100%),
+      linear-gradient(to bottom,
+        rgba(10,10,11,.90) 0%, rgba(10,10,11,.74) 22%, rgba(10,10,11,.30) 33%,
+        transparent 44%, transparent 60%, rgba(10,10,11,.58) 72%, rgba(10,10,11,.95) 100%);
   }
+  /* Portrait composition: the statements alternate top-left / bottom-right
+     rather than left / right, so the stone keeps the middle of the frame
+     the whole way down. */
+  .chero{ --cs-top:calc(10.5vh + env(safe-area-inset-top)); }
   .cscene{
-    top:auto; bottom:16vh; translate:0 0;
-    width:min(84vw,520px); left:8vw; right:auto;
+    top:auto; bottom:auto; translate:0 0;
+    width:min(84vw,520px); left:auto; right:auto;
   }
-  /* left → centred → left → centred, so the narrative still alternates */
-  .cscene--right{ left:50%; translate:-50% 0; text-align:center; }
-  .cscene--right .cscene__eyebrow{ justify-content:center; }
-  .cscene--right .cscene__body{ margin-inline:auto; }
+  .cscene--left{
+    top:var(--cs-top); left:6vw; text-align:left;
+  }
+  .cscene--right{
+    bottom:calc(13vh + env(safe-area-inset-bottom)); right:6vw;
+    width:min(80vw,500px); text-align:right;
+  }
+  .cscene--right .cscene__eyebrow{ justify-content:flex-end; }
+  .cscene--right .cscene__body{ margin-left:auto; margin-right:0; }
   .cscene::before{ inset:-18% -30% -24% -30%; }
-  .cscene__title{ font-size:clamp(2.3rem,9.4vw,3.6rem); }
-  .cscene__body{ font-size:clamp(.84rem,3.4vw,.96rem); max-width:32ch; }
-  .chero__cta{ bottom:clamp(70px,11vh,110px); }
-  .chero__prog{ right:auto; left:50%; translate:-50% 0; bottom:clamp(18px,3vh,30px); }
+  /* a dedicated mobile scale, not the desktop ramp shrunk */
+  .cscene__title{ font-size:clamp(2.8rem,12.4vw,4.4rem); letter-spacing:-.042em; line-height:.88; }
+  .cscene__eyebrow{ letter-spacing:.34em; margin-bottom:clamp(11px,1.6vh,18px); }
+  .cscene__body{
+    font-size:clamp(.82rem,3.3vw,.94rem); line-height:1.62;
+    max-width:26ch; margin-top:clamp(13px,1.8vh,20px);
+  }
+  /* The CTA is absolutely positioned from left:50% with no width, so its
+     shrink-to-fit box was only half the stage — which is what broke
+     "Explore our diamonds" onto two lines. */
+  .chero__cta{
+    left:50%; right:auto; width:max-content; max-width:92vw;
+    bottom:calc(clamp(58px,9vh,96px) + env(safe-area-inset-bottom));
+  }
+  .cbtn{ padding:1.02em 1.9em; }
+  .cbtn__label{
+    justify-content:center; white-space:nowrap;
+    font-size:clamp(10px,2.7vw,11.5px); letter-spacing:.11em; gap:.75em;
+  }
+  .chero__prog{
+    right:auto; left:50%; translate:-50% 0;
+    bottom:calc(clamp(14px,2.4vh,24px) + env(safe-area-inset-bottom));
+  }
   .chero__hint{ display:none; }
 }
 @media (max-width:480px){
-  /* only the left variant takes the edge inset — a bare `.cscene{left:…}` here
-     would override .cscene--right's left:50% (same specificity, declared later)
-     while its translate:-50% still applied, throwing it off-screen. */
-  .cscene{ width:88vw; bottom:14vh; }
-  .cscene--left{ left:6vw; }
-  .cscene--right{ left:50%; }
-  .cscene__title{ font-size:clamp(2.1rem,10.6vw,3rem); }
-  .cbtn{ padding:1.05em 2em; }
+  .cscene{ width:88vw; }
+  .cscene--left{ left:5.5vw; }
+  .cscene--right{ right:5.5vw; width:84vw; }
+  .cscene__title{ font-size:clamp(2.7rem,13.2vw,3.7rem); }
+  .cbtn{ padding:1em 1.7em; }
+  .cbtn__label{ letter-spacing:.1em; }
+}
+/* landscape phones: there is no vertical room for a top/bottom alternation,
+   so the statements go back to sharing the frame with the stone */
+@media (max-width:900px) and (orientation:landscape) and (max-height:520px){
+  .cscene{ top:50%; bottom:auto; translate:0 -50%; width:min(46vw,420px); }
+  .cscene--left{ left:5vw; }
+  .cscene--right{ left:auto; right:5vw; }
+  .cscene__title{ font-size:clamp(1.9rem,6.2vw,2.8rem); }
+  .cscene__body{ font-size:.8rem; max-width:28ch; }
+  .chero__cta{ bottom:clamp(20px,7vh,42px); }
 }
 
 /* ---------------------------------------------- reduced motion
@@ -763,32 +821,85 @@
    Narrow viewports drop the left/right composition for a centred column:
    type above, stone below, one benefit at a time. Not a shrunken desktop. */
 @media (max-width:900px){
-  .plr{ height:460vh; }
+  /* Same scroll distance as the desktop chapter (400vh at 900px tall),
+     expressed against a phone's shorter viewport. */
+  .plr{ height:420vh; }
+  /* Portrait recomposition, not a stacked article: the copy and the stone
+     each take one corner of the frame and swap corners between benefits,
+     which is the desktop idea turned through 90 degrees. The stone's
+     matching poses are CD.pillars.mobileStone. */
   .plr__scene{
-    align-items:start; padding-top:15vh;
+    align-items:center; padding-top:0;
     justify-items:center; text-align:center;
   }
   .plr__scene[data-side="right"]{ text-align:center; }
   .plr__copy,
-  .plr__scene[data-side="center"] .plr__copy{ width:min(88vw,560px); }
+  .plr__scene[data-side="center"] .plr__copy{ width:min(84vw,480px); }
   .plr__n{ justify-content:center; }
+
+  /* 01 — copy upper-left, stone lower-right */
+  .plr__scene[data-plr-scene="0"]{
+    align-items:start; padding-top:calc(11.5vh + env(safe-area-inset-top));
+    justify-items:start; text-align:left;
+  }
+  .plr__scene[data-plr-scene="0"] .plr__n{ justify-content:flex-start; }
+  .plr__scene[data-plr-scene="0"] .plr__b{ margin-inline:0; }
+
+  /* 02 — copy upper-right, stone lower-left */
+  .plr__scene[data-plr-scene="1"]{
+    align-items:start; padding-top:calc(11.5vh + env(safe-area-inset-top));
+    justify-items:end; text-align:right;
+  }
+  .plr__scene[data-plr-scene="1"] .plr__n{ justify-content:flex-end; }
+  .plr__scene[data-plr-scene="1"] .plr__b{ margin-left:auto; margin-right:0; }
+
+  /* 03 — copy lower-left, stone upper-right */
+  .plr__scene[data-plr-scene="2"]{
+    align-items:end; padding-bottom:calc(13vh + env(safe-area-inset-bottom));
+    justify-items:start; text-align:left;
+  }
+  .plr__scene[data-plr-scene="2"] .plr__n{ justify-content:flex-start; }
+  .plr__scene[data-plr-scene="2"] .plr__b{ margin-inline:0; }
+
+  /* 04 — centred, with the stone behind it */
+  .plr__scene[data-plr-scene="3"]{ align-items:center; justify-items:center; text-align:center; }
+  .plr__scene[data-plr-scene="3"] .plr__b{ margin-inline:auto; }
+
   .plr__t,
-  .plr__scene[data-side="center"] .plr__t{ font-size:clamp(2.4rem,10.4vw,4.4rem); }
-  .plr__h2{ font-size:clamp(2.3rem,10.6vw,4.6rem); }
+  .plr__scene[data-side="center"] .plr__t{ font-size:clamp(2.5rem,11.4vw,4.2rem); line-height:.92; }
+  .plr__h2{ font-size:clamp(2.5rem,11.6vw,4.6rem); }
   .plr__b,
-  .plr__scene[data-side="center"] .plr__b{ margin-inline:auto; max-width:34ch; }
+  .plr__scene[data-side="center"] .plr__b{ margin-inline:auto; max-width:30ch; font-size:clamp(.88rem,3.5vw,1rem); }
   .plr__scene[data-side="right"] .plr__b{ margin-inline:auto; }
-  .plr__stone-in{ width:min(74vw,420px); }
-  .plr__word{ white-space:normal; font-size:clamp(2.1rem,10.8vw,3.8rem); }
+  .plr__n{ margin-bottom:clamp(14px,2vh,24px); }
+  .plr__stone-in{ width:min(76vw,430px); }
+  .plr__word{ white-space:normal; font-size:clamp(2.3rem,11.6vw,4rem); }
   .plr__word[data-plr-word="2"]{ font-size:clamp(1.6rem,7.4vw,2.6rem); }
-  .plr__intro,.plr__scene{ padding-inline:var(--gut); }
+  .plr__intro,.plr__scene{ padding-inline:clamp(1rem,5.5vw,2rem); }
 }
 @media (max-width:560px){
-  .plr__scene{ padding-top:12vh; }
   .plr__b,
-  .plr__scene[data-side="center"] .plr__b{ font-size:.9rem; max-width:30ch; }
-  .plr__stone-in{ width:min(84vw,360px); }
+  .plr__scene[data-side="center"] .plr__b{ font-size:.9rem; max-width:27ch; }
+  .plr__stone-in{ width:min(86vw,370px); }
 }
+/* landscape phones: no room for corner-to-corner, so the chapter falls back
+   to the centred column it used before */
+@media (max-width:900px) and (orientation:landscape) and (max-height:520px){
+  .plr__scene,
+  .plr__scene[data-plr-scene="0"],
+  .plr__scene[data-plr-scene="1"],
+  .plr__scene[data-plr-scene="2"]{
+    /* the header is a fixed height, not a fraction of a 360px-tall frame:
+       9vh would start the copy underneath it */
+    align-items:start; padding-top:calc(76px + 3vh); padding-bottom:0;
+    justify-items:center; text-align:center;
+  }
+  .plr__scene .plr__n{ justify-content:center; }
+  .plr__scene .plr__b{ margin-inline:auto; }
+  .plr__t{ font-size:clamp(1.8rem,5.8vw,2.6rem); }
+  .plr__stone-in{ width:min(42vw,300px); }
+}
+
 /* short-and-wide (1366x768, laptop landscape): keep the stone clear of the
    type instead of letting the two share the middle band */
 @media (min-width:901px) and (max-height:760px){
@@ -1553,17 +1664,101 @@
 .coll.is-reduced .coll__grain,
 .no-js .coll .coll__grain{ animation:none; }
 
+/* ---------------------------------------------- narrow: the same rail
+   A phone runs the gallery the desktop runs — one pinned stage, vertical
+   scroll travelling it horizontally — recomposed for the frame it has:
+   one piece large in the middle with a slice of its neighbour at the edge,
+   its plate beneath it, the controls along the foot. */
 @media (max-width:900px){
-  .cl__cut{ font-size:clamp(2rem,9vw,3.4rem); }
-  .coll__h2{ font-size:clamp(2.4rem,10.6vw,4.6rem); }
-  .coll__stmtT{ font-size:clamp(1.6rem,7vw,3rem); }
-  .coll__finalT{ font-size:clamp(1.5rem,6.6vw,2.6rem); }
-  .coll__hero{ width:min(62vw,300px); }
-  .coll__lede{ max-width:38ch; margin-top:clamp(20px,3.4vh,34px); }
+  .coll{
+    height:500vh;
+    --pitch:55vw;                      /* distance between slot centres */
+    --stone-w:88vw;
+    --stone-h:44vh;
+  }
+  .coll__rail{ top:46%; }
+
+  .coll__intro{
+    grid-template-columns:1fr; align-content:start;
+    gap:clamp(14px,2.2vh,26px);
+    padding:calc(13vh + env(safe-area-inset-top)) clamp(1rem,5.5vw,2rem) 0;
+  }
+  .coll__lede{ align-self:start; max-width:32ch; padding-bottom:0; }
+  .coll__h2{ font-size:clamp(2.6rem,12vw,4.6rem); }
+  .coll__eyebrow{ margin-bottom:clamp(14px,2vh,24px); }
+
+  .cl__plate{ margin-top:clamp(12px,1.8vh,22px); }
+  .cl__cut{ font-size:clamp(2.1rem,9.6vw,3.4rem); }
+  .cl__ct{ font-size:clamp(1rem,4.4vw,1.3rem); }
+  .cl__sku{ font-size:9.5px; letter-spacing:.26em; }
+  .cl__spec{ font-size:9.5px; letter-spacing:.2em; margin-top:.8em; }
+
+  /* the lifestyle plates keep their editorial height; their caption sits on
+     the frame rather than under it, which is where the controls live */
+  .cl--life .cl__frame{ width:min(94vw,540px); height:70vh; }
+  .cl__plate--life{
+    position:absolute; left:0; right:0; bottom:0; margin:0;
+    padding:clamp(30px,6vh,52px) 0 clamp(12px,2vh,18px);
+    background:linear-gradient(to top, rgba(243,240,233,.92), rgba(243,240,233,0));
+  }
+  .cl--life{ position:relative; }
+
+  .coll__stmt{ padding-inline:clamp(1rem,5.5vw,2rem); }
+  .coll__stmtT{ font-size:clamp(1.9rem,8.2vw,3.2rem); }
+
+  /* material families: a row along the foot, above the counter */
+  .coll__metals{
+    left:clamp(1rem,5.5vw,2rem); right:clamp(1rem,5.5vw,2rem);
+    bottom:calc(clamp(56px,8vh,80px) + env(safe-area-inset-bottom));
+    flex-direction:row; flex-wrap:wrap; align-items:baseline;
+    gap:.5em 1.05em;
+  }
+  .coll__metals::before{ inset:-60% -14% -50% -14%;
+    background:radial-gradient(ellipse at 50% 56%, var(--ground) 52%, transparent 88%); }
+  .coll__metalsL{ width:100%; margin-bottom:0; }
+  .coll__metals button{ font-size:clamp(.92rem,3.9vw,1.15rem); }
+
+  .coll__nav{
+    left:clamp(1rem,5.5vw,2rem); right:clamp(1rem,5.5vw,2rem);
+    bottom:calc(clamp(16px,2.6vh,26px) + env(safe-area-inset-bottom));
+    gap:clamp(9px,2.6vw,14px);
+    /* placed explicitly rather than auto-flowed: the counter is hidden on the
+       lifestyle plates, which have no reference, and auto-placement would
+       hand the flexible column to the arrow and collapse the rule to nothing */
+    grid-template-columns:auto auto 1fr auto;
+  }
+  .coll__nav [data-coll-prev]{ grid-column:1; }
+  .coll__count{ grid-column:2; }
+  .coll__bar  { grid-column:3; }
+  .coll__nav [data-coll-next]{ grid-column:4; }
+  /* the shape already reads on the plate directly above */
+  .coll__now{ display:none; }
+  .coll__count{ font-size:.95rem; }
+  .coll__arw{ width:32px; height:32px; }
+
+  .coll__final{ padding-inline:clamp(1rem,5.5vw,2rem); gap:clamp(16px,2.6vh,32px); }
+  .coll__finalT{ font-size:clamp(1.6rem,7.4vw,2.8rem); }
+  .coll__hero{ width:min(58vw,280px); }
 }
 @media (max-width:560px){
-  .cl__spec{ letter-spacing:.2em; }
-  .coll__metals{ gap:.9em; }
+  .cl__spec{ letter-spacing:.18em; }
+  .coll__metals{ gap:.45em .85em; }
+}
+/* Landscape phones fall back to the column, which JS marks with .is-stacked
+   and the rules above already dress. The composition is chosen once at load,
+   so a phone rotated afterwards keeps whichever one it started in — these
+   rules keep the rail usable in the frame it did not expect, rather than
+   letting the piece, its plate and the controls pile up. */
+@media (max-width:900px) and (orientation:landscape){
+  .coll:not(.is-stacked){ --pitch:40vw; --stone-w:46vw; --stone-h:56vh; }
+  .coll:not(.is-stacked) .coll__rail{ top:44%; }
+  .coll:not(.is-stacked) .cl__cut{ font-size:clamp(1.3rem,4.6vw,2.1rem); }
+  .coll:not(.is-stacked) .cl__plate{ margin-top:.5vh; }
+  .coll:not(.is-stacked) .cl--life .cl__frame{ width:min(54vw,420px); height:62vh; }
+  .coll:not(.is-stacked) .coll__metals{
+    flex-direction:row; bottom:calc(clamp(40px,10vh,56px) + env(safe-area-inset-bottom));
+  }
+  .coll:not(.is-stacked) .coll__metalsL{ width:auto; }
 }
 
 /* ============================================================
@@ -1670,30 +1865,96 @@
 }
 
 /* ---------------------------------------------- responsive
-   One plate at a time, centred, and the spread gathers into a column —
-   the desktop poses are lateral by design and would shrink to thumbnails. */
+   A phone runs the chapter as a sequence rather than a contact sheet: one
+   photograph owns the frame at a time, cropped to portrait by the `--mar` /
+   `--mpos` pair stated on each figure, with the copy in the space the
+   photograph is composed to leave. Choreography: CD.worn.mobile. */
 @media (max-width:900px){
-  .wrn{ height:320vh; }
+  .wrn{ height:440vh; }
+
+  .wrn__plate{
+    aspect-ratio:var(--mar, 3/4);
+    /* the renderer asks in vw; on a tall portrait tablet that is more height
+       than the frame has, so the plate is also capped against the viewport.
+       --mar substitutes textually, so `72vh * 3/4` is what this resolves to. */
+    width:min(var(--w), calc(72vh * var(--mar, 3/4)));
+    box-shadow:0 18px 54px rgba(0,0,0,.55);
+  }
+  .wrn__plate img{ object-position:var(--mpos, 50% 50%); }
+  /* the last plate is the chapter's full-bleed close: it takes the frame
+     itself rather than a ratio, so no phone leaves a band above or below it.
+     The renderer's slow push still plays — it is a transform. */
+  .wrn__plate:last-of-type{
+    top:0; left:0; translate:none;
+    width:100%; height:100%; aspect-ratio:auto;
+    box-shadow:none;
+  }
+
   .wrn__scene{ justify-items:center !important; text-align:center !important; }
-  .wrn__copy{ width:min(100%,520px); }
-  .wrn__b{ margin-inline:auto !important; max-width:30ch; }
-  /* type takes the space below the plates rather than overlapping them */
-  .wrn__scene .wrn__copy{ align-self:end; padding-bottom:clamp(26px,6vh,64px); }
-  /* and the closing statement sits above the stack, not inside it */
-  .wrn__gather{ align-content:start !important; padding-top:12vh; }
-  .wrn__h2{ font-size:clamp(2.5rem,11.5vw,4.6rem); }
-  .wrn__t{ font-size:clamp(1.7rem,7.4vw,2.6rem); }
-  .wrn__final{ font-size:clamp(1.7rem,7.6vw,2.8rem); }
-  .wrn__plate{ box-shadow:0 14px 36px rgba(0,0,0,.45); }
+  .wrn__copy{ width:min(88vw,520px); position:relative; }
+  /* the copy sits on a photograph now, so it carries its own light — a
+     feathered wash, never a panel */
+  .wrn__copy::before{
+    content:""; position:absolute; inset:-26% -16% -30% -16%; z-index:-1;
+    background:radial-gradient(62% 58% at 50% 50%,
+      rgba(10,10,11,.90) 0%, rgba(10,10,11,.66) 40%, rgba(10,10,11,.24) 68%, transparent 86%);
+    pointer-events:none;
+  }
+  .wrn__b{ margin-inline:auto !important; max-width:28ch; }
+
+  /* 01 rides low under the second plate, 02 high over the fourth */
+  .wrn__scene[data-wrn-scene="0"]{
+    align-items:end; text-align:left !important; justify-items:start !important;
+    padding-bottom:calc(11vh + env(safe-area-inset-bottom));
+  }
+  .wrn__scene[data-wrn-scene="0"] .wrn__b{ margin-inline:0 !important; }
+  .wrn__scene[data-wrn-scene="1"]{
+    align-items:start; text-align:right !important; justify-items:end !important;
+    padding-top:calc(12vh + env(safe-area-inset-top));
+  }
+  .wrn__scene[data-wrn-scene="1"] .wrn__b{ margin-left:auto !important; margin-right:0 !important; }
+
+  /* the closing statement plays over the last plate, centred */
+  .wrn__gather{ align-content:center !important; padding-top:0; }
+  .wrn__gather::before{
+    content:""; position:absolute; inset:22% -10% 20% -10%; z-index:-1;
+    background:radial-gradient(58% 52% at 50% 50%,
+      rgba(10,10,11,.88) 0%, rgba(10,10,11,.62) 42%, rgba(10,10,11,.20) 70%, transparent 88%);
+    pointer-events:none;
+  }
+
+  .wrn__h2{ font-size:clamp(2.7rem,12.4vw,4.6rem); }
+  .wrn__t{ font-size:clamp(1.9rem,8.4vw,3rem); line-height:1.04; }
+  .wrn__final{ font-size:clamp(1.9rem,8.6vw,3.1rem); }
+  .wrn__rule{ width:min(52vw,300px); }
+  .wrn__intro,.wrn__scene,.wrn__gather{ padding-inline:clamp(1rem,5.5vw,2rem); }
 }
 @media (max-width:560px){
-  .wrn__b{ font-size:.88rem; max-width:28ch; }
+  .wrn__b{ font-size:.88rem; max-width:26ch; }
+}
+/* portrait tablets are much taller than a phone relative to their width, so
+   the vw the renderer asks for buys far more height than the copy can spare */
+@media (min-width:601px) and (max-width:900px) and (orientation:portrait){
+  .wrn__plate{ width:min(var(--w), calc(62vh * var(--mar, 3/4))); }
 }
 /* short-and-wide laptops: keep the headline clear of the plates */
 @media (min-width:901px) and (max-height:760px){
   .wrn__h2{ font-size:clamp(2.6rem,6.4vw,5.6rem); }
   .wrn__t{ font-size:clamp(1.7rem,3vw,2.8rem); }
   .wrn__final{ font-size:clamp(1.7rem,3.6vw,3.4rem); }
+}
+/* landscape phones: the portrait crops have nowhere to go, so the plates
+   keep their own ratio and the copy returns to the centre */
+@media (max-width:900px) and (orientation:landscape) and (max-height:520px){
+  .wrn__plate{ aspect-ratio:var(--ar, 4/5); }
+  .wrn__plate img{ object-position:50% 50%; }
+  .wrn__scene[data-wrn-scene="0"],
+  .wrn__scene[data-wrn-scene="1"]{
+    align-items:center; padding:0 clamp(1rem,5.5vw,2rem);
+    justify-items:center !important; text-align:center !important;
+  }
+  .wrn__t{ font-size:clamp(1.5rem,4.6vw,2.1rem); }
+  .wrn__final{ font-size:clamp(1.5rem,5vw,2.2rem); }
 }
 
 /* ---------------------------------------------- reduced motion / no JS
@@ -2049,18 +2310,66 @@
 .dsp__scene[data-side="right"] .dsp__b{ margin-left:auto; }
 
 /* ---------------------------------------------- responsive
-   One case at a time above the copy; the last beat sits the pair low. */
+   The same room, composed for a portrait frame: the case large enough to be
+   looked at, alternating with the copy — high with the copy under it, then
+   low with the copy over it — before the two come together for the closing
+   frame. Choreography: CD.display.mobile. */
 @media (max-width:900px){
-  .dsp{ height:330vh; }
+  .dsp{ height:360vh; }
+  .dsp__case{
+    aspect-ratio:var(--mar, 4/5);
+    /* capped against the frame as well as the renderer's vw — see .wrn__plate */
+    width:min(var(--w), calc(66vh * var(--mar, 4/5)));
+    box-shadow:0 26px 70px rgba(0,0,0,.58);
+  }
+  .dsp__case img{ object-position:var(--mpos, 50% 50%); will-change:transform; }
+
   .dsp__scene{ justify-items:center !important; text-align:center !important; }
-  .dsp__copy{ width:min(100%,520px); align-self:end; padding-bottom:clamp(26px,7vh,72px); }
-  .dsp__b{ margin-inline:auto !important; max-width:30ch; }
-  .dsp__h2{ font-size:clamp(2.4rem,11vw,4.4rem); }
-  .dsp__t{ font-size:clamp(1.7rem,7.4vw,2.6rem); }
-  .dsp__glow{ width:150vw; }
+  .dsp__copy{ width:min(88vw,520px); position:relative; }
+  /* the copy can land on a photograph here, so it carries its own light */
+  .dsp__copy::before{
+    content:""; position:absolute; inset:-26% -16% -30% -16%; z-index:-1;
+    background:radial-gradient(62% 58% at 50% 50%,
+      rgba(16,17,32,.86) 0%, rgba(16,17,32,.60) 42%, rgba(16,17,32,.20) 70%, transparent 88%);
+    pointer-events:none;
+  }
+  .dsp__b{ margin-inline:auto !important; max-width:28ch; }
+
+  /* 01 under the case, 02 over it */
+  .dsp__scene[data-dsp-scene="0"]{
+    align-items:end; text-align:left !important; justify-items:start !important;
+    padding-bottom:calc(9vh + env(safe-area-inset-bottom));
+  }
+  .dsp__scene[data-dsp-scene="0"] .dsp__b{ margin-inline:0 !important; }
+  .dsp__scene[data-dsp-scene="1"]{
+    align-items:start; text-align:right !important; justify-items:end !important;
+    padding-top:calc(12vh + env(safe-area-inset-top));
+  }
+  .dsp__scene[data-dsp-scene="1"] .dsp__b{ margin-left:auto !important; margin-right:0 !important; }
+
+  .dsp__h2{ font-size:clamp(2.6rem,12.2vw,4.6rem); }
+  .dsp__t{ font-size:clamp(1.9rem,8.4vw,3rem); line-height:1.04; }
+  .dsp__glow{ width:172vw; }
+  .dsp__intro,.dsp__scene{ padding-inline:clamp(1rem,5.5vw,2rem); }
 }
 @media (max-width:560px){
-  .dsp__b{ font-size:.88rem; max-width:28ch; }
+  .dsp__b{ font-size:.88rem; max-width:26ch; }
+}
+/* portrait tablets — see the matching note on .wrn__plate */
+@media (min-width:601px) and (max-width:900px) and (orientation:portrait){
+  .dsp__case{ width:min(var(--w), calc(56vh * var(--mar, 4/5))); }
+}
+/* landscape phones: the two cases can share the frame, so the copy holds
+   the centre as it does on a desktop */
+@media (max-width:900px) and (orientation:landscape) and (max-height:520px){
+  .dsp__case{ aspect-ratio:var(--ar, 4/5); }
+  .dsp__case img{ object-position:50% 50%; }
+  .dsp__scene[data-dsp-scene="0"],
+  .dsp__scene[data-dsp-scene="1"]{
+    align-items:center; padding:0 clamp(1rem,5.5vw,2rem);
+    justify-items:center !important; text-align:center !important;
+  }
+  .dsp__t{ font-size:clamp(1.5rem,4.6vw,2.1rem); }
 }
 @media (min-width:901px) and (max-height:760px){
   .dsp__h2{ font-size:clamp(2.4rem,5.8vw,5rem); }

@@ -15,6 +15,11 @@ CD.heroNarrative = (function () {
   var ctaEl = null;
   var cta = null;
   var reduced = false;
+  /* Portrait phones compose the narrative top / bottom rather than left /
+     right (see the .chero mobile block), so the entrance travels on the axis
+     the statement actually sits on. Desktop is untouched by this. */
+  var PORTRAIT_Q = '(max-width: 860px) and (orientation: portrait)';
+  var portrait = false;
 
   function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
   function range(p, a, b) { return b === a ? (p >= b ? 1 : 0) : clamp01((p - a) / (b - a)); }
@@ -25,6 +30,10 @@ CD.heroNarrative = (function () {
   function build(root, data, ctaData) {
     if (!root) return null;
     reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    portrait = window.matchMedia(PORTRAIT_Q).matches;
+    window.addEventListener('resize', function () {
+      portrait = window.matchMedia(PORTRAIT_Q).matches;
+    }, { passive: true });
 
     data.forEach(function (s, i) {
       var el = document.createElement('article');
@@ -99,13 +108,21 @@ CD.heroNarrative = (function () {
       var vis = vIn * (1 - vOut);
 
       var dir = c.side === 'left' ? -1 : 1;
-      // enters from its own side, leaves continuing the same direction
-      var x = (1 - vIn) * dir * 7 + vOut * dir * 5;      // vw
       var scale = 0.965 + 0.035 * vIn - 0.02 * vOut;
       var blur = (1 - vIn) * 7 + vOut * 5;
+      var shift;
+      if (portrait) {
+        /* a top statement drops in and lifts away; a bottom one rises in and
+           settles further down — the axis the composition already reads on */
+        var vdir = c.side === 'left' ? -1 : 1;
+        shift = 'translate3d(0,' + ((1 - vIn) * vdir * 4.2 + vOut * vdir * -3.2).toFixed(3) + 'vh,0)';
+      } else {
+        // enters from its own side, leaves continuing the same direction
+        shift = 'translate3d(' + ((1 - vIn) * dir * 7 + vOut * dir * 5).toFixed(3) + 'vw,0,0)';
+      }
 
       s.el.style.opacity = vis.toFixed(3);
-      s.el.style.transform = 'translate3d(' + x.toFixed(3) + 'vw,0,0) scale(' + scale.toFixed(4) + ')';
+      s.el.style.transform = shift + ' scale(' + scale.toFixed(4) + ')';
       s.el.style.filter = blur > 0.06 ? 'blur(' + blur.toFixed(2) + 'px)' : 'none';
 
       // per-line mask reveal, staggered

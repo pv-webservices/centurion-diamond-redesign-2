@@ -92,11 +92,29 @@ CD.display = {
     ] }
   ],
 
-  /* narrow viewports: one case at a time, centred above the copy */
+  /* ---------------------------------------------------------------- mobile
+     A phone gets the same room, composed for a portrait frame: one case at
+     a time and large enough to be looked at, alternating with the copy —
+     the case high and the copy under it, then the case low and the copy
+     over it — before the two cases come together for the closing frame.
+
+     The crop is `--mar` / `--mpos` on the figures in index.html; the mask
+     that opens each case and the slow push inside its frame are `reveal`
+     and `push` below. */
   mobile: {
-    a: { x: 0, y: -16, w: 56 },
-    b: { x: 0, y: -16, w: 56 },
-    /* except the last beat, where they sit side by side low in the frame */
-    pair: { x: 24, y: 2, w: 40 }
+    a: { x: 0, y: -15, w: 95 },
+    b: { x: 0, y:  16, w: 95 },
+    /* the last beat, where the two come together: side by side and
+       stepped, so the pair reads as a composition rather than as one
+       wide photograph cut down the middle */
+    pair: { x: 25.5, y: 2, w: 46, step: 7 },
+    /* a 95vw case cannot share a phone with another one, so the first hands
+       the frame to the second rather than staying behind it */
+    swap: { inA: 0.500, inB: 0.592 },
+    pairAt: { inA: 0.700, inB: 0.815 },
+    /* the mask opening under each case, measured from where it arrives */
+    reveal: 0.10,
+    /* gentle parallax: 1.06 settling to 1.00, then closing in for the pair */
+    push: { from: 1.06, to: 1.00, pair: 0.14 }
   }
 };

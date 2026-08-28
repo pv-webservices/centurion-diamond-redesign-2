@@ -99,6 +99,14 @@ only ~26% of its width — a slice of the stone. Instead the full composition is
 composited into a 720×1280 canvas over a blurred, darkened self-extension with a
 feathered edge, so it reads full-bleed while the framing survives.
 
+That master carries its picture in roughly the top 21–53% of its canvas. Dropped
+8% down the stage on mobile (`.chero__media{ top:8% }`), the band lands at
+29–61% — which opens a type zone above it as well as below, so the four
+statements can alternate **top-left / bottom-right / top-left / bottom-right**
+without ever crossing the facets. The entrance travels on that axis too, not the
+desktop's lateral one. Each master also preloads only where it is used, so a
+phone never pays for the landscape poster.
+
 ## The Sparkle section
 
 The deliberate reset after the dark hero. A 330vh track with a pinned stage; one
@@ -157,9 +165,16 @@ choreography lives in `assets/js/pillars/scenes.js` (beat windows and stone
 keyframes in 0..1 progress space). `timeline.js` is pure maths — progress in, a
 frame description out — and `visual.js` is the only thing that touches the DOM.
 
-Mobile drops the left/right composition for a centred column: type above, stone
-below, one benefit at a time. Reduced motion drops the pin entirely and renders the
-chapter as an ordinary bright editorial run, stone included, in document order.
+Mobile keeps the pin, the recomposing stone and the one-benefit-at-a-time frame —
+it turns the composition through 90 degrees rather than flattening it. The copy
+takes one corner and the stone the opposite one, swapping between benefits
+(upper-left/lower-right → upper-right/lower-left → lower-left/upper-right →
+centred, with the stone ghosted behind). The stone runs its own pose track
+(`CD.pillars.mobileStone`) on the same `p` markers as the desktop one, so the
+sheen still fires on the same legs. 420vh at a phone's viewport is the same
+scroll distance as 400vh at a desktop's. Reduced motion drops the pin entirely
+and renders the chapter as an ordinary bright editorial run, stone included, in
+document order.
 
 ### 06 · The Collection
 
@@ -193,9 +208,15 @@ disagree with the catalogue. Nothing implies anything about availability.
 
 Product data lives in `index.html` — references, shapes, carats, metals and
 setting weights, straight from the deck. Choreography is in
-`assets/js/collection/scenes.js`. Narrow viewports drop the rail for a vertical
-column, one piece at a time, each plate on its own scrubbed trigger; reduced
-motion and no-JS render the whole catalogue in document flow.
+`assets/js/collection/scenes.js`. Narrow viewports keep the rail — the same
+pinned stage, the same vertical-scroll-to-horizontal-travel, the same beats — on
+their own falloff (`mobileRail`): one piece at ~76vw with a slice of its
+neighbour at each edge, and the plate exclusive to whichever piece actually holds
+the frame. The lifestyle interludes become 70vh portrait plates with their
+caption on the frame rather than under it, because that is where the controls
+live. Only a phone held sideways falls back to the column (`stackAt`), which has
+no vertical room for a piece, its plate and the controls at once; reduced motion
+and no-JS render the whole catalogue in document flow.
 
 ### 04 · A Study in Light
 
@@ -282,8 +303,16 @@ one — a red plate at 30% still fights a paragraph. They keep travelling toward
 their `home` pose as they fade, so a slow scroll still shows them settling into
 the place the gather finds them.
 
-Mobile shows a lead plate and its partner offset above the copy, and gathers into
-a 2-wide stack under the closing statement rather than ringing it.
+Mobile runs the chapter as a **sequence rather than a contact sheet**: the same
+six photographs get six moments instead of one crowded one, each owning the frame
+in turn, cropped to portrait by the `--mar` / `--mpos` pair stated on its own
+`<figure>`. The copy rides in the space two of them are composed to leave — low
+under the second, high over the fourth — and the closing statement plays over the
+last, which is full-bleed and never leaves. Each plate has one entrance of its
+own (clip up, slide, scale, slide back, clip down, slow push) so six in a row
+read as a film and not as six fades. 440vh; choreography in `CD.worn.mobile`.
+The desktop spread is kept for the desktop: six 12vw plates on a 390px screen are
+47px wide.
 
 ### 08 · Metals
 
@@ -324,6 +353,12 @@ since the Sparkle section already ramps one and Metals already wipes one.
 > the matching rgba in `.dsp__glow` are the whole change — the stop list is
 > expressed as fractions of that one triple precisely so it stays a one-line
 > decision.
+
+Mobile composes the same room for a portrait frame: the case large enough to be
+looked at (95vw) and alternating with the copy — high with the copy under it,
+then low with the copy over it — before the two cases come together, stepped,
+for the closing frame. Each case opens under a mask and carries a slow push
+inside its own frame (1.06 → 1.00, closing in for the pair). `CD.display.mobile`.
 
 ### 10 · Exclusivity
 
@@ -366,6 +401,70 @@ element and it animates in on scroll, with siblings staggering automatically.
 
 **`prefers-reduced-motion` is fully honoured**: smooth scroll, the preloader,
 parallax and all scrubbed animation switch off, and content renders in its final state.
+
+---
+
+## Mobile
+
+Mobile is a **composition of the same chapters, not a smaller copy of them**. The
+desktop build is the approved master and nothing here may move it: every mobile
+rule lives inside a `@media (max-width:900px)` block (`860px` for the hero, which
+is the breakpoint that module already used) or inside a `narrow` branch in a
+module's `timeline.js`. Where a chapter needed different geometry it got its own
+data — `CD.pillars.mobileStone`, `CD.collection.mobileRail`, `CD.worn.mobile`,
+`CD.display.mobile` — sitting beside the desktop data in the same `scenes.js`,
+on the same progress markers. No second scrolling system, no second animation
+library, one Lenis and one ScrollTrigger as before.
+
+Two chapters changed shape rather than scale:
+
+- **The Collection keeps its horizontal rail.** It used to become a vertical
+  column on every phone, which told a different story from the desktop. Now
+  vertical scroll still travels the gallery sideways; only the falloff differs.
+- **Worn becomes a sequence.** Six photographs, six moments, one owning the frame
+  at a time — instead of the desktop contact sheet shrunk to thumbnails.
+
+Portrait crops are stated next to the photograph they belong to, as `--mar`
+(mobile aspect ratio) and `--mpos` (object-position) on the `<figure>`. Desktop
+CSS never reads either, so the framing decision lives with the image without
+touching the approved layout. `sizes` on those images describes the mobile
+render too, so a phone does not fetch a 34vw source for a 100vw plate.
+
+Each chapter also has a **landscape-phone** branch. Corner-to-corner and
+top/bottom compositions need vertical room a rotated phone does not have, so
+under `(orientation:landscape) and (max-height:520px)` the hero and Anatomy go
+back to sharing the frame and the Collection falls back to its column. That
+composition is chosen once at load; a phone rotated afterwards keeps the one it
+started in, and the CSS is scoped to follow the class JS actually set
+(`.coll:not(.is-stacked)`) so the two can never disagree.
+
+Safe-area insets (`env(safe-area-inset-*)`) are respected on the header, the menu
+sheet, and every element that sits against the top or bottom of a pinned stage.
+
+A phone downloads **2.2MB** on first load against the desktop's 5.1MB — the
+portrait hero master is 2.0MB where the 1280 master is 5.0MB, and each poster now
+preloads only where it is used. 26 of 27 images are `loading="lazy"` +
+`decoding="async"` with `srcset`/`sizes`.
+
+### Checking it
+
+```
+node dev/mobaudit.js       # 6 device sizes: overflow, off-frame copy, header
+                           # collisions, wrapped CTAs, empty frames, JS errors
+node dev/rotate.js         # portrait <-> landscape without a reload
+node dev/rmcheck2.js       # reduced motion; NOJS=1 for scripting off
+node dev/perfmob.js        # what a phone downloads vs a desktop
+node dev/fingerprint.js    # the desktop regression guard — see the file header
+```
+
+`fingerprint.js` + `fpdiff.js` are the reason the desktop can be trusted: they
+dump the geometry and key computed styles of every node in the five scroll
+chapters at 42 scroll positions and diff two runs. Pixel diffs are useless here
+because the hero's scrub position is not reproducible run to run. The mobile work
+lands at **0 differing rows** at 1440×900 and 1280×720, and 1–3 rows at 1920×1080
+and 1366×768 — all inside `HEADER.hdr`, whose dim is a CSS transition a capture
+can catch mid-flight, and which is the same noise two runs of an unmodified tree
+produce.
 
 ---
 

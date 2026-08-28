@@ -68,8 +68,20 @@ CD.wornVisual = (function () {
       if (pl.o < 0.004) continue;
       node.style.setProperty('--w', pl.w.toFixed(2) + 'vw');
       node.style.zIndex = pl.z;
+      var dx = pl.x;
+      var clip = '';
+      if (f.narrow) {
+        /* one gesture per plate, so a sequence of six reads as a film
+           rather than as six fades. `k` is the entrance's own progress. */
+        var k = pl.k, o = 1 - k;
+        if (pl.enter === 'clipUp')          clip = 'inset(' + (o * 100).toFixed(2) + '% 0 0 0)';
+        else if (pl.enter === 'clipDown')   clip = 'inset(0 0 ' + (o * 100).toFixed(2) + '% 0)';
+        else if (pl.enter === 'slideRight') dx += o * 13;
+        else if (pl.enter === 'slideLeft')  dx -= o * 13;
+      }
+      node.style.clipPath = clip;
       node.style.transform =
-        'translate3d(' + pl.x.toFixed(2) + 'vw,' + pl.y.toFixed(2) + 'vh,0) ' +
+        'translate3d(' + dx.toFixed(2) + 'vw,' + pl.y.toFixed(2) + 'vh,0) ' +
         'scale(' + pl.s.toFixed(4) + ') rotate(' + pl.r.toFixed(2) + 'deg)';
     }
 

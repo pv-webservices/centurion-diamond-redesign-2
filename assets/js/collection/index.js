@@ -6,9 +6,12 @@
    Brilliance turn it into their own timelines. Same shape, same Lenis, same
    ScrollTrigger — nothing new is introduced.
 
-   Narrow viewports get a different composition, not a smaller one: the rail
-   becomes a vertical column in normal flow, and each plate animates on its
-   own scrubbed trigger. Reduced motion drops the motion entirely.
+   Narrow viewports keep that rail. A phone gets a different composition of
+   the same idea, not a different idea: one piece large in the frame with a
+   slice of its neighbour, on CD.collection.mobileRail's falloff. Only a
+   phone held sideways — no vertical room for a piece, its plate and the
+   controls — falls back to the column. Reduced motion drops the motion
+   entirely.
    ============================================================ */
 window.CD = window.CD || {};
 
@@ -27,6 +30,14 @@ CD.initCollection = function initCollection() {
   var n = el.slots.length;
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var narrow  = window.matchMedia(cfg.narrowAt).matches;
+  var stacked = window.matchMedia(cfg.stackAt).matches;
+
+  /* The rail runs on both, on its own falloff each. Everything else about
+     the chapter — beats, hold, aperture, finale — is shared, so the two
+     compositions can never tell a different story. */
+  var runCfg = (narrow && !stacked)
+    ? Object.assign({}, cfg, { rail: cfg.mobileRail })
+    : cfg;
 
   /* ---------- the metal selector ----------
      Editorial, not a filter widget. Choosing a family dims what does not
@@ -65,7 +76,7 @@ CD.initCollection = function initCollection() {
         root.setAttribute('data-filter', el.filter);
 
         var fam = el.filter ? families[el.filter] : null;
-        if (narrow || REDUCED) {
+        if (stacked || REDUCED) {
           if (fam) el.slots[fam[0]].el.scrollIntoView({ behavior: 'smooth', block: 'center' });
           return;
         }
@@ -76,7 +87,7 @@ CD.initCollection = function initCollection() {
           });
           goTo(near);
         }
-        V.render(el, T.frame(cfg, last, n, state), cfg);
+        V.render(el, T.frame(runCfg, last, n, state), runCfg);
       });
     });
   }
@@ -90,8 +101,8 @@ CD.initCollection = function initCollection() {
     return;
   }
 
-  /* ---------- narrow: a vertical column, scrubbed plate by plate ---------- */
-  if (narrow) {
+  /* ---------- landscape phone: a vertical column, scrubbed plate by plate ---------- */
+  if (stacked) {
     root.classList.add('is-stacked');
     el.stage.style.setProperty('--ground', 'rgb(243,240,233)');
 
@@ -119,8 +130,8 @@ CD.initCollection = function initCollection() {
     return;
   }
 
-  /* ---------- desktop: the pinned gallery ---------- */
-  var state = T.createState(cfg, n);
+  /* ---------- the pinned gallery: desktop and portrait mobile alike ---------- */
+  var state = T.createState(runCfg, n);
   var last = 0;
   var trigger = null;
 
@@ -129,7 +140,7 @@ CD.initCollection = function initCollection() {
   function goTo(i) {
     if (!trigger) return;
     i = Math.max(0, Math.min(n - 1, i));
-    var p = T.progressForSlot(cfg, i, n);
+    var p = T.progressForSlot(runCfg, i, n);
     var y = trigger.start + (trigger.end - trigger.start) * p;
     if (window.lenis) window.lenis.scrollTo(y, { duration: 1.1 });
     else window.scrollTo({ top: y, behavior: 'smooth' });
@@ -144,7 +155,7 @@ CD.initCollection = function initCollection() {
     anticipatePin: 1,
     onUpdate: function (self) {
       last = self.progress;
-      V.render(el, T.frame(cfg, last, n, state), cfg);
+      V.render(el, T.frame(runCfg, last, n, state), runCfg);
     }
   });
 
@@ -157,6 +168,6 @@ CD.initCollection = function initCollection() {
   initMetals();
 
   // paint the opening frame so nothing shows in an untimed state
-  V.render(el, T.frame(cfg, 0, n, state), cfg);
+  V.render(el, T.frame(runCfg, 0, n, state), runCfg);
   ScrollTrigger.refresh();
 };

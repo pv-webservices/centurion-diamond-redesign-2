@@ -63,8 +63,11 @@ CD.wornTimeline = (function () {
     var i;
     for (i = 0; i < cfg.beats.scenes.length; i++) st.scenes.push({ vin: 0, vout: 0, v: 0 });
     for (i = 0; i < cfg.plates.length; i++) {
-      st.plates.push({ x: 0, y: 0, w: 10, r: 0, o: 0, z: 1, s: 1 });
+      /* `k` and `enter` are only written on narrow viewports; the renderer
+         reads them only there too */
+      st.plates.push({ x: 0, y: 0, w: 10, r: 0, o: 0, z: 1, s: 1, k: 0, enter: '' });
     }
+    st.narrow = false;
     return st;
   }
 
@@ -97,21 +100,42 @@ CD.wornTimeline = (function () {
     return o;
   }
 
-  function mobileHome(mob, i) {
-    var g = mob.grid;
-    return {
-      x: (i % 2 ? 1 : -1) * g.gapX / 2,
-      y: g.y0 + Math.floor(i / 2) * g.gapY,
-      w: g.w,
-      r: 0
-    };
+  /* Where a plate sits this frame on a phone.
+
+     A sequence, not a spread: the plate owns the frame for its own window
+     and is gone outside it. `k` is the entrance's own 0..1, which the
+     renderer turns into whichever gesture the plate asked for. */
+  function mobilePlateInto(def, p, o) {
+    var w = def.win;
+    var vin  = easeOut(range(p, w.inA, w.inB));
+    var vout = w.outA == null ? 0 : easeIn(range(p, w.outA, w.outB));
+    var v = vin * (1 - vout);
+
+    o.x = def.pose.x;
+    o.y = def.pose.y - vout * 4;
+    o.w = def.pose.w;
+    o.r = def.pose.r;
+    o.o = v;
+    /* the brief's base move, under every entrance: 1.08 settling to 1.00,
+       and the last plate keeps pushing rather than settling */
+    o.s = def.enter === 'push' ? 1.00 + 0.11 * (1 - vin)
+                               : 1.08 - 0.08 * vin + vout * 0.03;
+    o.z = 2;
+    o.k = vin;
+    o.enter = def.enter;
+    return o;
   }
 
   function frame(cfg, p, narrow, st) {
-    var B = cfg.beats, i;
+    /* Narrow viewports run the chapter as a sequence on their own beats —
+       see CD.worn.mobile. Everything below is written against `B`, so the
+       two compositions share one shape and cannot drift. */
+    var mob = narrow && cfg.mobile && cfg.mobile.beats ? cfg.mobile : null;
+    var B = mob ? mob.beats : cfg.beats, i;
+    st.narrow = !!mob;
 
     st.ground = rampAt(cfg.bgStops, p);
-    st.colour = valueAt(cfg.colour, p);
+    st.colour = valueAt(mob ? mob.colour : cfg.colour, p);
 
     /* --- opening --- */
     var introIn  = easeOut(range(p, B.intro.inA, B.intro.inB));
@@ -146,6 +170,7 @@ CD.wornTimeline = (function () {
        The gather's own presence is what brings them up, read from the beat
        rather than re-derived, so the two can never drift apart. */
     for (i = 0; i < st.plates.length; i++) {
+      if (mob) { mobilePlateInto(mob.plates[i], p, st.plates[i]); continue; }
       var def = cfg.plates[i];
       plateInto(cfg, def, def.scene >= 0 ? st.scenes[def.scene] : null,
                 p, gIn * (1 - gOut * 0.55), narrow, cfg.mobile, i, st.plates[i]);

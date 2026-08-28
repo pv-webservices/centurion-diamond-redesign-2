@@ -113,7 +113,7 @@ CD.collectionTimeline = (function () {
        so the first stone reads as emerging beneath the title. The recession is
        applied per slot, not to the rail: the rail is eleven slots wide, and
        scaling it would swing its far-off centre across the viewport. */
-    st.rail.y = st.intro.v * 11;
+    st.rail.y = st.intro.v * (R.introDrop == null ? 11 : R.introDrop);
     st.active = Math.max(0, Math.min(n - 1, Math.round(pos)));
 
     for (i = 0; i < n; i++) {

@@ -21,7 +21,13 @@
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/sections.css">
 
-<link rel="preload" as="image" href="assets/video/hero-scrub-poster.webp" fetchpriority="high">
+<!-- One poster per hero master, so a phone never pays for the landscape one.
+     The conditions mirror CD.heroVideo.pickSource exactly: portrait is a
+     <=720px viewport taller than 1.3x its width. -->
+<link rel="preload" as="image" href="assets/video/hero-scrub-poster.webp" fetchpriority="high"
+      media="(min-width:721px), (min-aspect-ratio:10/13)">
+<link rel="preload" as="image" href="assets/video/hero-scrub-portrait.webp" fetchpriority="high"
+      media="(max-width:720px) and (max-aspect-ratio:10/13)">
 <script>document.documentElement.className = document.documentElement.className.replace('no-js','js');</script>
 </head>
 <body>
@@ -94,8 +100,9 @@
   <div class="chero__stage">
 
     <div class="chero__media">
+      <!-- the poster is set by assets/js/hero/video.js alongside the source it
+           belongs to; the matching preload above is what puts it in cache -->
       <video data-hero-video muted playsinline preload="auto"
-             poster="assets/video/hero-scrub-poster.webp"
              aria-hidden="true" tabindex="-1"></video>
     </div>
 
@@ -737,45 +744,45 @@
          takes the chapter from monochrome to colour -->
     <div class="wrn__film" data-wrn-film aria-hidden="true">
 
-      <figure class="wrn__plate" data-wrn-plate style="--ar:900/1242">
+      <figure class="wrn__plate" data-wrn-plate style="--ar:900/1242; --mar:3/4;  --mpos:50% 42%">
         <img src="assets/img/model/ed-radiant-cheek-900.webp"
              srcset="assets/img/model/ed-radiant-cheek-600.webp 600w, assets/img/model/ed-radiant-cheek-900.webp 900w, assets/img/model/ed-radiant-cheek-1400.webp 1400w"
-             sizes="(max-width:900px) 66vw, 28vw"
+             sizes="(max-width:900px) 100vw, 28vw"
              alt="" width="1400" height="1932" loading="lazy" decoding="async">
       </figure>
 
-      <figure class="wrn__plate" data-wrn-plate style="--ar:760/349">
+      <figure class="wrn__plate" data-wrn-plate style="--ar:760/349; --mar:4/5;  --mpos:56% 50%">
         <img src="assets/img/model/ed-hands-silk-1200.webp"
              srcset="assets/img/model/ed-hands-silk-760.webp 760w, assets/img/model/ed-hands-silk-1200.webp 1200w, assets/img/model/ed-hands-silk-1800.webp 1800w"
-             sizes="(max-width:900px) 66vw, 27vw"
+             sizes="(max-width:900px) 100vw, 27vw"
              alt="" width="1800" height="827" loading="lazy" decoding="async">
       </figure>
 
-      <figure class="wrn__plate" data-wrn-plate style="--ar:760/587">
+      <figure class="wrn__plate" data-wrn-plate style="--ar:760/587; --mar:2/3;  --mpos:60% 44%">
         <img src="assets/img/model/ed-black-coat-hands-1200.webp"
              srcset="assets/img/model/ed-black-coat-hands-760.webp 760w, assets/img/model/ed-black-coat-hands-1200.webp 1200w, assets/img/model/ed-black-coat-hands-1800.webp 1800w"
-             sizes="(max-width:900px) 66vw, 30vw"
+             sizes="(max-width:900px) 100vw, 30vw"
              alt="" width="1800" height="1391" loading="lazy" decoding="async">
       </figure>
 
-      <figure class="wrn__plate" data-wrn-plate style="--ar:900/1317">
+      <figure class="wrn__plate" data-wrn-plate style="--ar:900/1317; --mar:4/5;  --mpos:48% 54%">
         <img src="assets/img/model/ed-oval-shirt-900.webp"
              srcset="assets/img/model/ed-oval-shirt-600.webp 600w, assets/img/model/ed-oval-shirt-900.webp 900w, assets/img/model/ed-oval-shirt-1400.webp 1400w"
-             sizes="(max-width:900px) 34vw, 14vw"
+             sizes="(max-width:900px) 100vw, 14vw"
              alt="" width="1400" height="2049" loading="lazy" decoding="async">
       </figure>
 
-      <figure class="wrn__plate" data-wrn-plate style="--ar:760/587">
+      <figure class="wrn__plate" data-wrn-plate style="--ar:760/587; --mar:3/4;  --mpos:47% 42%">
         <img src="assets/img/model/ed-portrait-red-1200.webp"
              srcset="assets/img/model/ed-portrait-red-760.webp 760w, assets/img/model/ed-portrait-red-1200.webp 1200w, assets/img/model/ed-portrait-red-1800.webp 1800w"
-             sizes="(max-width:900px) 34vw, 16vw"
+             sizes="(max-width:900px) 100vw, 16vw"
              alt="" width="1800" height="1391" loading="lazy" decoding="async">
       </figure>
 
-      <figure class="wrn__plate" data-wrn-plate style="--ar:900/1295">
+      <figure class="wrn__plate" data-wrn-plate style="--ar:900/1295; --mar:9/16; --mpos:58% 40%">
         <img src="assets/img/model/ed-cushion-pinch-900.webp"
              srcset="assets/img/model/ed-cushion-pinch-600.webp 600w, assets/img/model/ed-cushion-pinch-900.webp 900w, assets/img/model/ed-cushion-pinch-1400.webp 1400w"
-             sizes="(max-width:900px) 34vw, 12vw"
+             sizes="(max-width:900px) 100vw, 12vw"
              alt="" width="1400" height="2015" loading="lazy" decoding="async">
       </figure>
 
@@ -930,17 +937,17 @@
 
     <div class="dsp__glow" data-dsp-glow aria-hidden="true"></div>
 
-    <figure class="dsp__case" data-dsp-case style="--ar:1200/1480">
+    <figure class="dsp__case" data-dsp-case style="--ar:1200/1480; --mar:4/5; --mpos:50% 46%">
       <img src="assets/img/model/display-case-a-800.webp"
            srcset="assets/img/model/display-case-a-560.webp 560w, assets/img/model/display-case-a-800.webp 800w, assets/img/model/display-case-a-1200.webp 1200w"
-           sizes="(max-width:900px) 56vw, 27vw"
+           sizes="(max-width:900px) 96vw, 27vw"
            alt="The Centurion Diamond retail display case, angled view"
            width="1200" height="1480" loading="lazy" decoding="async">
     </figure>
-    <figure class="dsp__case" data-dsp-case style="--ar:1200/1479">
+    <figure class="dsp__case" data-dsp-case style="--ar:1200/1479; --mar:4/5; --mpos:50% 46%">
       <img src="assets/img/model/display-case-b-800.webp"
            srcset="assets/img/model/display-case-b-560.webp 560w, assets/img/model/display-case-b-800.webp 800w, assets/img/model/display-case-b-1200.webp 1200w"
-           sizes="(max-width:900px) 56vw, 19vw"
+           sizes="(max-width:900px) 96vw, 19vw"
            alt="The Centurion Diamond retail display case, overhead view"
            width="1200" height="1479" loading="lazy" decoding="async">
     </figure>

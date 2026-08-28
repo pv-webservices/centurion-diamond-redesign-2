@@ -30,6 +30,7 @@ CD.displayVisual = (function () {
       stage:   q('.dsp__stage'),
       glow:    q('[data-dsp-glow]'),
       cases:   all('[data-dsp-case]'),
+      caseImgs: all('[data-dsp-case] img'),
       intro:   q('[data-dsp-intro]'),
       introLn: all('[data-dsp-intro] .dsp__ln > span'),
       scenes:  scenes,
@@ -51,6 +52,13 @@ CD.displayVisual = (function () {
       node.style.setProperty('--w', c.w.toFixed(2) + 'vw');
       node.style.transform =
         'translate3d(' + c.x.toFixed(2) + 'vw,' + c.y.toFixed(2) + 'vh,0)';
+      /* the mask the case opens under, and the push inside its own frame.
+         Written on every frame, narrow or not, so a rotation back to a wide
+         viewport does not leave a phone's mask behind on the element. */
+      node.style.clipPath = f.narrow
+        ? 'inset(' + ((1 - c.k) * 100).toFixed(2) + '% 0 0 0)' : '';
+      el.caseImgs[i].style.transform = f.narrow
+        ? 'scale(' + c.push.toFixed(4) + ')' : '';
     }
 
     el.intro.style.opacity = f.intro.v.toFixed(3);

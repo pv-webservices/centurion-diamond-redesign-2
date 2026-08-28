@@ -81,19 +81,57 @@ CD.worn = {
       home: { x:   9, y:  31, w: 10, r: -2.0 } }
   ],
 
-  /* Narrow viewports show one plate at a time, centred, and gather into a
-     column rather than a spread — the poses above are lateral by design
-     and would shrink to thumbnails. */
+  /* ---------------------------------------------------------------- mobile
+     A phone runs the chapter as a sequence rather than a contact sheet: one
+     photograph owns the frame at a time, in the order the plates appear in
+     the markup, and the copy rides in the negative space of the two it has
+     something to say about. The desktop spread would shrink to thumbnails
+     here — six 12vw plates on a 390px screen are 47px wide — so the same
+     six pictures are given six moments instead of one crowded one.
+
+     Windows are the chapter's own progress space. `w` is vw; the crop
+     itself is `--mar` / `--mpos` on the figure in index.html, so the
+     framing of each photograph is stated next to the photograph.
+
+     `enter` names the reveal. They differ per plate deliberately — a
+     sequence of six identical fades is a slideshow, not a film — but each
+     is one gesture, not a stack of them. */
   mobile: {
-    /* the plates take the top of the frame, the copy the bottom — a lead
-       and its partner offset rather than stacked in one pose */
-    feat: {
-      lead: { x: -4, y: -20, w: 60, r: 0 },
-      sub:  { x: 22, y:   2, w: 30, r: 0 }
+    /* the colour arrives earlier than on desktop: a full-frame photograph
+       held at 12% saturation reads as a fault rather than as an idea */
+    colour: [
+      { p: 0.100, v: 0.00 },
+      { p: 0.300, v: 0.18 },
+      { p: 0.460, v: 0.58 },
+      { p: 0.620, v: 1.00 },
+      { p: 1.000, v: 1.00 }
+    ],
+
+    beats: {
+      intro:  { inA: 0.018, inB: 0.078, outA: 0.098, outB: 0.136 },
+      scenes: [
+        { inA: 0.312, inB: 0.362, outA: 0.392, outB: 0.432 },   // 01 · over the second plate
+        { inA: 0.600, inB: 0.650, outA: 0.680, outB: 0.720 }    // 02 · over the fourth
+      ],
+      /* the closing statement plays over the last plate, which never leaves */
+      gather: { inA: 0.876, inB: 0.928, outA: 0.982, outB: 1.000 },
+      rule:   { inA: 0.900, inB: 0.948, outA: 0.984, outB: 1.000 }
     },
-    /* the gather runs the statement above a 2-wide stack rather than
-       around it: there is no room to ring anything on a phone */
-    grid: { w: 28, gapX: 32, gapY: 21, y0: -6 }
+
+    plates: [
+      { win: { inA: 0.118, inB: 0.186, outA: 0.256, outB: 0.298 },
+        pose: { x: 0, y:  -2, w:  94, r: 0 }, enter: 'clipUp'     },
+      { win: { inA: 0.268, inB: 0.332, outA: 0.402, outB: 0.446 },
+        pose: { x: 0, y: -15, w:  92, r: 0 }, enter: 'slideRight' },   // copy below
+      { win: { inA: 0.414, inB: 0.478, outA: 0.544, outB: 0.588 },
+        pose: { x: 0, y:  -1, w:  96, r: 0 }, enter: 'scale'      },
+      { win: { inA: 0.556, inB: 0.620, outA: 0.688, outB: 0.732 },
+        pose: { x: 0, y:  15, w:  92, r: 0 }, enter: 'slideLeft'  },   // copy above
+      { win: { inA: 0.700, inB: 0.762, outA: 0.822, outB: 0.862 },
+        pose: { x: 0, y:  -1, w:  94, r: 0 }, enter: 'clipDown'   },
+      { win: { inA: 0.830, inB: 0.892, outA: null,  outB: null   },
+        pose: { x: 0, y:   0, w: 100, r: 0 }, enter: 'push'       }    // full bleed, holds
+    ]
   },
 
   /* the plate that leads a scene sits a little proud of its partner */

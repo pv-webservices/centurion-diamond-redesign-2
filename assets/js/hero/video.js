@@ -37,7 +37,10 @@ CD.heroVideo = (function () {
              : w >= 1200 ? 'hero-scrub-1280.mp4'
              : w >= 900  ? 'hero-scrub-960.mp4'
              : 'hero-scrub-720.mp4';
-    if (portrait) v.poster = 'assets/video/hero-scrub-portrait.webp';
+    /* the poster travels with the source: the markup carries none, so only
+       the one this viewport will actually use is ever fetched */
+    v.poster = portrait ? 'assets/video/hero-scrub-portrait.webp'
+                        : 'assets/video/hero-scrub-poster.webp';
     v.src = 'assets/video/' + file;
     return file;
   }
