@@ -242,6 +242,7 @@
     initHeader();
     if (window.CD && CD.initSparkle) CD.initSparkle();
     if (window.CD && CD.initPillars) CD.initPillars();
+    if (window.CD && CD.initCollection) CD.initCollection();
     ScrollTrigger.refresh();
   }
 

@@ -325,131 +325,287 @@
   </div>
 </div>
 
-<!-- ============================================ 06 · COLLECTION (light zone) -->
-<section class="section zone-light" id="collection">
-  <div class="wrap">
-    <div class="coll__head">
-      <div>
-        <div class="label" data-anim="fade"><b>002</b> The Collection</div>
-        <h2 class="d2" style="margin-top:.4em" data-anim="up">Bridal,<br><em class="serif-i">reconsidered</em></h2>
+<!-- ============================================ 06 · THE COLLECTION — the gallery
+     A pinned light zone that opens through the same aperture that closed
+     Anatomy of Brilliance, then travels a horizontal rail of the nine SKUs.
+
+     Every reference, shape, carat, metal and setting weight below is the
+     deck's own — they live here rather than in JS so the catalogue survives
+     with scripting off. Choreography is in assets/js/collection/scenes.js. -->
+<section class="coll" id="collection" aria-labelledby="collTitle">
+  <div class="coll__stage">
+    <div class="coll__grain" data-coll-grain aria-hidden="true"></div>
+
+    <!-- the rail of nine stones and two plates of them worn -->
+    <div class="coll__rail" data-coll-rail>
+
+      <figure class="cl" data-cl="product" data-metal="platinum" data-n="01" data-cut="Radiant">
+        <span class="cl__stone">
+          <img src="assets/img/ring/ring-radiant-3-pt-600.webp"
+               srcset="assets/img/ring/ring-radiant-3-pt-420.webp 420w,
+                       assets/img/ring/ring-radiant-3-pt-600.webp 600w,
+                       assets/img/ring/ring-radiant-3-pt-797.webp 797w"
+               sizes="(max-width:900px) 84vw, 36vw"
+               alt="Radiant-cut 3.00 carat Centurion Diamond ring in platinum"
+               width="797" height="999" loading="lazy" decoding="async">
+        </span>
+        <figcaption class="cl__plate">
+          <span class="cl__sku">RG064179-RA-3</span>
+          <span class="cl__cut">Radiant</span>
+          <span class="cl__ct">3.00 cts</span>
+          <span class="cl__spec">Platinum <i>&middot;</i> 0.63 ctw</span>
+        </figcaption>
+      </figure>
+
+      <figure class="cl" data-cl="product" data-metal="yellow" data-n="02" data-cut="Radiant">
+        <span class="cl__stone">
+          <img src="assets/img/ring/ring-radiant-25-yg-600.webp"
+               srcset="assets/img/ring/ring-radiant-25-yg-420.webp 420w,
+                       assets/img/ring/ring-radiant-25-yg-600.webp 600w,
+                       assets/img/ring/ring-radiant-25-yg-735.webp 735w"
+               sizes="(max-width:900px) 84vw, 36vw"
+               alt="Radiant-cut 2.50 carat Centurion Diamond ring in 14K yellow gold"
+               width="735" height="876" loading="lazy" decoding="async">
+        </span>
+        <figcaption class="cl__plate">
+          <span class="cl__sku">RG056241-RA-2.5</span>
+          <span class="cl__cut">Radiant</span>
+          <span class="cl__ct">2.50 cts</span>
+          <span class="cl__spec">14K Yellow <i>&middot;</i> 0.34 ctw</span>
+        </figcaption>
+      </figure>
+
+      <figure class="cl cl--life" data-cl="life" data-n="" data-cut="In wear">
+        <span class="cl__frame">
+          <img src="assets/img/model/ed-hands-rings-900.webp"
+               srcset="assets/img/model/ed-hands-rings-600.webp 600w,
+                       assets/img/model/ed-hands-rings-900.webp 900w,
+                       assets/img/model/ed-hands-rings-1400.webp 1400w"
+               sizes="(max-width:900px) 92vw, 40vw"
+               alt="Model wearing five Centurion Diamond rings across both hands"
+               width="1400" height="2231" loading="lazy" decoding="async">
+        </span>
+        <figcaption class="cl__plate cl__plate--life">
+          <span class="cl__sku">The collection, worn</span>
+        </figcaption>
+      </figure>
+
+      <figure class="cl" data-cl="product" data-metal="two-tone" data-n="03" data-cut="Oval">
+        <span class="cl__stone">
+          <img src="assets/img/ring/ring-oval-25-tt-600.webp"
+               srcset="assets/img/ring/ring-oval-25-tt-420.webp 420w,
+                       assets/img/ring/ring-oval-25-tt-600.webp 600w,
+                       assets/img/ring/ring-oval-25-tt-738.webp 738w"
+               sizes="(max-width:900px) 84vw, 36vw"
+               alt="Oval-cut 2.50 carat Centurion Diamond ring in 14K two tone gold"
+               width="738" height="899" loading="lazy" decoding="async">
+        </span>
+        <figcaption class="cl__plate">
+          <span class="cl__sku">RG064180OV2.5HE</span>
+          <span class="cl__cut">Oval</span>
+          <span class="cl__ct">2.50 cts</span>
+          <span class="cl__spec">14K Two Tone <i>&middot;</i> 0.54 ctw</span>
+        </figcaption>
+      </figure>
+
+      <figure class="cl" data-cl="product" data-metal="platinum" data-n="04" data-cut="Emerald" style="--fit:1.16">
+        <span class="cl__stone">
+          <img src="assets/img/ring/ring-emerald-2-pt-600.webp"
+               srcset="assets/img/ring/ring-emerald-2-pt-420.webp 420w,
+                       assets/img/ring/ring-emerald-2-pt-600.webp 600w,
+                       assets/img/ring/ring-emerald-2-pt-900.webp 900w"
+               sizes="(max-width:900px) 84vw, 36vw"
+               alt="Emerald-cut 2.00 carat Centurion Diamond three stone ring in platinum"
+               width="900" height="648" loading="lazy" decoding="async">
+        </span>
+        <figcaption class="cl__plate">
+          <span class="cl__sku">RG064181-EM-2</span>
+          <span class="cl__cut">Emerald</span>
+          <span class="cl__ct">2.00 cts</span>
+          <span class="cl__spec">Platinum <i>&middot;</i> 1.00 ctw</span>
+        </figcaption>
+      </figure>
+
+      <figure class="cl" data-cl="product" data-metal="two-tone" data-n="05" data-cut="Oval" style="--fit:1.10">
+        <span class="cl__stone">
+          <img src="assets/img/ring/ring-oval-2-tt-600.webp"
+               srcset="assets/img/ring/ring-oval-2-tt-420.webp 420w,
+                       assets/img/ring/ring-oval-2-tt-600.webp 600w,
+                       assets/img/ring/ring-oval-2-tt-900.webp 900w"
+               sizes="(max-width:900px) 84vw, 36vw"
+               alt="Oval-cut 2.00 carat Centurion Diamond ring in 14K two tone gold"
+               width="900" height="718" loading="lazy" decoding="async">
+        </span>
+        <figcaption class="cl__plate">
+          <span class="cl__sku">RG055381-OV-2</span>
+          <span class="cl__cut">Oval</span>
+          <span class="cl__ct">2.00 cts</span>
+          <span class="cl__spec">14K Two Tone <i>&middot;</i> 0.45 ctw</span>
+        </figcaption>
+      </figure>
+
+      <figure class="cl cl--life" data-cl="life" data-n="" data-cut="In wear">
+        <span class="cl__frame">
+          <img src="assets/img/model/ed-radiant-collar-900.webp"
+               srcset="assets/img/model/ed-radiant-collar-600.webp 600w,
+                       assets/img/model/ed-radiant-collar-900.webp 900w,
+                       assets/img/model/ed-radiant-collar-1400.webp 1400w"
+               sizes="(max-width:900px) 92vw, 40vw"
+               alt="Model wearing a radiant-cut Centurion Diamond ring at the collarbone"
+               width="1400" height="2049" loading="lazy" decoding="async">
+        </span>
+        <figcaption class="cl__plate cl__plate--life">
+          <span class="cl__sku">In the softest light</span>
+        </figcaption>
+      </figure>
+
+      <figure class="cl" data-cl="product" data-metal="platinum" data-n="06" data-cut="Oval" style="--fit:.98">
+        <span class="cl__stone">
+          <img src="assets/img/ring/ring-oval-25-pt-600.webp"
+               srcset="assets/img/ring/ring-oval-25-pt-420.webp 420w,
+                       assets/img/ring/ring-oval-25-pt-600.webp 600w,
+                       assets/img/ring/ring-oval-25-pt-802.webp 802w"
+               sizes="(max-width:900px) 84vw, 36vw"
+               alt="Oval-cut 2.50 carat Centurion Diamond solitaire in platinum"
+               width="802" height="1035" loading="lazy" decoding="async">
+        </span>
+        <figcaption class="cl__plate">
+          <span class="cl__sku">RG055388-OV-3</span>
+          <span class="cl__cut">Oval</span>
+          <span class="cl__ct">2.50 cts</span>
+          <span class="cl__spec">Platinum <i>&middot;</i> 0.096 ctw</span>
+        </figcaption>
+      </figure>
+
+      <figure class="cl" data-cl="product" data-metal="platinum" data-n="07" data-cut="Round" style="--fit:1.08">
+        <span class="cl__stone">
+          <img src="assets/img/ring/ring-round-2-pt-600.webp"
+               srcset="assets/img/ring/ring-round-2-pt-420.webp 420w,
+                       assets/img/ring/ring-round-2-pt-600.webp 600w,
+                       assets/img/ring/ring-round-2-pt-900.webp 900w"
+               sizes="(max-width:900px) 84vw, 36vw"
+               alt="Round brilliant 2.00 carat Centurion Diamond ring in platinum"
+               width="900" height="764" loading="lazy" decoding="async">
+        </span>
+        <figcaption class="cl__plate">
+          <span class="cl__sku">RG064182RD2HE</span>
+          <span class="cl__cut">Round</span>
+          <span class="cl__ct">2.00 cts</span>
+          <span class="cl__spec">Platinum <i>&middot;</i> 0.32 ctw</span>
+        </figcaption>
+      </figure>
+
+      <figure class="cl" data-cl="product" data-metal="platinum" data-n="08" data-cut="Radiant" style="--fit:1.08">
+        <span class="cl__stone">
+          <img src="assets/img/ring/ring-radiant-3-pt-b-600.webp"
+               srcset="assets/img/ring/ring-radiant-3-pt-b-420.webp 420w,
+                       assets/img/ring/ring-radiant-3-pt-b-600.webp 600w,
+                       assets/img/ring/ring-radiant-3-pt-b-900.webp 900w"
+               sizes="(max-width:900px) 84vw, 36vw"
+               alt="Radiant-cut 3.00 carat Centurion Diamond ring with graduated band in platinum"
+               width="900" height="777" loading="lazy" decoding="async">
+        </span>
+        <figcaption class="cl__plate">
+          <span class="cl__sku">RG059659-RD-3</span>
+          <span class="cl__cut">Radiant</span>
+          <span class="cl__ct">3.00 cts</span>
+          <span class="cl__spec">Platinum <i>&middot;</i> 0.95 ctw</span>
+        </figcaption>
+      </figure>
+
+      <figure class="cl" data-cl="product" data-metal="two-tone" data-n="09" data-cut="Cushion" style="--fit:.98">
+        <span class="cl__stone">
+          <img src="assets/img/ring/ring-cushion-3-tt-600.webp"
+               srcset="assets/img/ring/ring-cushion-3-tt-420.webp 420w,
+                       assets/img/ring/ring-cushion-3-tt-600.webp 600w,
+                       assets/img/ring/ring-cushion-3-tt-731.webp 731w"
+               sizes="(max-width:900px) 84vw, 36vw"
+               alt="Cushion-cut 3.00 carat Centurion Diamond ring in 14K two tone gold"
+               width="731" height="987" loading="lazy" decoding="async">
+        </span>
+        <figcaption class="cl__plate">
+          <span class="cl__sku">RG055388-CU10.0</span>
+          <span class="cl__cut">Cushion</span>
+          <span class="cl__ct">3.00 cts</span>
+          <span class="cl__spec">14K Two Tone <i>&middot;</i> 0.09 ctw</span>
+        </figcaption>
+      </figure>
+
+    </div>
+
+    <!-- opening -->
+    <header class="coll__intro" data-coll-intro>
+      <div class="coll__introL">
+        <p class="coll__eyebrow"><i></i><b>02</b><span>The Collection</span></p>
+        <h2 class="coll__h2" id="collTitle">
+          <span class="coll__ln"><span>Bridal,</span></span>
+          <span class="coll__ln"><span class="is-em">reconsidered</span></span>
+        </h2>
       </div>
-      <p class="body-sm" style="max-width:38ch" data-anim="up">
+      <p class="coll__lede">
         Built exclusively in Platinum and 14K gold. Every centre stone is a
         100-facet Centurion Diamond.
       </p>
+    </header>
+
+    <!-- the gallery holds while this takes the frame -->
+    <div class="coll__stmt" data-coll-stmt>
+      <p class="coll__stmtT">
+        <span class="coll__ln"><span>Every centre stone</span></span>
+        <span class="coll__ln"><span>is a <em class="is-em">100-facet</em></span></span>
+        <span class="coll__ln"><span>Centurion Diamond.</span></span>
+      </p>
     </div>
 
-    <div class="coll__grid" id="collGrid">
-
-      <article class="card" data-anim="up">
-        <div class="card__plinth">
-          <div class="card__glow"></div>
-          <img src="assets/img/ring/ring-radiant-3-pt-766.webp"
-               srcset="assets/img/ring/ring-radiant-3-pt-420.webp 420w, assets/img/ring/ring-radiant-3-pt-600.webp 600w, assets/img/ring/ring-radiant-3-pt-766.webp 766w, assets/img/ring/ring-radiant-3-pt-797.webp 797w"
-               sizes="(max-width:600px) 90vw, (max-width:1000px) 44vw, 30vw"
-               alt="Radiant-cut 3.00 carat Centurion Diamond ring in platinum" loading="lazy" decoding="async" width="797" height="999">
-        </div>
-        <div class="card__meta"><span class="card__sku">RG064179-RA-3</span><span class="card__cut">Radiant</span></div>
-        <div class="card__spec"><span>3.00 cts</span><span>Platinum</span><span>0.63 ctw</span></div>
-      </article>
-
-      <article class="card" data-anim="up">
-        <div class="card__plinth">
-          <div class="card__glow"></div>
-          <img src="assets/img/ring/ring-radiant-25-yg-704.webp"
-               srcset="assets/img/ring/ring-radiant-25-yg-420.webp 420w, assets/img/ring/ring-radiant-25-yg-600.webp 600w, assets/img/ring/ring-radiant-25-yg-704.webp 704w, assets/img/ring/ring-radiant-25-yg-735.webp 735w"
-               sizes="(max-width:600px) 90vw, (max-width:1000px) 44vw, 30vw"
-               alt="Radiant-cut 2.50 carat Centurion Diamond ring in 14K yellow gold" loading="lazy" decoding="async" width="735" height="876">
-        </div>
-        <div class="card__meta"><span class="card__sku">RG056241-RA-2.5</span><span class="card__cut">Radiant</span></div>
-        <div class="card__spec"><span>2.50 cts</span><span>14K Yellow</span><span>0.34 ctw</span></div>
-      </article>
-
-      <article class="card" data-anim="up">
-        <div class="card__plinth">
-          <div class="card__glow"></div>
-          <img src="assets/img/ring/ring-oval-25-tt-707.webp"
-               srcset="assets/img/ring/ring-oval-25-tt-420.webp 420w, assets/img/ring/ring-oval-25-tt-600.webp 600w, assets/img/ring/ring-oval-25-tt-707.webp 707w, assets/img/ring/ring-oval-25-tt-738.webp 738w"
-               sizes="(max-width:600px) 90vw, (max-width:1000px) 44vw, 30vw"
-               alt="Oval-cut 2.50 carat Centurion Diamond ring in 14K two tone gold" loading="lazy" decoding="async" width="738" height="899">
-        </div>
-        <div class="card__meta"><span class="card__sku">RG064180OV2.5HE</span><span class="card__cut">Oval</span></div>
-        <div class="card__spec"><span>2.50 cts</span><span>14K Two Tone</span><span>0.54 ctw</span></div>
-      </article>
-
-      <article class="card" data-anim="up">
-        <div class="card__plinth">
-          <div class="card__glow"></div>
-          <img src="assets/img/ring/ring-emerald-2-pt-786.webp"
-               srcset="assets/img/ring/ring-emerald-2-pt-420.webp 420w, assets/img/ring/ring-emerald-2-pt-600.webp 600w, assets/img/ring/ring-emerald-2-pt-786.webp 786w, assets/img/ring/ring-emerald-2-pt-900.webp 900w"
-               sizes="(max-width:600px) 90vw, (max-width:1000px) 44vw, 30vw"
-               alt="Emerald-cut 2.00 carat Centurion Diamond three stone ring in platinum" loading="lazy" decoding="async" width="900" height="648">
-        </div>
-        <div class="card__meta"><span class="card__sku">RG064181-EM-2</span><span class="card__cut">Emerald</span></div>
-        <div class="card__spec"><span>2.00 cts</span><span>Platinum</span><span>1.00 ctw</span></div>
-      </article>
-
-      <article class="card" data-anim="up">
-        <div class="card__plinth">
-          <div class="card__glow"></div>
-          <img src="assets/img/ring/ring-oval-2-tt-739.webp"
-               srcset="assets/img/ring/ring-oval-2-tt-420.webp 420w, assets/img/ring/ring-oval-2-tt-600.webp 600w, assets/img/ring/ring-oval-2-tt-739.webp 739w, assets/img/ring/ring-oval-2-tt-900.webp 900w"
-               sizes="(max-width:600px) 90vw, (max-width:1000px) 44vw, 30vw"
-               alt="Oval-cut 2.00 carat Centurion Diamond ring in 14K two tone gold" loading="lazy" decoding="async" width="900" height="718">
-        </div>
-        <div class="card__meta"><span class="card__sku">RG055381-OV-2</span><span class="card__cut">Oval</span></div>
-        <div class="card__spec"><span>2.00 cts</span><span>14K Two Tone</span><span>0.45 ctw</span></div>
-      </article>
-
-      <article class="card" data-anim="up">
-        <div class="card__plinth">
-          <div class="card__glow"></div>
-          <img src="assets/img/ring/ring-oval-25-pt-759.webp"
-               srcset="assets/img/ring/ring-oval-25-pt-420.webp 420w, assets/img/ring/ring-oval-25-pt-600.webp 600w, assets/img/ring/ring-oval-25-pt-759.webp 759w, assets/img/ring/ring-oval-25-pt-802.webp 802w"
-               sizes="(max-width:600px) 90vw, (max-width:1000px) 44vw, 30vw"
-               alt="Oval-cut 2.50 carat Centurion Diamond solitaire in platinum" loading="lazy" decoding="async" width="802" height="1035">
-        </div>
-        <div class="card__meta"><span class="card__sku">RG055388-OV-3</span><span class="card__cut">Oval</span></div>
-        <div class="card__spec"><span>2.50 cts</span><span>Platinum</span><span>0.096 ctw</span></div>
-      </article>
-
-      <article class="card" data-anim="up">
-        <div class="card__plinth">
-          <div class="card__glow"></div>
-          <img src="assets/img/ring/ring-round-2-pt-772.webp"
-               srcset="assets/img/ring/ring-round-2-pt-420.webp 420w, assets/img/ring/ring-round-2-pt-600.webp 600w, assets/img/ring/ring-round-2-pt-772.webp 772w, assets/img/ring/ring-round-2-pt-900.webp 900w"
-               sizes="(max-width:600px) 90vw, (max-width:1000px) 44vw, 30vw"
-               alt="Round brilliant 2.00 carat Centurion Diamond ring in platinum" loading="lazy" decoding="async" width="900" height="764">
-        </div>
-        <div class="card__meta"><span class="card__sku">RG064182RD2HE</span><span class="card__cut">Round</span></div>
-        <div class="card__spec"><span>2.00 cts</span><span>Platinum</span><span>0.32 ctw</span></div>
-      </article>
-
-      <article class="card" data-anim="up">
-        <div class="card__plinth">
-          <div class="card__glow"></div>
-          <img src="assets/img/ring/ring-radiant-3-pt-b-739.webp"
-               srcset="assets/img/ring/ring-radiant-3-pt-b-420.webp 420w, assets/img/ring/ring-radiant-3-pt-b-600.webp 600w, assets/img/ring/ring-radiant-3-pt-b-739.webp 739w, assets/img/ring/ring-radiant-3-pt-b-900.webp 900w"
-               sizes="(max-width:600px) 90vw, (max-width:1000px) 44vw, 30vw"
-               alt="Radiant-cut 3.00 carat Centurion Diamond ring with graduated band in platinum" loading="lazy" decoding="async" width="900" height="777">
-        </div>
-        <div class="card__meta"><span class="card__sku">RG059659-RD-3</span><span class="card__cut">Radiant</span></div>
-        <div class="card__spec"><span>3.00 cts</span><span>Platinum</span><span>0.95 ctw</span></div>
-      </article>
-
-      <article class="card" data-anim="up">
-        <div class="card__plinth">
-          <div class="card__glow"></div>
-          <img src="assets/img/ring/ring-cushion-3-tt-700.webp"
-               srcset="assets/img/ring/ring-cushion-3-tt-420.webp 420w, assets/img/ring/ring-cushion-3-tt-600.webp 600w, assets/img/ring/ring-cushion-3-tt-700.webp 700w, assets/img/ring/ring-cushion-3-tt-731.webp 731w"
-               sizes="(max-width:600px) 90vw, (max-width:1000px) 44vw, 30vw"
-               alt="Cushion-cut 3.00 carat Centurion Diamond ring in 14K two tone gold" loading="lazy" decoding="async" width="731" height="987">
-        </div>
-        <div class="card__meta"><span class="card__sku">RG055388-CU10.0</span><span class="card__cut">Cushion</span></div>
-        <div class="card__spec"><span>3.00 cts</span><span>14K Two Tone</span><span>0.09 ctw</span></div>
-      </article>
-
+    <!-- material families — editorial selectors, not availability filters -->
+    <div class="coll__metals" data-coll-metals>
+      <p class="coll__metalsL">Material</p>
+      <button type="button" data-metal="all" aria-pressed="true">All nine</button>
+      <button type="button" data-metal="platinum" aria-pressed="false">Platinum</button>
+      <button type="button" data-metal="yellow" aria-pressed="false">14K Yellow</button>
+      <button type="button" data-metal="two-tone" aria-pressed="false">Two Tone</button>
     </div>
+
+    <!-- counter, progress rule, and the two small controls -->
+    <div class="coll__nav" data-coll-nav>
+      <button class="coll__arw" type="button" data-coll-prev aria-label="Previous piece"><i></i></button>
+      <span class="coll__count" data-coll-count><b data-coll-i>01</b><i>/</i><s>09</s></span>
+      <span class="coll__now" data-coll-cut>Radiant</span>
+      <span class="coll__bar"><i data-coll-bar></i></span>
+      <button class="coll__arw coll__arw--n" type="button" data-coll-next aria-label="Next piece"><i></i></button>
+    </div>
+
+    <!-- the last frame -->
+    <div class="coll__final" data-coll-final>
+      <span class="coll__hero" aria-hidden="true">
+        <img src="assets/img/ring/ring-radiant-3-pt-600.webp"
+             srcset="assets/img/ring/ring-radiant-3-pt-420.webp 420w,
+                     assets/img/ring/ring-radiant-3-pt-600.webp 600w,
+                     assets/img/ring/ring-radiant-3-pt-797.webp 797w"
+             sizes="(max-width:900px) 74vw, 26vw"
+             alt="" width="797" height="999" loading="lazy" decoding="async">
+      </span>
+      <p class="coll__finalT">
+        <span class="coll__ln"><span>The Centurion Collection</span></span>
+        <span class="coll__ln"><span class="is-em">Discover every design.</span></span>
+      </p>
+      <a class="coll__cta" href="#worn" data-coll-cta>
+        <span class="dot"></span> Explore the collection
+        <i aria-hidden="true">&rarr;</i>
+      </a>
+    </div>
+
+    <!-- the aperture from Anatomy of Brilliance, run in reverse -->
+    <svg class="coll__iris" data-coll-iris aria-hidden="true" focusable="false"
+         viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+      <mask id="collIris" maskUnits="userSpaceOnUse" x="-10" y="-10" width="120" height="120">
+        <rect x="-10" y="-10" width="120" height="120" fill="#fff"/>
+        <circle class="coll__ir" cx="50" cy="50" r="50" fill="#000"/>
+      </mask>
+      <rect x="-10" y="-10" width="120" height="120" fill="#0A0A0B" mask="url(#collIris)"/>
+      <circle class="coll__ir" cx="50" cy="50" r="50" fill="none"
+              stroke="rgba(216,201,182,.45)" stroke-width=".55"/>
+    </svg>
   </div>
 </section>
 
@@ -653,6 +809,10 @@
 <script defer src="assets/js/pillars/timeline.js"></script>
 <script defer src="assets/js/pillars/visual.js"></script>
 <script defer src="assets/js/pillars/index.js"></script>
+<script defer src="assets/js/collection/scenes.js"></script>
+<script defer src="assets/js/collection/timeline.js"></script>
+<script defer src="assets/js/collection/visual.js"></script>
+<script defer src="assets/js/collection/index.js"></script>
 <script defer src="assets/js/main.js"></script>
 </body>
 </html>

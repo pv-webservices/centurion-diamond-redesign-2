@@ -46,7 +46,7 @@ The page is built as an argument, not a brochure — each section advances one c
 | 03 | **Anatomy of Brilliance** | Pinned 400vh. The four benefits, one owning the viewport at a time, closing on an aperture into the Light Study |
 | 04 | Light Study | Pinned video — "light enters, light returns" |
 | 05 | Marquee | Oversized horizontal type |
-| 06 | **Collection** | Light zone. All 9 SKUs with real specs |
+| 06 | **The Collection** | Pinned 480vh light zone. The aperture reopens onto a horizontal gallery of all 9 SKUs |
 | 07 | Worn | Alternating editorial spreads |
 | 08 | Metals | Platinum / 14K Yellow / Two Tone |
 | 09 | Display | The periwinkle retail case |
@@ -161,6 +161,42 @@ Mobile drops the left/right composition for a centred column: type above, stone
 below, one benefit at a time. Reduced motion drops the pin entirely and renders the
 chapter as an ordinary bright editorial run, stone included, in document order.
 
+### 06 · The Collection
+
+A pinned 480vh light zone between two dark sections. It opens through the same
+SVG-mask aperture that closes Anatomy of Brilliance, run in reverse: the Marquee
+above ends on the page's ink, a circle of light widens out of it, and the first
+stone is already standing in the middle of it as the room fills.
+
+Vertical scroll drives travel along a horizontal rail of eleven plates — the nine
+SKUs and two lifestyle interludes. The active piece takes the centre at full
+scale; its neighbours sit smaller, lower, tilted and clipped by the viewport
+edges. A lifestyle plate is wider than the rail's pitch, so it overlaps the
+stones either side while it holds the centre, and it recedes on a steeper curve
+than a ring does — a full-colour photograph holds the eye far harder than a ring
+on ivory.
+
+**Every ring photograph ships on white.** They are dropped onto the page with
+`mix-blend-mode: multiply`, but each slot carries its own animated transform,
+which isolates it from the page backdrop. So every plate paints the stage's own
+colour behind its ring, published by the renderer as `--ground`. That is also
+what makes the handoff work: as the ground darkens into the Worn section, the
+rings dissolve into it rather than sitting on it.
+
+Halfway along, the rail holds still and the frame is taken by *Every centre stone
+is a 100-facet Centurion Diamond.* The hold and the statement are derived from
+the same numbers, so they can never drift apart. The material families arrive in
+the second half as editorial selectors, not filters: choosing one dims what does
+not belong to it, travels to the nearest piece in that family, and shows how many
+pieces it actually holds — counts read from the markup, so they can never
+disagree with the catalogue. Nothing implies anything about availability.
+
+Product data lives in `index.html` — references, shapes, carats, metals and
+setting weights, straight from the deck. Choreography is in
+`assets/js/collection/scenes.js`. Narrow viewports drop the rail for a vertical
+column, one piece at a time, each plate on its own scrubbed trigger; reduced
+motion and no-JS render the whole catalogue in document flow.
+
 ## Motion
 
 GSAP 3.15 + ScrollTrigger + Lenis smooth scroll, all vendored into
@@ -168,7 +204,7 @@ GSAP 3.15 + ScrollTrigger + Lenis smooth scroll, all vendored into
 
 `assets/js/main.js` covers the remaining sections: preloader, cursor, scroll reveals,
 marquee, image parallax, stat counters, video play-in-view and the header menu. The
-hero, the Sparkle section and Anatomy of Brilliance each own their own modules.
+hero, the Sparkle section, Anatomy of Brilliance and the Collection each own their own modules.
 
 Reveals are declarative — add `data-anim="up|fade|left|right|scale|clip"` to any
 element and it animates in on scroll, with siblings staggering automatically.

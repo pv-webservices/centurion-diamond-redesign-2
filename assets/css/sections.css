@@ -888,40 +888,420 @@
 .marq__track em{ font-style:normal; color:transparent; -webkit-text-stroke:1px var(--rule); }
 .marq__track b{ font-weight:400; color:var(--accent); font-size:.3em; transform:translateY(-.5em); }
 
-/* ---------------------------------------------- COLLECTION */
-.coll__head{ display:flex; align-items:flex-end; justify-content:space-between;
-  gap:2rem; flex-wrap:wrap; margin-bottom:clamp(40px,5.4vw,86px); }
-.coll__grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.9vw,30px); }
-@media (max-width:1000px){ .coll__grid{ grid-template-columns:repeat(2,1fr); } }
-@media (max-width:600px){ .coll__grid{ grid-template-columns:1fr; } }
+/* ============================================================
+   06 · THE COLLECTION — the gallery.
+   A lit room between two dark sections. The stage's ground is driven from
+   JS across the ramp and published as `--ground`; every product plate
+   paints that same colour behind its ring, which is what lets the white
+   product photography sit on the page with `mix-blend-mode: multiply`
+   even though each slot carries its own animated transform.
+   ============================================================ */
+.coll{
+  --ground:#F3F0E9;                    /* written by JS, mirrored below */
+  --coll-ink:#1C1B19;
+  --coll-dim:rgba(28,27,25,.60);
+  --coll-faint:rgba(28,27,25,.32);
+  --coll-rule:rgba(28,27,25,.14);
+  --coll-champagne:#B9A88C;
 
-.card{ position:relative; display:block; }
-.card__plinth{
-  position:relative; aspect-ratio:4/4.4; overflow:hidden;
-  background:linear-gradient(168deg,#FBFAF7 0%, #F1EDE4 54%, #E4DDD0 100%);
-  display:grid; place-items:center;
+  --pitch:42vw;                        /* distance between slot centres */
+  --stone-w:32vw;
+  --stone-h:51vh;
+
+  position:relative; height:480vh; background:var(--ink);
 }
-/* product shots ship on white — multiply drops the white ground onto the
-   plinth gradient while keeping metal and facet detail intact */
-.card__plinth img{
-  width:86%; height:86%; object-fit:contain;
+.coll__stage{
+  position:relative; height:100svh; width:100%; overflow:hidden;
+  background:var(--ground); color:var(--coll-ink);
+}
+.coll__grain{
+  position:absolute; inset:-120%; z-index:2; pointer-events:none;
+  opacity:.075; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='.5'/></svg>");
+  animation:grain 7s steps(6) infinite;
+}
+
+/* ---------------------------------------------- the rail */
+.coll__rail{
+  position:absolute; z-index:3; top:50%; left:50%;
+  margin-left:calc(var(--pitch) / -2);
+  display:flex; align-items:center;
+  will-change:transform;
+}
+.cl{
+  position:relative; flex:0 0 auto; margin:0;
+  width:var(--pitch); display:flex; flex-direction:column; align-items:center;
+  will-change:transform,opacity;
+}
+
+/* the plinth. Its fill is the stage's own ground, so the rectangle is
+   invisible — but it gives the multiply a backdrop inside the slot's own
+   stacking context, which the animated transform would otherwise cut off. */
+.cl__stone{
+  position:relative; display:block;
+  width:calc(var(--stone-w) * var(--fit, 1));
+  height:calc(var(--stone-h) * var(--fit, 1));
+  background:var(--ground);
+}
+/* a breath of ambient light under each piece, which the white ground of the
+   photograph lets through when it multiplies */
+.cl__stone::before{
+  content:""; position:absolute; left:50%; top:56%; translate:-50% -50%;
+  width:82%; aspect-ratio:1.6; border-radius:50%;
+  background:radial-gradient(closest-side, rgba(198,186,168,.5), transparent 72%);
+}
+.cl__stone img{
+  position:relative; width:100%; height:100%; object-fit:contain;
   mix-blend-mode:multiply;
-  transition:transform 1s var(--ease);
 }
-.card:hover .card__plinth img{ transform:scale(1.07) translateY(-1.5%); }
-.card__glow{
-  position:absolute; left:50%; top:46%; translate:-50% -50%;
-  width:64%; aspect-ratio:1; border-radius:50%;
-  background:radial-gradient(circle, rgba(204,156,156,.36), transparent 66%);
-  opacity:0; transition:opacity .8s var(--ease); pointer-events:none;
+
+/* --- the museum plate --- */
+.cl__plate{
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  margin-top:clamp(16px,2.2vh,30px); gap:.16em;
 }
-.card:hover .card__glow{ opacity:1; }
-.card__meta{ display:flex; justify-content:space-between; align-items:baseline;
-  gap:1rem; padding-top:clamp(12px,1.4vw,20px); border-top:1px solid var(--rule); margin-top:clamp(12px,1.4vw,18px); }
-.card__sku{ font-size:clamp(10px,.82vw,11.5px); letter-spacing:.16em; text-transform:uppercase; font-weight:500; }
-.card__cut{ font-family:var(--display); font-size:clamp(.95rem,1.15vw,1.2rem); }
-.card__spec{ display:flex; gap:1.4em; padding-top:.6em; font-size:10.5px;
-  letter-spacing:.14em; text-transform:uppercase; color:var(--fg-faint); }
+.cl__plate > *{ display:block; will-change:transform,opacity; }
+.cl__sku{
+  font-size:clamp(8.5px,.62vw,10px); font-weight:500;
+  letter-spacing:.3em; text-transform:uppercase; color:var(--coll-faint);
+}
+.cl__cut{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(2rem,3.9vw,4.6rem); line-height:1;
+  letter-spacing:-.03em; text-transform:uppercase; margin-top:.16em;
+}
+.cl__ct{
+  font-family:var(--display); font-size:clamp(1rem,1.32vw,1.42rem);
+  color:var(--rose-dp); letter-spacing:.02em; margin-top:.2em;
+}
+.cl__spec{
+  font-size:clamp(8.5px,.66vw,10.5px); font-weight:500;
+  letter-spacing:.26em; text-transform:uppercase; color:var(--coll-dim);
+  margin-top:1em;
+}
+.cl__spec i{ font-style:normal; color:var(--coll-champagne); margin-inline:.3em; }
+
+/* --- the lifestyle plates: wider than the pitch, so they overlap the
+       stones either side while they hold the centre --- */
+.cl--life{ width:var(--pitch); }
+.cl--life .cl__frame{
+  position:relative; display:block;
+  width:min(44vw,640px); height:66vh; overflow:hidden;
+}
+.cl--life img{
+  width:100%; height:100%; object-fit:cover; object-position:center 38%;
+  -webkit-mask-image:radial-gradient(ellipse 108% 106% at 50% 50%, #000 84%, transparent 100%);
+          mask-image:radial-gradient(ellipse 108% 106% at 50% 50%, #000 84%, transparent 100%);
+}
+.cl__plate--life{ margin-top:clamp(14px,2vh,24px); }
+.cl__plate--life .cl__sku{ letter-spacing:.36em; color:var(--coll-dim); }
+
+/* ---------------------------------------------- opening */
+.coll__intro{
+  position:absolute; z-index:5; inset:0;
+  padding:clamp(90px,16vh,180px) calc(var(--rail) + var(--gut)) 0;
+  display:grid; grid-template-columns:1.15fr .85fr; align-items:start;
+  gap:clamp(24px,5vw,90px);
+  pointer-events:none; will-change:transform,opacity;
+}
+.coll__eyebrow{
+  display:flex; align-items:center; gap:.85em;
+  font-size:clamp(9px,.66vw,10.5px); font-weight:500;
+  letter-spacing:.42em; text-transform:uppercase; color:var(--coll-faint);
+  margin-bottom:clamp(18px,2.6vh,34px);
+}
+.coll__eyebrow i{ width:clamp(22px,3vw,54px); height:1px; background:currentColor; opacity:.45; }
+.coll__eyebrow b{ font-weight:500; color:var(--coll-champagne); }
+.coll__h2{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(3rem,8.2vw,8.6rem); line-height:.92;
+  letter-spacing:-.038em; text-transform:uppercase;
+}
+.coll__ln{ display:block; overflow:hidden; padding-block:.06em; margin-block:-.06em; }
+.coll__ln > span{ display:block; will-change:transform; }
+.is-em{ font-style:italic; color:var(--rose-dp); text-transform:none; }
+.coll__lede{
+  align-self:end; max-width:36ch; padding-bottom:.6em;
+  font-size:clamp(.92rem,1.05vw,1.08rem); line-height:1.74;
+  color:var(--coll-dim); text-wrap:pretty; will-change:transform,opacity;
+}
+
+/* ---------------------------------------------- the statement */
+.coll__stmt{
+  position:absolute; z-index:6; inset:0; display:grid; place-items:center;
+  padding-inline:calc(var(--rail) + var(--gut)); pointer-events:none;
+}
+.coll__stmtT{
+  font-family:var(--display); font-weight:400; text-align:center;
+  font-size:clamp(2.1rem,6.4vw,6.8rem); line-height:.98;
+  letter-spacing:-.038em; text-transform:uppercase;
+}
+
+/* ---------------------------------------------- material families */
+.coll__metals{
+  position:absolute; z-index:7; left:calc(var(--rail) + var(--gut));
+  bottom:clamp(92px,15vh,150px);
+  display:flex; flex-direction:column; align-items:flex-start; gap:.36em;
+  isolation:isolate;
+}
+/* a feathered wash of the live ground — invisible on bare ivory, and enough
+   to hold the type when a photographic plate drifts behind it */
+.coll__metals::before{
+  content:""; position:absolute; z-index:-1; inset:-40% -60% -30% -80%;
+  background:radial-gradient(ellipse at 34% 56%, var(--ground) 46%, transparent 82%);
+  pointer-events:none;
+}
+.coll__metalsL{
+  font-size:clamp(8.5px,.62vw,10px); font-weight:500;
+  letter-spacing:.36em; text-transform:uppercase; color:var(--coll-faint);
+  margin-bottom:.5em;
+}
+.coll__metals button{
+  border:0; background:none; padding:.12em 0; cursor:pointer;
+  font-family:var(--display); font-size:clamp(.95rem,1.32vw,1.42rem);
+  line-height:1.24; letter-spacing:-.01em; color:var(--coll-dim);
+  transition:color .45s var(--ease), opacity .45s var(--ease);
+  position:relative;
+}
+.coll__metals button::after{
+  content:""; position:absolute; left:0; right:0; bottom:.16em; height:1px;
+  background:var(--rose-dp); transform:scaleX(0); transform-origin:right;
+  transition:transform .5s var(--ease);
+}
+/* how many pieces the family actually holds — read from the markup */
+.coll__metalsN{
+  text-decoration:none; font-family:var(--sans);
+  font-size:.42em; font-weight:500; letter-spacing:.14em;
+  color:var(--coll-faint); margin-left:.7em; vertical-align:.45em;
+}
+.coll__metals button[aria-pressed="true"] .coll__metalsN{ color:var(--rose-dp); }
+.coll__metals button:hover{ color:var(--coll-ink); }
+.coll__metals button:hover::after,
+.coll__metals button[aria-pressed="true"]::after{ transform:scaleX(1); transform-origin:left; }
+.coll__metals button[aria-pressed="true"]{ color:var(--coll-ink); }
+
+/* ---------------------------------------------- counter + progress rule */
+.coll__nav{
+  position:absolute; z-index:7; left:calc(var(--rail) + var(--gut));
+  right:calc(var(--rail) + var(--gut)); bottom:clamp(34px,5.4vh,60px);
+  display:grid; grid-template-columns:auto auto auto 1fr auto;
+  align-items:center; gap:clamp(12px,1.8vw,26px);
+}
+.coll__count{
+  font-family:var(--display); font-size:clamp(.9rem,1.15vw,1.24rem);
+  font-variant-numeric:tabular-nums; letter-spacing:.02em; white-space:nowrap;
+}
+.coll__count i{ font-style:normal; color:var(--coll-faint); margin-inline:.3em; }
+.coll__count s{ text-decoration:none; color:var(--coll-faint); }
+.coll__now{
+  font-size:clamp(8.5px,.66vw,10.5px); font-weight:500;
+  letter-spacing:.32em; text-transform:uppercase; color:var(--coll-dim);
+  white-space:nowrap;
+}
+.coll__bar{
+  display:block; height:1px; background:rgba(28,27,25,.18); overflow:hidden;
+}
+.coll__bar i{
+  display:block; height:100%; background:var(--rose-dp);
+  transform:scaleX(0); transform-origin:left; will-change:transform;
+}
+.coll__arw{
+  width:clamp(30px,2.6vw,38px); height:clamp(30px,2.6vw,38px);
+  display:grid; place-items:center; cursor:pointer;
+  border:1px solid var(--coll-rule); border-radius:50%; background:none;
+  transition:border-color .45s var(--ease), background-color .45s var(--ease);
+}
+.coll__arw i{
+  width:7px; height:7px; border-left:1px solid var(--coll-dim);
+  border-bottom:1px solid var(--coll-dim); rotate:45deg; margin-left:2px;
+  transition:border-color .45s var(--ease);
+}
+.coll__arw--n i{ rotate:-135deg; margin-left:-2px; }
+.coll__arw:hover{ border-color:var(--rose-dp); background:rgba(168,122,122,.08); }
+.coll__arw:hover i{ border-color:var(--rose-dp); }
+
+/* ---------------------------------------------- the last frame */
+.coll__final{
+  position:absolute; z-index:8; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:clamp(18px,3vh,40px); text-align:center; pointer-events:none;
+  padding-inline:calc(var(--rail) + var(--gut));
+}
+.coll__hero{
+  display:block; width:clamp(180px,24vw,360px); aspect-ratio:797/999;
+  background:var(--ground); will-change:transform;
+}
+.coll__hero img{ width:100%; height:100%; object-fit:contain; mix-blend-mode:multiply; }
+.coll__finalT{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(1.7rem,4.4vw,4.4rem); line-height:1.02;
+  letter-spacing:-.032em; text-transform:uppercase;
+}
+.coll__cta{
+  position:relative; display:inline-flex; align-items:center; gap:1em;
+  padding:1.05em 2.1em; border:1px solid var(--coll-rule); border-radius:100px;
+  font-size:clamp(10px,.78vw,11.5px); font-weight:500;
+  text-transform:uppercase; letter-spacing:.22em; color:var(--coll-ink);
+  overflow:hidden; isolation:isolate; will-change:transform,opacity;
+  transition:color .5s var(--ease), border-color .5s var(--ease);
+}
+.coll__cta::after{
+  content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit;
+  background:var(--rose-dp); transform:scaleY(0); transform-origin:bottom;
+  transition:transform .55s var(--ease);
+}
+.coll__cta:hover{ color:var(--bone); border-color:var(--rose-dp); }
+.coll__cta:hover::after{ transform:scaleY(1); transform-origin:top; }
+.coll__cta .dot{ width:5px; height:5px; border-radius:50%; background:currentColor; }
+.coll__cta i{ font-style:normal; transition:transform .5s var(--ease); }
+.coll__cta:hover i{ transform:translateX(4px); }
+
+/* ---------------------------------------------- the aperture, opening */
+.coll__iris{
+  position:absolute; inset:0; z-index:9; width:100%; height:100%;
+  pointer-events:none; overflow:visible;
+}
+.coll__iris .coll__ir{
+  transform-box:view-box; transform-origin:50% 50%;
+  transform:scale(.02); will-change:transform;
+}
+
+/* ---------------------------------------------- responsive
+   Tighter viewports keep the rail but pull the neighbours in and drop the
+   type, so the active piece never has to compete for the middle band. */
+@media (min-width:901px) and (max-height:800px){
+  .coll{ --stone-h:46vh; --pitch:34vw; }
+  .cl__cut{ font-size:clamp(1.7rem,3.2vw,3.4rem); }
+  .coll__h2{ font-size:clamp(2.6rem,6.2vw,5.4rem); }
+  .cl--life .cl__frame{ height:58vh; }
+  .coll__stmtT{ font-size:clamp(1.9rem,5vw,4.4rem); }
+  .coll__metals{ bottom:clamp(80px,13vh,120px); }
+}
+@media (min-width:901px) and (max-width:1120px){
+  .coll{ --pitch:44vw; --stone-w:38vw; }
+  .coll__intro{ grid-template-columns:1fr; gap:clamp(18px,3vh,34px); }
+  .coll__lede{ align-self:start; max-width:42ch; }
+}
+
+/* ---------------------------------------------- narrow: a vertical column
+   Not a shrunken rail — one piece at a time, full width, in document flow. */
+.coll.is-stacked,
+.coll.is-reduced,
+.no-js .coll{ height:auto; background:rgb(243,240,233); }
+.coll.is-stacked .coll__stage,
+.coll.is-reduced .coll__stage,
+.no-js .coll .coll__stage{
+  height:auto; min-height:auto; overflow:hidden;
+  padding:clamp(104px,16vh,180px) var(--gut) clamp(60px,10vh,110px);
+}
+.coll.is-stacked .coll__rail,
+.coll.is-reduced .coll__rail,
+.no-js .coll .coll__rail{
+  position:relative; inset:auto; margin:0; transform:none !important;
+  flex-direction:column; align-items:stretch; gap:clamp(64px,11vh,130px);
+  order:2;
+}
+.coll.is-stacked .coll__stage,
+.coll.is-reduced .coll__stage,
+.no-js .coll .coll__stage{ display:flex; flex-direction:column; }
+.coll.is-stacked .coll__stage::before,
+.coll.is-reduced .coll__stage::before,
+.no-js .coll .coll__stage::before{
+  content:""; position:absolute; left:0; right:0; top:0; height:18vh;
+  background:linear-gradient(to bottom, var(--ink), rgba(10,10,11,0));
+  pointer-events:none; z-index:4;
+}
+.coll.is-stacked .coll__intro,
+.coll.is-reduced .coll__intro,
+.no-js .coll .coll__intro{ position:relative; z-index:5; }
+.coll.is-stacked .coll__intro,
+.coll.is-reduced .coll__intro,
+.no-js .coll .coll__intro{
+  position:relative; inset:auto; order:1; display:block; padding:0;
+  opacity:1 !important; transform:none !important; visibility:visible !important;
+  margin-bottom:clamp(48px,8vh,90px);
+}
+.coll.is-stacked .cl,
+.coll.is-reduced .cl,
+.no-js .coll .cl{
+  width:auto; opacity:1 !important; transform:none !important;
+  visibility:visible !important;
+}
+.coll.is-stacked .cl__stone,
+.coll.is-reduced .cl__stone,
+.no-js .coll .cl__stone{
+  width:min(82vw,460px); height:auto; aspect-ratio:auto;
+  margin-inline:auto;
+}
+.coll.is-stacked .cl__stone img,
+.coll.is-reduced .cl__stone img,
+.no-js .coll .cl__stone img{ height:auto; }
+.coll.is-stacked .cl__plate,
+.coll.is-reduced .cl__plate,
+.no-js .coll .cl__plate{ opacity:1 !important; }
+.coll.is-stacked .cl__plate > *,
+.coll.is-reduced .cl__plate > *,
+.no-js .coll .cl__plate > *{ opacity:1 !important; transform:none !important; }
+.coll.is-stacked .cl--life .cl__frame,
+.coll.is-reduced .cl--life .cl__frame,
+.no-js .coll .cl--life .cl__frame{
+  width:min(92vw,620px); height:auto; aspect-ratio:3/4;
+}
+.coll.is-stacked .coll__stmt,
+.coll.is-reduced .coll__stmt,
+.no-js .coll .coll__stmt{
+  position:relative; inset:auto; order:3; padding:0;
+  margin-block:clamp(64px,11vh,130px);
+  opacity:1 !important; visibility:visible !important;
+}
+.coll.is-stacked .coll__ln > span,
+.coll.is-reduced .coll__ln > span,
+.no-js .coll .coll__ln > span{ transform:none !important; }
+.coll.is-stacked .coll__metals,
+.coll.is-reduced .coll__metals,
+.no-js .coll .coll__metals{
+  position:relative; inset:auto; order:4; opacity:1 !important;
+  visibility:visible !important; pointer-events:auto !important;
+  margin-top:clamp(48px,8vh,90px);
+  flex-direction:row; flex-wrap:wrap; align-items:center; gap:1.2em;
+}
+.coll.is-stacked .coll__metalsL,
+.coll.is-reduced .coll__metalsL,
+.no-js .coll .coll__metalsL{ margin-bottom:0; width:100%; }
+.coll.is-stacked .coll__final,
+.coll.is-reduced .coll__final,
+.no-js .coll .coll__final{
+  position:relative; inset:auto; order:5; padding:0;
+  margin-top:clamp(56px,10vh,120px);
+  opacity:1 !important; visibility:visible !important; pointer-events:auto;
+}
+.coll.is-stacked .coll__hero,
+.coll.is-reduced .coll__hero,
+.no-js .coll .coll__hero{ transform:none !important; }
+.coll.is-stacked .coll__cta,
+.coll.is-reduced .coll__cta,
+.no-js .coll .coll__cta{ opacity:1 !important; transform:none !important; pointer-events:auto !important; }
+.coll.is-stacked .coll__nav,
+.coll.is-reduced .coll__nav,
+.no-js .coll .coll__nav,
+.coll.is-stacked .coll__iris,
+.coll.is-reduced .coll__iris,
+.no-js .coll .coll__iris{ display:none; }
+.coll.is-reduced .coll__grain,
+.no-js .coll .coll__grain{ animation:none; }
+
+@media (max-width:900px){
+  .cl__cut{ font-size:clamp(2rem,9vw,3.4rem); }
+  .coll__h2{ font-size:clamp(2.4rem,10.6vw,4.6rem); }
+  .coll__stmtT{ font-size:clamp(1.6rem,7vw,3rem); }
+  .coll__finalT{ font-size:clamp(1.5rem,6.6vw,2.6rem); }
+  .coll__hero{ width:min(62vw,300px); }
+  .coll__lede{ max-width:38ch; margin-top:clamp(20px,3.4vh,34px); }
+}
+@media (max-width:560px){
+  .cl__spec{ letter-spacing:.2em; }
+  .coll__metals{ gap:.9em; }
+}
 
 /* ---------------------------------------------- EDITORIAL SPLIT */
 .ed{ display:grid; grid-template-columns:repeat(12,1fr); gap:clamp(20px,3vw,54px); align-items:center; }
