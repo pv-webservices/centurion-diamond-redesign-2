@@ -294,26 +294,133 @@
   </div>
 </section>
 
-<!-- ============================================ 04 · LIGHT STUDY (pinned video) -->
-<section class="study" id="study">
-  <div class="study__media">
-    <video id="studyVid" muted loop playsinline preload="none" poster="assets/video/light-poster.webp">
-      <source src="assets/video/light-1920.webm" type="video/webm" media="(min-width:1600px)">
-      <source src="assets/video/light-1920.mp4"  type="video/mp4"  media="(min-width:1600px)">
-      <source src="assets/video/light-1280.webm" type="video/webm" media="(min-width:900px)">
-      <source src="assets/video/light-1280.mp4"  type="video/mp4"  media="(min-width:900px)">
-      <source src="assets/video/light-720.mp4"   type="video/mp4">
-    </video>
-  </div>
-  <div class="study__copy">
-    <div class="label label--plain" data-anim="fade" style="justify-content:center">A study in light</div>
-    <p class="d2" style="max-width:16ch;margin-top:.5em" data-anim="scale">
-      Light enters. <em class="serif-i hl">Light returns.</em>
-    </p>
-    <p class="body-sm" style="max-width:42ch;margin-top:1.6em" data-anim="up">
-      Where a traditional stone lets light slip through the pavilion,
-      the Centurion geometry turns it back toward you.
-    </p>
+<!-- ============================================ 04 · A STUDY IN LIGHT
+     A pinned optical study. Anatomy of Brilliance closes by sealing its
+     aperture to --ink; this stage opens on --ink with its own aperture
+     shut, so the two share a frame rather than a fade.
+
+     The aperture is four ink shutters. It is what opens the clip out of
+     the dark, what makes room for the type — the frame re-centres on
+     whatever is left open, so the stone is never behind a word — and what
+     compresses the light back into the single line that hands off to the
+     marquee below.
+
+     Copy lives here so the chapter still reads with scripting off;
+     choreography is in assets/js/study/scenes.js. The video source is set
+     by assets/js/study/video.js — it picks a scrub-optimised master, which
+     is a different file from the one a plain <video> would stream. -->
+<section class="sty" id="study" aria-labelledby="styTitle">
+  <div class="sty__stage">
+
+    <!-- the subject -->
+    <div class="sty__media" data-sty-media aria-hidden="true">
+      <span class="sty__glow" data-sty-glow></span>
+      <video class="sty__vid" data-sty-video data-manual muted playsinline
+             preload="none" tabindex="-1"
+             poster="assets/video/light-scrub-poster.webp"></video>
+    </div>
+
+    <!-- optical traces. Held for short beats, never more than one idea at
+         a time, and never stating a measurement. The 160x90 view box is
+         the clip's own frame, so a trace sits on the stone. -->
+    <svg class="sty__optics" data-sty-optics aria-hidden="true" focusable="false"
+         viewBox="0 0 160 90" preserveAspectRatio="xMidYMid meet">
+      <g data-sty-optics-g>
+        <g class="sty__rule" data-sty-rule>
+          <line x1="26" y1="84" x2="134" y2="84"/>
+          <line x1="26" y1="81.6" x2="26" y2="86.4"/>
+          <line x1="134" y1="81.6" x2="134" y2="86.4"/>
+          <line x1="80" y1="82.6" x2="80" y2="85.4"/>
+        </g>
+        <g class="sty__reticle" data-sty-reticle>
+          <ellipse cx="80" cy="48" rx="38" ry="33"/>
+          <ellipse cx="80" cy="48" rx="47" ry="40" class="is-dash"/>
+          <line x1="27" y1="48" x2="35" y2="48"/>
+          <line x1="125" y1="48" x2="133" y2="48"/>
+          <line x1="80" y1="9"  x2="80" y2="15"/>
+          <line x1="80" y1="81" x2="80" y2="87"/>
+        </g>
+        <g class="sty__facets" data-sty-facets></g>
+        <g class="sty__points" data-sty-points>
+          <circle cx="46"  cy="44" r="0.7"/>
+          <circle cx="66"  cy="34" r="0.7"/>
+          <circle cx="96"  cy="38" r="0.7"/>
+          <circle cx="118" cy="50" r="0.7"/>
+          <circle cx="80"  cy="79" r="0.7"/>
+        </g>
+      </g>
+    </svg>
+
+    <!-- light crossing the stone -->
+    <div class="sty__beam" data-sty-beam aria-hidden="true"></div>
+
+    <!-- the aperture, and the hairline along its inner edge -->
+    <div class="sty__sh sty__sh--t" data-sty-sh="t" aria-hidden="true"></div>
+    <div class="sty__sh sty__sh--b" data-sty-sh="b" aria-hidden="true"></div>
+    <div class="sty__sh sty__sh--l" data-sty-sh="l" aria-hidden="true"></div>
+    <div class="sty__sh sty__sh--r" data-sty-sh="r" aria-hidden="true"></div>
+    <div class="sty__edge sty__edge--t" data-sty-edge="t" aria-hidden="true"></div>
+    <div class="sty__edge sty__edge--b" data-sty-edge="b" aria-hidden="true"></div>
+
+    <!-- that line, leaving: down to the foot of the stage, then left,
+         which is the direction the marquee below is already travelling -->
+    <div class="sty__exit" data-sty-exit aria-hidden="true"></div>
+
+    <!-- opening -->
+    <div class="sty__intro" data-sty-intro>
+      <p class="sty__eyebrow"><i></i><b>03</b><span id="styTitle">A Study in Light</span></p>
+    </div>
+
+    <!-- 01 · light enters -->
+    <article class="sty__scene" data-sty-scene="0" data-side="left">
+      <div class="sty__copy">
+        <h2 class="sty__t">
+          <span class="sty__ln"><span>Light</span></span>
+          <span class="sty__ln"><span class="is-em">enters.</span></span>
+        </h2>
+      </div>
+    </article>
+
+    <!-- 02 · light moves -->
+    <article class="sty__scene" data-sty-scene="1" data-side="right">
+      <div class="sty__copy">
+        <h2 class="sty__t">
+          <span class="sty__ln"><span>Light</span></span>
+          <span class="sty__ln"><span class="is-em">moves.</span></span>
+        </h2>
+      </div>
+    </article>
+
+    <!-- 03 · light returns — the conceptual centre of the chapter -->
+    <article class="sty__scene" data-sty-scene="2" data-side="left">
+      <div class="sty__copy">
+        <h2 class="sty__t">
+          <span class="sty__ln"><span>Light</span></span>
+          <span class="sty__ln"><span class="is-em">returns.</span></span>
+        </h2>
+        <p class="sty__b">Where a traditional stone lets light slip through the
+          pavilion, the Centurion geometry turns it back toward you.</p>
+      </div>
+    </article>
+
+    <!-- 04 · the number, bracketing the stone rather than covering it -->
+    <article class="sty__scene sty__scene--fig" data-sty-scene="3" data-side="center">
+      <div class="sty__copy">
+        <p class="sty__fig"><span class="sty__ln"><span>100</span></span></p>
+        <p class="sty__figlabel"><span class="sty__ln"><span>Facets</span></span></p>
+      </div>
+    </article>
+
+    <!-- 05 · the proposition, in the deck's own words -->
+    <article class="sty__scene" data-sty-scene="4" data-side="right">
+      <div class="sty__copy sty__copy--narrow">
+        <p class="sty__lead">
+          <span class="sty__ln"><span>The Centurion Diamond is designed with 100 facets,
+            creating a distinctive play of light and sparkle.</span></span>
+        </p>
+      </div>
+    </article>
+
   </div>
 </section>
 
@@ -809,6 +916,11 @@
 <script defer src="assets/js/pillars/timeline.js"></script>
 <script defer src="assets/js/pillars/visual.js"></script>
 <script defer src="assets/js/pillars/index.js"></script>
+<script defer src="assets/js/study/scenes.js"></script>
+<script defer src="assets/js/study/timeline.js"></script>
+<script defer src="assets/js/study/visual.js"></script>
+<script defer src="assets/js/study/video.js"></script>
+<script defer src="assets/js/study/index.js"></script>
 <script defer src="assets/js/collection/scenes.js"></script>
 <script defer src="assets/js/collection/timeline.js"></script>
 <script defer src="assets/js/collection/visual.js"></script>

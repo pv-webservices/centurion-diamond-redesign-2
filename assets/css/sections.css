@@ -860,21 +860,288 @@
 .plr.is-reduced .plr__sheen,   .no-js .plr .plr__sheen{ display:none; }
 .plr.is-reduced .plr__grain,   .no-js .plr .plr__grain{ animation:none; }
 
-/* ---------------------------------------------- LIGHT STUDY */
-.study{ position:relative; height:100svh; overflow:hidden; background:var(--ink); }
-.study__media{ position:absolute; inset:0; }
-.study__media video,.study__media img{ width:100%; height:100%; object-fit:cover; opacity:.62; }
-.study__media::after{
-  content:""; position:absolute; inset:0;
-  background:
-    radial-gradient(46% 34% at 50% 46%, rgba(10,10,11,.72) 0%, rgba(10,10,11,.30) 62%, transparent 100%),
-    radial-gradient(92% 72% at 50% 50%, transparent 26%, rgba(10,10,11,.88) 90%);
+/* ============================================================
+   04 · A STUDY IN LIGHT — pinned optical study.
+
+   The aperture is four ink shutters over a full-bleed clip. They scale
+   (compositor-friendly); their inner hairline is a separate un-scaled
+   element so 1px stays 1px at any opening. Everything else the section
+   does per frame is transform, opacity, or the one filter on the video.
+
+   Ground is --ink throughout: this is the exact frame Anatomy of
+   Brilliance seals to, so the two sections meet without a seam.
+   ============================================================ */
+.sty{
+  --sty-line:rgba(238,240,246,.92);      /* the light itself */
+  --sty-trace:rgba(216,201,182,.46);     /* champagne, as in the plr iris */
+  position:relative; height:360vh; background:var(--ink);
 }
-.study__copy{
-  position:relative; z-index:2; height:100%;
-  display:flex; flex-direction:column; justify-content:center; align-items:center;
-  text-align:center; padding-inline:calc(var(--rail) + var(--gut));
+.sty__stage{
+  position:relative; height:100svh; width:100%; overflow:hidden;
+  background:var(--ink); color:var(--bone);
 }
+
+/* --- the subject ------------------------------------------------------
+   Full-bleed and never moved to make room for type: it is offset only to
+   re-centre itself on whatever the aperture leaves open, and that offset
+   can never exceed the shutter that created it. */
+.sty__media,
+.sty__optics{
+  /* the clip's own 16:9 frame, centred and laid out at its cover size.
+     Both share the box, which is what puts an optical trace on the stone
+     rather than near it. */
+  position:absolute; inset:0; margin:auto;
+  width:max(100vw, 177.8vh); height:auto; aspect-ratio:16/9;
+}
+.sty__media{ z-index:1; opacity:0; will-change:transform,opacity; }
+.sty__vid{
+  width:100%; height:100%; object-fit:cover; object-position:center;
+  will-change:filter;
+}
+/* a soft bed of the clip's own light, so a letterboxed band on a phone
+   still lights the page rather than floating in a black rectangle */
+.sty__glow{
+  position:absolute; inset:0; pointer-events:none; opacity:0;
+  background:radial-gradient(58% 40% at 50% 50%,
+    rgba(226,232,244,.16) 0%, rgba(226,232,244,.05) 52%, transparent 78%);
+}
+
+/* --- optical traces ---------------------------------------------------
+   The view box is the clip's own 160x90 frame, sized to the video's cover
+   footprint, so a reticle sits on the stone rather than on the viewport. */
+.sty__optics{
+  z-index:2;
+  opacity:0; pointer-events:none; overflow:visible;
+  fill:none; stroke:var(--sty-trace); stroke-width:.22; vector-effect:non-scaling-stroke;
+  will-change:transform,opacity;
+}
+.sty__optics > g{ transform-origin:80px 48px; transform-box:view-box; }
+.sty__optics .is-dash{ stroke-dasharray:1.6 3.2; opacity:.6; }
+.sty__optics [data-sty-facets] line{ stroke-width:.3; }
+.sty__optics [data-sty-points] circle{ fill:rgba(240,243,250,.9); stroke:none; }
+.sty__rule,.sty__reticle,.sty__facets,.sty__points{ opacity:0; }
+
+/* --- light crossing the stone --- */
+.sty__beam{
+  position:absolute; z-index:3; top:-24%; bottom:-24%; left:50%;
+  width:clamp(90px,11vw,210px); margin-left:calc(clamp(90px,11vw,210px) / -2);
+  opacity:0; pointer-events:none; will-change:transform,opacity;
+  background:linear-gradient(100deg, transparent, rgba(244,247,255,.62) 50%, transparent);
+  filter:blur(22px);
+}
+
+/* --- the aperture --- */
+.sty__sh{
+  position:absolute; z-index:4; background:var(--ink);
+  pointer-events:none; will-change:transform;
+}
+/* +2px so a shut aperture overlaps by a pixel rather than abutting exactly:
+   at scaleY(.5) each, sub-pixel rounding otherwise lets a hairline of the
+   clip through the seam, and by then the clip is at its brightest. */
+.sty__sh--t{ top:-1px; left:0; right:0; height:calc(100% + 2px); transform-origin:top center;    transform:scaleY(.5); }
+.sty__sh--b{ bottom:-1px; left:0; right:0; height:calc(100% + 2px); transform-origin:bottom center; transform:scaleY(.5); }
+.sty__sh--l{ top:0; bottom:0; left:-1px; width:calc(100% + 2px);  transform-origin:left center;  transform:scaleX(0); }
+.sty__sh--r{ top:0; bottom:0; right:-1px; width:calc(100% + 2px); transform-origin:right center; transform:scaleX(0); }
+
+/* the hairline along the aperture's inner edge. Positioned in pixels by
+   the renderer, so it never inherits a shutter's scale. */
+.sty__edge{
+  position:absolute; z-index:5; left:0; right:0; height:1px;
+  opacity:0; pointer-events:none; will-change:transform,opacity;
+  background:linear-gradient(90deg, transparent, var(--sty-line) 12%,
+                                     var(--sty-line) 88%, transparent);
+  box-shadow:0 0 22px 1px rgba(226,232,244,.42);
+}
+.sty__edge--t{ top:0; }
+.sty__edge--b{ bottom:0; }
+
+/* that line, leaving — the marquee's own rule picks it up */
+.sty__exit{
+  position:absolute; z-index:6; top:50%; left:0; right:0; height:1px;
+  opacity:0; pointer-events:none; will-change:transform,opacity;
+  background:linear-gradient(90deg, transparent 0%, rgba(226,232,244,.5) 22%,
+                                     var(--sty-line) 62%, rgba(255,255,255,1) 84%, transparent 100%);
+  box-shadow:0 0 30px 2px rgba(226,232,244,.5);
+}
+
+/* --- copy -------------------------------------------------------------
+   Every scene sits in the band the aperture has closed, so type is always
+   over ink and the stone is never behind a word. */
+.sty__intro,
+.sty__scene{
+  position:absolute; inset:0; z-index:7;
+  display:grid; align-items:center;
+  padding-inline:calc(var(--rail) + var(--gut));
+  pointer-events:none; will-change:opacity,transform;
+}
+.sty__intro{ justify-items:center; align-content:center; opacity:0; }
+.sty__scene{ opacity:0; visibility:hidden; }
+.sty__scene[data-side="left"]  { justify-items:start; }
+.sty__scene[data-side="right"] { justify-items:end; text-align:right; }
+.sty__scene[data-side="center"]{ justify-items:center; text-align:center; }
+
+.sty__eyebrow{
+  /* below the opening line, so the light reads as the aperture and the
+     label as its caption rather than being struck through */
+  margin-top:20vh;
+  display:flex; align-items:center; justify-content:center; gap:.85em;
+  font-size:clamp(9px,.66vw,10.5px); font-weight:500;
+  letter-spacing:.42em; text-transform:uppercase; color:var(--fg-faint);
+}
+.sty__eyebrow i{ width:clamp(22px,3vw,54px); height:1px; background:currentColor; opacity:.5; }
+.sty__eyebrow b{ font-weight:500; color:var(--rose); }
+
+/* the copy always sits in the band the aperture has closed, so these track
+   the side-shutter values in study/scenes.js — widen one, widen the other */
+.sty__copy{ width:min(28vw,420px); will-change:transform; }
+.sty__scene[data-side="center"] .sty__copy{ width:min(94vw,1180px); }
+.sty__copy--narrow{ width:min(27vw,400px); }
+
+.sty__ln{ display:block; padding-block:.08em; margin-block:-.08em; overflow:hidden; }
+.sty__ln > span{ display:block; will-change:transform,opacity; }
+
+.sty__t{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(3.2rem,7.6vw,9.2rem); line-height:.88;
+  letter-spacing:-.035em; text-transform:uppercase;
+}
+.sty__t .is-em{ font-style:italic; color:var(--rose); text-transform:none; }
+.sty__b{
+  margin-top:clamp(18px,2.4vh,34px); max-width:30ch;
+  font-size:clamp(.86rem,.96vw,.98rem); line-height:1.72; color:var(--fg-dim);
+}
+
+/* 04 · the number brackets the stone — one line above the open aperture,
+   one below — rather than sitting on top of it */
+.sty__scene--fig .sty__copy{
+  display:grid; grid-template-rows:1fr 1fr; height:100%; align-content:stretch;
+}
+.sty__fig{
+  font-family:var(--display); font-weight:500; font-variant-numeric:tabular-nums;
+  font-size:clamp(3.6rem,9.8vw,10.4rem); line-height:1; letter-spacing:-.045em;
+  /* clears the fixed header, which sits over every section */
+  align-self:start; padding-top:clamp(78px,12vh,124px);
+}
+.sty__figlabel{
+  font-family:var(--sans); font-weight:300;
+  font-size:clamp(1rem,2.4vw,2.4rem); line-height:1;
+  letter-spacing:.44em; text-transform:uppercase; color:var(--fg-dim);
+  align-self:end; padding-bottom:clamp(26px,6vh,68px); padding-left:.44em;
+}
+.sty__lead{
+  font-family:var(--display); font-weight:400; font-style:italic;
+  font-size:clamp(1.24rem,2.1vw,2.05rem); line-height:1.36;
+  letter-spacing:-.012em; color:rgba(244,241,234,.86);
+}
+
+/* ---------------------------------------------- responsive
+   Narrow and tall: a centred column, no side shutters, and the clip
+   letterboxed rather than cropped — the stone spans nearly the whole
+   width of a 16:9 frame, so a portrait cover-crop shows a third of it. */
+.sty.is-contain .sty__media,
+.sty.is-contain .sty__optics{ width:min(100vw, 177.8vh); }
+
+@media (max-width:900px){
+  .sty{ height:340vh; }
+  .sty__scene{ justify-items:center !important; text-align:center !important; }
+  /* fills the padded track rather than overflowing it — a grid item wider
+     than its track is placed at the track's start, not centred over it */
+  .sty__copy,
+  .sty__copy--narrow,
+  .sty__scene[data-side="center"] .sty__copy{ width:min(100%,560px); }
+  .sty__t{ font-size:clamp(2.9rem,13vw,5.2rem); }
+  .sty__b{ margin-inline:auto; max-width:30ch; }
+  /* the band of light holds the middle; type takes the space above and
+     below it rather than overlapping the stone */
+  .sty__scene .sty__copy{
+    display:grid; grid-template-rows:1fr auto; height:100%;
+    align-content:stretch; justify-items:center;
+  }
+  .sty__scene .sty__t{ align-self:start; padding-top:clamp(48px,11vh,110px); }
+  .sty__scene .sty__b,
+  .sty__scene .sty__lead{ align-self:end; padding-bottom:clamp(40px,9vh,96px); }
+  .sty__lead{ font-size:clamp(1.06rem,4.4vw,1.5rem); }
+  .sty__fig{ font-size:clamp(4.6rem,26vw,9rem); padding-top:clamp(40px,9vh,96px); }
+  .sty__figlabel{ font-size:clamp(1rem,4.6vw,1.7rem); padding-bottom:clamp(40px,9vh,96px); }
+  .sty__beam{ filter:blur(16px); }
+}
+@media (max-width:560px){
+  .sty__t{ font-size:clamp(2.6rem,14vw,4.2rem); }
+  .sty__b{ font-size:.88rem; max-width:28ch; }
+}
+/* short-and-wide laptops: keep the headline out of the open aperture */
+@media (min-width:901px) and (max-height:760px){
+  .sty__t{ font-size:clamp(2.8rem,6vw,5.4rem); }
+  .sty__fig{ font-size:clamp(3.6rem,11vw,9rem); }
+  .sty__lead{ font-size:clamp(1.06rem,1.7vw,1.6rem); }
+}
+
+/* ---------------------------------------------- reduced motion / no JS
+   No pin, no scrub: an ordinary dark editorial run with every line in
+   document order and the clip kept, parked on one frame. */
+.sty.is-reduced,
+.no-js .sty{ height:auto; }
+.sty.is-reduced .sty__stage,
+.no-js .sty .sty__stage{
+  height:auto; min-height:auto; display:flex; flex-direction:column;
+  gap:clamp(28px,5vh,64px);
+  padding:clamp(70px,12vh,140px) calc(var(--rail) + var(--gut));
+}
+.sty.is-reduced .sty__media,
+.no-js .sty .sty__media{
+  position:relative; inset:auto; order:2; opacity:1 !important;
+  transform:none !important; aspect-ratio:16/9; width:100%;
+}
+.sty.is-reduced .sty__vid,
+.no-js .sty .sty__vid{ filter:none !important; object-fit:cover; }
+.sty.is-reduced .sty__intro,
+.no-js .sty .sty__intro{ order:1; }
+.sty.is-reduced .sty__scene[data-sty-scene="0"],
+.no-js .sty .sty__scene[data-sty-scene="0"]{ order:3; }
+.sty.is-reduced .sty__scene[data-sty-scene="1"],
+.no-js .sty .sty__scene[data-sty-scene="1"]{ order:4; }
+.sty.is-reduced .sty__scene[data-sty-scene="2"],
+.no-js .sty .sty__scene[data-sty-scene="2"]{ order:5; }
+.sty.is-reduced .sty__scene[data-sty-scene="3"],
+.no-js .sty .sty__scene[data-sty-scene="3"]{ order:6; }
+.sty.is-reduced .sty__scene[data-sty-scene="4"],
+.no-js .sty .sty__scene[data-sty-scene="4"]{ order:7; }
+/* The scenes stay grids here and are flattened to one stretched column
+   rather than being switched to block: the pinned layout places each copy
+   block with `justify-items`, and re-declaring `display` is not enough to
+   undo that on its own. */
+.sty.is-reduced .sty__intro,  .no-js .sty .sty__intro,
+.sty.is-reduced .sty__scene,  .no-js .sty .sty__scene{
+  position:relative; inset:auto; width:auto;
+  display:grid !important; grid-template-columns:minmax(0,1fr) !important;
+  grid-template-rows:none !important;
+  justify-items:stretch !important; align-content:start !important;
+  padding-inline:0; text-align:left !important;
+  opacity:1 !important; visibility:visible !important; transform:none !important;
+}
+.sty.is-reduced .sty__eyebrow, .no-js .sty .sty__eyebrow{
+  justify-content:flex-start; margin-top:0;
+}
+.sty.is-reduced .sty__copy,    .no-js .sty .sty__copy{
+  display:block !important; width:auto !important; max-width:none !important;
+  height:auto !important; grid-template-rows:none !important;
+  transform:none !important; padding:0 !important;
+}
+.sty.is-reduced .sty__ln > span, .no-js .sty .sty__ln > span,
+.sty.is-reduced .sty__b,         .no-js .sty .sty__b,
+.sty.is-reduced .sty__fig,       .no-js .sty .sty__fig,
+.sty.is-reduced .sty__figlabel,  .no-js .sty .sty__figlabel{
+  opacity:1 !important; transform:none !important; clip-path:none !important;
+  padding:0 !important; align-self:auto !important;
+}
+.sty.is-reduced .sty__b,       .no-js .sty .sty__b{ margin-inline:0 !important; }
+.sty.is-reduced .sty__figlabel,.no-js .sty .sty__figlabel{ margin-top:.3em; }
+.sty.is-reduced .sty__sh,      .no-js .sty .sty__sh,
+.sty.is-reduced .sty__edge,    .no-js .sty .sty__edge,
+.sty.is-reduced .sty__exit,    .no-js .sty .sty__exit,
+.sty.is-reduced .sty__beam,    .no-js .sty .sty__beam,
+.sty.is-reduced .sty__glow,    .no-js .sty .sty__glow,
+.sty.is-reduced .sty__optics,  .no-js .sty .sty__optics{ display:none; }
 
 /* ---------------------------------------------- MARQUEE */
 .marq{ overflow:hidden; width:100%; padding-block:clamp(24px,3.4vw,54px);

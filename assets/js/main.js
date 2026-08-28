@@ -187,9 +187,12 @@
     });
   }
 
-  /* ---------------------------------------------- video: play only in view */
+  /* ---------------------------------------------- video: play only in view
+     `data-manual` opts a video out entirely: a scroll-scrubbed clip is
+     seeked, never played, and an autoplay here would fight its engine for
+     the playhead. */
   function initVideos() {
-    document.querySelectorAll('video').forEach(function (v) {
+    document.querySelectorAll('video:not([data-manual])').forEach(function (v) {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           if (en.isIntersecting) {
@@ -242,6 +245,7 @@
     initHeader();
     if (window.CD && CD.initSparkle) CD.initSparkle();
     if (window.CD && CD.initPillars) CD.initPillars();
+    if (window.CD && CD.initStudy) CD.initStudy();
     if (window.CD && CD.initCollection) CD.initCollection();
     ScrollTrigger.refresh();
   }
