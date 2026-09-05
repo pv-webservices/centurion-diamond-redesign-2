@@ -681,29 +681,21 @@
 }
 .plr__stone-in{
   position:relative; display:block;
-  width:clamp(230px,33vw,510px); aspect-ratio:666/275;
+  width:clamp(230px,29vw,440px); aspect-ratio:1;
   opacity:0; will-change:transform,opacity;
+  filter:drop-shadow(0 28px 42px rgba(26,25,23,.26));
 }
-.plr__stone-in img{
-  width:100%; height:100%; object-fit:contain;
-  filter:drop-shadow(0 26px 44px rgba(26,25,23,.22));
+.plr__gem{ width:100%; height:100%; overflow:visible; }
+.plr__gem-flash{
+  opacity:0; transform-origin:center; mix-blend-mode:screen;
+  will-change:transform,opacity;
 }
-/* internal light sweep, masked to the stone's own silhouette so the highlight
-   travels across the facets rather than across a rectangle */
-.plr__sheen{
-  position:absolute; inset:0; overflow:hidden; pointer-events:none;
-  mix-blend-mode:screen;
-  -webkit-mask-image:url("../img/brand/cut-centurion-ring-a380.webp");
-          mask-image:url("../img/brand/cut-centurion-ring-a380.webp");
-  -webkit-mask-size:contain;     mask-size:contain;
-  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
-  -webkit-mask-position:center;  mask-position:center;
+.plr__shape-label{
+  position:absolute; left:50%; bottom:-1.1rem; translate:-50% 100%;
+  font-size:9px; font-weight:500; letter-spacing:.42em; text-transform:uppercase;
+  color:var(--rose-dp); opacity:0; will-change:opacity; white-space:nowrap;
 }
-.plr__sheen i{
-  position:absolute; top:-45%; bottom:-45%; left:0; width:34%;
-  background:linear-gradient(100deg, transparent, rgba(255,252,246,.92) 50%, transparent);
-  filter:blur(9px); opacity:0; will-change:transform,opacity;
-}
+.plr__shape-list{ display:none; }
 
 /* --- opening title --- */
 .plr__intro{
@@ -953,6 +945,13 @@
 .plr.is-reduced .plr__stone-in,.no-js .plr .plr__stone-in{
   opacity:1 !important; width:min(70vw,460px); margin-inline:auto;
 }
+.plr.is-reduced .plr__shape-label,.no-js .plr .plr__shape-label{ display:none; }
+.plr.is-reduced .plr__shape-list,.no-js .plr .plr__shape-list{
+  display:block; margin-top:1.2rem; text-align:center;
+  font-size:9px; font-weight:500; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--rose-dp);
+}
+.plr__shape-list i{ margin-inline:.45em; color:var(--plr-faint); }
 .plr.is-reduced .plr__final,   .no-js .plr .plr__final{
   margin-top:clamp(48px,8vh,96px); text-align:left;
 }
@@ -963,8 +962,7 @@
 .plr.is-reduced .plr__sweep,   .no-js .plr .plr__sweep,
 .plr.is-reduced .plr__beam,    .no-js .plr .plr__beam,
 .plr.is-reduced .plr__iris,    .no-js .plr .plr__iris,
-.plr.is-reduced .plr__seal,    .no-js .plr .plr__seal,
-.plr.is-reduced .plr__sheen,   .no-js .plr .plr__sheen{ display:none; }
+.plr.is-reduced .plr__seal,    .no-js .plr .plr__seal{ display:none; }
 .plr.is-reduced .plr__grain,   .no-js .plr .plr__grain{ animation:none; }
 
 /* ============================================================
@@ -2221,15 +2219,15 @@
 /* ============================================================
    09 · DISPLAY — the Centurion experience.
 
-   The page's one chromatic room. The ground is written from JS as the
+   A controlled brand-lit room. The ground is written from JS as the
    ramp the light leaves on the walls; every stop stays dark enough that
    bone type clears AA on it, so nothing here ever changes colour.
 
-   The bloom is one element — a radial periwinkle scaled and faded — which
+   The bloom is one element — a radial blush reflection scaled and faded — which
    is the whole lighting rig.
    ============================================================ */
 .dsp{
-  --peri-lit:#A9AECF;
+  --dsp-lit:var(--brand-blush-light);
   position:relative; height:360vh; background:var(--ink);
 }
 .dsp__stage{
@@ -2242,11 +2240,9 @@
   width:112vw; aspect-ratio:1/1;
   transform:translate3d(-50%,-50%,0) scale(.1);
   opacity:0; pointer-events:none; will-change:transform,opacity;
-  /* the light source itself. Its hue is the same decision as `room.tint`
-     in assets/js/display/scenes.js — change both together. */
   background:radial-gradient(circle at 50% 50%,
-    rgba(169,174,207,.50) 0%, rgba(146,152,196,.28) 34%,
-    rgba(96,102,152,.12) 58%, transparent 74%);
+    rgba(var(--brand-blush-rgb),.46) 0%, rgba(var(--brand-blush-rgb),.24) 34%,
+    rgba(var(--brand-blush-rgb),.09) 58%, transparent 74%);
 }
 
 .dsp__case{
@@ -2283,7 +2279,7 @@
   margin-bottom:clamp(20px,3vh,40px);
 }
 .dsp__eyebrow i{ width:clamp(22px,3vw,54px); height:1px; background:currentColor; opacity:.5; }
-.dsp__eyebrow b{ font-weight:500; color:var(--peri-lit); }
+.dsp__eyebrow b{ font-weight:500; color:var(--dsp-lit); }
 
 .dsp__ln{ display:block; padding-block:.08em; margin-block:-.08em; overflow:hidden; }
 .dsp__ln > span{ display:block; will-change:transform; }
@@ -2294,7 +2290,7 @@
   letter-spacing:-.035em; text-transform:uppercase;
 }
 .dsp__h2 .is-em,
-.dsp__t .is-em{ font-style:italic; color:var(--peri-lit); text-transform:none; }
+.dsp__t .is-em{ font-style:italic; color:var(--dsp-lit); text-transform:none; }
 
 .dsp__copy{ width:min(30vw,440px); will-change:transform; }
 .dsp__t{
@@ -2330,7 +2326,7 @@
   .dsp__copy::before{
     content:""; position:absolute; inset:-26% -16% -30% -16%; z-index:-1;
     background:radial-gradient(62% 58% at 50% 50%,
-      rgba(16,17,32,.86) 0%, rgba(16,17,32,.60) 42%, rgba(16,17,32,.20) 70%, transparent 88%);
+      rgba(var(--brand-black-rgb),.88) 0%, rgba(var(--brand-black-rgb),.62) 42%, rgba(var(--brand-black-rgb),.20) 70%, transparent 88%);
     pointer-events:none;
   }
   .dsp__b{ margin-inline:auto !important; max-width:28ch; }
@@ -2386,7 +2382,7 @@
   height:auto; min-height:auto; display:flex; flex-direction:column;
   gap:clamp(30px,5vh,68px);
   padding:clamp(70px,12vh,140px) calc(var(--rail) + var(--gut));
-  background:rgb(42,46,76);
+  background:rgb(55,39,42);
 }
 .dsp.is-reduced .dsp__glow, .no-js .dsp .dsp__glow{ display:none; }
 .dsp.is-reduced .dsp__case, .no-js .dsp .dsp__case{
@@ -2591,8 +2587,111 @@
   justify-self:start; opacity:1 !important; transform:none !important;
   pointer-events:auto !important;
 }
-/* ---------------------------------------------- CTA / FOOTER */
-.cta{ position:relative; text-align:center; overflow:hidden; }
+/* ============================================================
+   11 · RETAIL FINALE — nine Collection rings converge behind the
+   overhead display-case photograph, then the retail invitation resolves.
+   ============================================================ */
+.fin{ position:relative; height:500vh; background:var(--ink); }
+.fin__stage{
+  position:relative; height:100svh; width:100%; overflow:hidden;
+  background:var(--ink); color:var(--brand-white); isolation:isolate;
+}
+.fin__stage::after{
+  content:""; position:absolute; inset:0; z-index:4; pointer-events:none;
+  background:linear-gradient(to bottom, rgba(var(--brand-black-rgb),.08), rgba(var(--brand-black-rgb),.28));
+}
+.fin__glow{
+  position:absolute; z-index:0; width:min(112vw,1500px); aspect-ratio:1;
+  left:50%; top:58%; translate:-50% -50%; opacity:0; pointer-events:none;
+  background:radial-gradient(circle,
+    rgba(var(--brand-blush-rgb),.28) 0%, rgba(var(--brand-blush-rgb),.13) 32%,
+    rgba(var(--brand-blush-rgb),.045) 55%, transparent 72%);
+  will-change:opacity;
+}
+.fin__rings{ position:absolute; inset:0; z-index:2; pointer-events:none; }
+.fin__ring{
+  position:absolute; left:50%; top:50%; width:clamp(118px,15vw,230px); margin:0;
+  opacity:0; visibility:hidden; transform-origin:center; overflow:hidden;
+  background:var(--brand-white); box-shadow:0 18px 42px rgba(0,0,0,.34);
+  will-change:transform,opacity;
+}
+.fin__ring img{
+  width:100%; height:auto; display:block; filter:contrast(1.035);
+}
+.fin__case{
+  position:absolute; z-index:3; left:50%; top:50%; margin:0;
+  width:min(43vw,610px); aspect-ratio:1200/1479;
+  opacity:0; pointer-events:none; transform-origin:center;
+  will-change:transform,opacity;
+}
+.fin__case-img{
+  position:absolute; inset:0; overflow:hidden; display:block;
+  box-shadow:0 46px 110px rgba(0,0,0,.64), 0 0 90px rgba(var(--brand-blush-rgb),.10);
+  clip-path:polygon(4% 4%,96% 4%,96% 96%,4% 96%);
+}
+.fin__case img{ width:100%; height:100%; object-fit:cover; }
+.fin__copy{
+  position:absolute; inset:0; z-index:5; display:grid; place-content:center; justify-items:center;
+  padding:calc(72px + env(safe-area-inset-top)) calc(var(--rail) + var(--gut)) calc(42px + env(safe-area-inset-bottom));
+  text-align:center; opacity:0; visibility:hidden; pointer-events:none;
+  background:radial-gradient(ellipse at center, rgba(var(--brand-black-rgb),.82) 0%, rgba(var(--brand-black-rgb),.60) 34%, rgba(var(--brand-black-rgb),.12) 68%, transparent 82%);
+  will-change:transform,opacity;
+}
+.fin__eyebrow{
+  display:flex; align-items:center; gap:1em; margin-bottom:clamp(18px,3vh,36px);
+  font-size:9px; font-weight:500; letter-spacing:.42em; text-transform:uppercase;
+  color:var(--brand-blush-light);
+}
+.fin__eyebrow i{ width:clamp(22px,3vw,52px); height:1px; background:currentColor; opacity:.55; }
+.fin__title{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(2.4rem,6.5vw,6.7rem); line-height:.96; letter-spacing:-.038em;
+  text-wrap:balance;
+}
+.fin__title em{ color:var(--brand-blush-light); font-weight:400; }
+.fin__body{
+  margin-top:clamp(18px,2.8vh,34px); color:rgba(244,241,234,.72);
+  font-size:clamp(.92rem,1.02vw,1.05rem); letter-spacing:.02em;
+}
+.fin__cta{ margin-top:clamp(24px,4vh,48px); pointer-events:none; }
+
+@media (max-width:900px){
+  .fin{ height:430vh; }
+  .fin__case{ width:min(88vw,430px); }
+  .fin__ring{ width:clamp(94px,29vw,150px); }
+  .fin__title{ font-size:clamp(2.15rem,10.4vw,4rem); line-height:.98; }
+  .fin__copy{ padding-inline:clamp(1.2rem,6vw,2.3rem); }
+  .fin__body{ max-width:28ch; }
+}
+@media (max-width:900px) and (orientation:landscape) and (max-height:520px){
+  .fin__case{ width:min(30vw,230px); }
+  .fin__ring{ width:clamp(74px,15vw,116px); }
+  .fin__title{ font-size:clamp(1.8rem,5.8vw,3rem); }
+  .fin__eyebrow{ margin-bottom:10px; }
+  .fin__body{ margin-top:10px; }
+  .fin__cta{ margin-top:14px; }
+}
+
+/* Reduced motion and no-JS: the complete case and conversion message remain
+   in normal flow; there is no pin, flight path or continuous morph. */
+.fin.is-reduced,.no-js .fin{ height:auto; }
+.fin.is-reduced .fin__stage,.no-js .fin .fin__stage{
+  height:auto; min-height:100svh; display:grid; align-content:center; justify-items:center;
+  gap:clamp(34px,6vh,70px); padding:clamp(80px,12vh,150px) var(--gut);
+}
+.fin.is-reduced .fin__glow,.no-js .fin .fin__glow{ opacity:1 !important; }
+.fin.is-reduced .fin__rings,.no-js .fin .fin__rings{ display:none; }
+.fin.is-reduced .fin__case,.no-js .fin .fin__case{
+  position:relative; left:auto; top:auto; width:min(74vw,520px);
+  opacity:1 !important; transform:none !important;
+}
+.fin.is-reduced .fin__copy,.no-js .fin .fin__copy{
+  position:relative; inset:auto; padding:0; opacity:1 !important; visibility:visible !important;
+  transform:none !important; pointer-events:auto; background:none;
+}
+.fin.is-reduced .fin__cta,.no-js .fin .fin__cta{ pointer-events:auto; }
+
+/* ---------------------------------------------- FOOTER */
 .foot{ border-top:1px solid var(--rule); }
 .foot__row{ display:flex; align-items:center; justify-content:space-between;
   gap:1.4rem; flex-wrap:wrap; padding-block:clamp(24px,3vw,40px); }

@@ -97,7 +97,7 @@ CD.displayTimeline = (function () {
     for (i = 0; i < st.cases.length; i++) {
       var c = st.cases[i];
       poseInto(cfg.cases[i].poses, p, CASE_FIELDS, c);
-      if (narrow) {
+      if (narrow && cfg.cases.length > 1) {
         /* one case at a time, large, alternating with the copy — then the
            two together for the closing frame */
         var m = cfg.mobile;
@@ -116,6 +116,11 @@ CD.displayTimeline = (function () {
         var k = easeOut(range(p, cfg.cases[i].in, cfg.cases[i].in + m.reveal));
         c.k = k;
         c.push = lerp(m.push.from, m.push.to, smooth(k)) + m.push.pair * pairV;
+      } else if (narrow) {
+        var one = cfg.mobile.a;
+        c.x = one.x; c.y = one.y; c.w = one.w;
+        c.k = easeOut(range(p, cfg.cases[i].in, cfg.cases[i].in + cfg.mobile.reveal));
+        c.push = lerp(cfg.mobile.push.from, cfg.mobile.push.to, smooth(c.k));
       }
     }
 

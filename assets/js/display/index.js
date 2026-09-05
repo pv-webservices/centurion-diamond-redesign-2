@@ -25,12 +25,16 @@ CD.initDisplay = function initDisplay() {
 
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Keep the progress renderer tied to the single CSS brand token. */
+  var brandRgb = getComputedStyle(document.documentElement).getPropertyValue('--brand-blush-rgb').trim().split(',');
+  if (brandRgb.length === 3) cfg.room.tint = [Number(brandRgb[0]), Number(brandRgb[1]), Number(brandRgb[2])];
+
   /* ---------- reduced motion: no pin, no light ----------
      The chapter becomes the case, its two photographs and its copy in
-     document order, on a lit periwinkle ground held still. */
+     document order, on a still, softly blush-lit ground. */
   if (REDUCED) {
     root.classList.add('is-reduced');
-    el.stage.style.backgroundColor = 'rgb(42,46,76)';
+    el.stage.style.backgroundColor = 'rgb(55,39,42)';
     return;
   }
 

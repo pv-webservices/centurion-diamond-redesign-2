@@ -63,7 +63,10 @@ CD.pillarsVisual = (function () {
       introLn: Array.prototype.slice.call(root.querySelectorAll('[data-plr-intro] .plr__ln > span')),
       scenes: scenes,
       stone:  q('[data-plr-stone] .plr__stone-in'),
-      sheen:  q('[data-plr-stone] .plr__sheen i'),
+      contour:q('[data-plr-contour]'),
+      outline:q('[data-plr-outline]'),
+      flash:  q('.plr__gem-flash'),
+      shapeLabel:q('[data-plr-shape-label]'),
       words:  Array.prototype.slice.call(root.querySelectorAll('[data-plr-word]')),
       final:  q('[data-plr-final]'),
       beam:   q('[data-plr-beam]'),
@@ -121,11 +124,16 @@ CD.pillarsVisual = (function () {
     el.stone.style.opacity = p.o.toFixed(3);
     el.stone.style.transform =
       'translate3d(' + p.x.toFixed(2) + 'vw,' + p.y.toFixed(2) + 'vh,0) ' +
-      'scale(' + p.s.toFixed(4) + ') rotate(' + p.r.toFixed(2) + 'deg)';
-    if (el.sheen) {
-      el.sheen.style.opacity = p.sh.toFixed(3);
-      el.sheen.style.transform =
-        'translate3d(' + (-175 + 350 * p.shT).toFixed(1) + '%,0,0) skewX(-16deg)';
+      'scale(' + (p.s * f.shape.contract).toFixed(4) + ') rotate(' + (p.r + f.shape.turn).toFixed(2) + 'deg)';
+    if (el.contour) {
+      var pts = '', xy = f.shape.points;
+      for (var pi = 0; pi < xy.length; pi += 2) pts += (pi ? ' ' : '') + xy[pi].toFixed(2) + ',' + xy[pi + 1].toFixed(2);
+      el.contour.setAttribute('points', pts);
+      el.outline.setAttribute('points', pts);
+      el.flash.style.opacity = Math.max(f.shape.flash, p.sh).toFixed(3);
+      el.flash.style.transform = 'translate3d(' + (-165 + 330 * f.shape.local).toFixed(1) + '%,0,0) rotate(14deg)';
+      el.shapeLabel.textContent = CD.pillars.shapes.items[f.shape.index].name;
+      el.shapeLabel.style.opacity = f.shape.v.toFixed(3);
     }
 
     /* --- closing statements --- */

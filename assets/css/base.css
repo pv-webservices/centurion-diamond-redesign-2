@@ -5,22 +5,32 @@
    ============================================================ */
 
 :root{
+  /* --- Centurion brand palette ---------------------------------------
+     Replace with official Pantone-derived values when supplied by client.
+     The RGB companions are for progress-rendered light calculations. */
+  --brand-black:       #0A0A0B;
+  --brand-black-rgb:   10,10,11;
+  --brand-blush:       #CC9C9C;
+  --brand-blush-rgb:   204,156,156;
+  --brand-blush-light: #E3BFBB;
+  --brand-blush-dark:  #A87A7A;
+  --brand-white:       #F4F1EA;
+
   /* --- ink / ground --- */
-  --ink:        #0A0A0B;
+  --ink:        var(--brand-black);
   --ink-2:      #101012;
   --ink-3:      #17171A;
   --ink-4:      #202027;
 
   /* --- light zone --- */
-  --bone:       #F4F1EA;
+  --bone:       var(--brand-white);
   --bone-2:     #EAE5DB;
   --bone-3:     #DCD5C8;
 
   /* --- brand --- */
-  --rose:       #CC9C9C;
-  --rose-lt:    #E3BFBB;
-  --rose-dp:    #A87A7A;
-  --periwinkle: #A9AECF;
+  --rose:       var(--brand-blush);
+  --rose-lt:    var(--brand-blush-light);
+  --rose-dp:    var(--brand-blush-dark);
   --platinum:   #C6CBD2;
   --gold:       #C9A876;
 

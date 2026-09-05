@@ -41,6 +41,21 @@ CD.pillars = {
     { key: 'gimmick',    side: 'center', motion: 'scale' }
   ],
 
+  /* The only cut families in the current Collection. Equal point counts are
+     generated once by timeline.js, then interpolated as one contour. */
+  shapes: {
+    inA: 0.205,
+    outB: 0.790,
+    points: 32,
+    items: [
+      { name: 'Round',   rx: 42, ry: 42, power: 2.0 },
+      { name: 'Oval',    rx: 32, ry: 44, power: 2.1 },
+      { name: 'Radiant', vertices: [[50,8],[65,8],[92,35],[92,65],[65,92],[35,92],[8,65],[8,35],[35,8]] },
+      { name: 'Emerald', vertices: [[50,7],[72,7],[84,19],[84,81],[72,93],[28,93],[16,81],[16,19],[28,7]] },
+      { name: 'Cushion', rx: 40, ry: 39, power: 4.0 }
+    ]
+  },
+
   /* the stone is one continuous object across the chapter — these are the
      poses it passes through, lerped with a smoothstep between neighbours.
      x is vw, y is vh, r is degrees, o is opacity, sh is sheen intensity. */

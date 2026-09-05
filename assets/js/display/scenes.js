@@ -2,9 +2,8 @@
    09 · DISPLAY — content timing + choreography, in master-progress
    space (0..1).
 
-   The chapter's one idea: the colour arrives as light. The deck names the
-   periwinkle explicitly, so this is the one chromatic room on the page —
-   a dark space that a periwinkle source rises into and fills, revealing
+   The chapter's one idea: the brand colour arrives as reflected light —
+   a dark space that a controlled blush source rises into and fills, revealing
    the case, then falls away again for Exclusivity below.
 
    That is deliberately not another ground ramp. The Sparkle section already
@@ -28,7 +27,7 @@ CD.display = {
     ]
   },
 
-  /* The light source: a soft periwinkle bloom that rises behind the case,
+  /* The light source: a soft blush bloom that rises behind the case,
      spreads to fill the room, holds, and falls. `s` is its scale, `v` its
      presence — the ground ramp below is keyed to the same shape. */
   glow: [
@@ -43,30 +42,23 @@ CD.display = {
 
   /* What the light leaves on the walls.
 
-     ONE PLACE FOR THE ROOM'S COLOUR. `tint` is the lit wall at its
+     `tint` is populated from the centralized CSS brand token at init.
      fullest; every stop is a fraction of it mixed over the page's ink, so
      changing the hue is a single edit here (and the matching rgba in
      .dsp__glow, which is the source itself).
-
-     It is periwinkle because that is what the deck says: "a striking
-     periwinkle colour". The photographed prototype is not periwinkle — it
-     samples at about rgb(183,123,126), a blush rose, which is all but the
-     brand's own --rose. The deck's word is treated as authoritative here
-     and the mismatch is flagged rather than quietly resolved; if the case
-     really is rose, this triple and the glow are the whole change.
 
      Both ends are the page's ink — Metals above drains to it and
      Exclusivity below opens on it. Every stop stays dark enough for bone
      type at AA without a colour change anywhere in the chapter. */
   room: {
-    tint: [75, 83, 140],
+    tint: null,
     stops: [
       { p: 0.00, k: 0.00 },
-      { p: 0.16, k: 0.10 },
-      { p: 0.40, k: 0.32 },
-      { p: 0.62, k: 0.52 },
-      { p: 0.86, k: 0.62 },
-      { p: 0.94, k: 0.24 },
+      { p: 0.16, k: 0.04 },
+      { p: 0.40, k: 0.12 },
+      { p: 0.62, k: 0.23 },
+      { p: 0.86, k: 0.30 },
+      { p: 0.94, k: 0.11 },
       { p: 1.00, k: 0.00 }
     ]
   },
@@ -80,15 +72,9 @@ CD.display = {
       { p: 0.150, x:  -2, y:  2, w: 20, o: 0 },
       { p: 0.300, x:  -2, y:  0, w: 26, o: 1 },     // 01 · lit, centred
       { p: 0.470, x:  -2, y:  0, w: 27, o: 1 },
-      { p: 0.660, x:  12, y: -8, w: 19, o: 1 },     // 02 · pairs up, right
-      { p: 0.820, x: -13, y:  4, w: 20, o: 1 },     // the room, the pair composed
-      { p: 1.000, x: -13, y:  5, w: 21, o: 0 }
-    ] },
-    { key: 'b', in: 0.470, poses: [
-      { p: 0.470, x:  30, y: 16, w: 13, o: 0 },
-      { p: 0.660, x:  30, y: 12, w: 17, o: 1 },     // 02 · behind and below A
-      { p: 0.820, x:  14, y: -5, w: 17, o: 1 },
-      { p: 1.000, x:  14, y: -6, w: 18, o: 0 }
+      { p: 0.660, x: -10, y: -4, w: 25, o: 1 },
+      { p: 0.820, x:   0, y:  1, w: 29, o: 1 },
+      { p: 1.000, x:   0, y:  2, w: 30, o: 0 }
     ] }
   ],
 

@@ -251,6 +251,7 @@
     if (window.CD && CD.initMetals) CD.initMetals();
     if (window.CD && CD.initDisplay) CD.initDisplay();
     if (window.CD && CD.initExclusive) CD.initExclusive();
+    if (window.CD && CD.initFinale) CD.initFinale();
     ScrollTrigger.refresh();
   }
 

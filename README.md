@@ -27,7 +27,7 @@ server (not `file://`, or the video sources and fonts will be blocked).
 | **UI / body type** | Jost — geometric sans that matches the CENTURION wordmark |
 | **Ground** | `#0A0A0B` near-black, with one inverted "light zone" for the collection |
 | **Brand accent** | `#CC9C9C` blush rose (sampled from the logo) |
-| **Secondary** | `#A9AECF` periwinkle (the retail display colour named in the deck) |
+| **Brand light** | controlled blush-rose reflection derived from `--brand-blush` |
 
 Tokens live at the top of `assets/css/base.css`. Change the palette there and the whole
 page follows — the light Collection section inverts automatically via `.zone-light`.
@@ -49,9 +49,9 @@ The page is built as an argument, not a brochure — each section advances one c
 | 06 | **The Collection** | Pinned 480vh light zone. The aperture reopens onto a horizontal gallery of all 9 SKUs |
 | 07 | **Worn** | Pinned 340vh. The photographs arrive in monochrome and find their colour, then gather into a spread |
 | 08 | **Metals** | Pinned 400vh. The ground becomes the metal; the gold panel retreats so Two Tone stands on the seam |
-| 09 | **Display** | Pinned 360vh. The page's one chromatic room — periwinkle arriving as light |
+| 09 | **Display** | Pinned 360vh. The retail preview — blush rose arriving as reflected light |
 | 10 | **Exclusivity** | Pinned 340vh. The retailer argument as a ledger. No photography at all |
-| 11 | CTA | centuriondiamond.com |
+| 11 | **Retail finale** | All 9 Collection rings converge into the case before the Contact invitation |
 
 ---
 
@@ -335,24 +335,18 @@ on the metal instead of on white.
 
 ### 09 · Display
 
-The page's one chromatic room. Metals above drains to ink and Exclusivity below
-opens on it, so this chapter can take the deck's periwinkle without either seam
-having to negotiate a colour.
+The page's controlled chromatic room. Metals above drains to ink and Exclusivity
+below opens on it, so the chapter can introduce the brand blush as reflected light
+without either seam having to negotiate a colour.
 
-Its idea is that **the colour arrives as light**: a periwinkle source rises
+Its idea is that **the colour arrives as light**: a blush-rose source rises
 behind the case, spreads to fill the room, and falls away. What the walls hold is
 only ever what the light leaves there — deliberately not another ground ramp,
 since the Sparkle section already ramps one and Metals already wipes one.
 
-> **Worth confirming.** The deck says the display is *"a striking periwinkle
-> colour"*. The photographed prototype is not periwinkle — it samples at about
-> `rgb(183,123,126)`, a blush rose, which is all but the brand's own `--rose`.
-> The deck's word is treated as authoritative here and the room is lit
-> periwinkle; the pink case under it reads as complementary rather than wrong.
-> If the case is really rose, `room.tint` in `assets/js/display/scenes.js` and
-> the matching rgba in `.dsp__glow` are the whole change — the stop list is
-> expressed as fractions of that one triple precisely so it stays a one-line
-> decision.
+The light colour is read from `--brand-blush-rgb` at mount, so official Pantone-
+derived values remain a single-token change. The copy is intentionally colour-
+neutral until final client wording is approved.
 
 Mobile composes the same room for a portrait frame: the case large enough to be
 looked at (95vw) and alternating with the copy — high with the copy under it,
@@ -519,7 +513,8 @@ assets/js/study/        A Study in Light
 assets/js/collection/   the gallery
 assets/js/worn/         the diamond, in life
 assets/js/metals/       the ground becomes the metal
-assets/js/display/      the periwinkle room
+assets/js/display/      the blush-lit retail preview
+assets/js/finale/       nine-ring jewelry-case conversion finale
 assets/js/exclusive/    the trade argument, as a ledger
 assets/js/vendor/       gsap, ScrollTrigger, SplitText, lenis
 assets/fonts/           self-hosted Bodoni Moda + Jost (woff2)
