@@ -149,10 +149,13 @@ resolves to that ivory instead of `--ink`.
 
 Each benefit gets its own reveal and its own composition — `rise` / `clip` /
 `slide` / `scale`, and left / right / left / centred — so the chapter never settles
-into a rhythm. A single Centurion stone (the alpha-keyed ring shot) recomposes
-between them, driven by a keyframe list rather than per-scene code. Its internal
-light sweep is a bar masked to the stone's own silhouette, so the highlight travels
-across the facets rather than across a rectangle.
+into a rhythm. A single loose stone recomposes between the five Collection cuts,
+driven by a keyframe list rather than per-scene code. The visuals are the supplied
+product photographs, isolated onto true alpha and served as responsive WebP pairs:
+`7.jpg` → Round, `11.jpg` → Oval, `8.jpg` → Radiant, `14.jpg` → Emerald and
+`6.jpg` → Cushion. The renderer holds each real cut, then contracts, brightens and
+cross-blends only through the middle of each transition, so no white source-image
+rectangle is ever exposed.
 
 The handoff into the Light Study is an **aperture**, not a page fade: a circle
 scaled inside an SVG mask cuts a shrinking hole out of a covering ink rect, with a

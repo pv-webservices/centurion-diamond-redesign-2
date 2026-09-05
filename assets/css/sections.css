@@ -681,15 +681,17 @@
 }
 .plr__stone-in{
   position:relative; display:block;
-  width:clamp(230px,29vw,440px); aspect-ratio:1;
-  opacity:0; will-change:transform,opacity;
-  filter:drop-shadow(0 28px 42px rgba(26,25,23,.26));
+  width:clamp(240px,31vw,470px); aspect-ratio:1;
+  opacity:0; will-change:transform,opacity,filter;
+  filter:drop-shadow(0 24px 30px rgba(26,25,23,.14)) brightness(var(--plr-shine,1)) contrast(1.035);
 }
-.plr__gem{ width:100%; height:100%; overflow:visible; }
-.plr__gem-flash{
-  opacity:0; transform-origin:center; mix-blend-mode:screen;
+.plr__photos{ position:absolute; inset:0; display:grid; place-items:center; }
+.plr__shape-photo{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:contain;
+  opacity:0; visibility:hidden; transform-origin:center;
   will-change:transform,opacity;
 }
+.plr__shape-photo:first-child{ opacity:1; visibility:visible; }
 .plr__shape-label{
   position:absolute; left:50%; bottom:-1.1rem; translate:-50% 100%;
   font-size:9px; font-weight:500; letter-spacing:.42em; text-transform:uppercase;
@@ -943,7 +945,17 @@
 .plr.is-reduced .plr__scene,   .no-js .plr .plr__scene{ order:3; }
 .plr.is-reduced .plr__final,   .no-js .plr .plr__final{ order:4; }
 .plr.is-reduced .plr__stone-in,.no-js .plr .plr__stone-in{
-  opacity:1 !important; width:min(70vw,460px); margin-inline:auto;
+  opacity:1 !important; width:min(100%,860px); aspect-ratio:auto; margin-inline:auto;
+  filter:none; transform:none !important;
+}
+.plr.is-reduced .plr__photos,.no-js .plr .plr__photos{
+  position:relative; inset:auto; display:grid; grid-template-columns:repeat(5,minmax(0,1fr));
+  align-items:end; gap:clamp(10px,2.2vw,28px);
+}
+.plr.is-reduced .plr__shape-photo,.no-js .plr .plr__shape-photo{
+  position:relative; inset:auto; width:100%; height:auto; aspect-ratio:1;
+  opacity:1 !important; visibility:visible !important; transform:none !important;
+  filter:drop-shadow(0 12px 14px rgba(26,25,23,.12)) !important;
 }
 .plr.is-reduced .plr__shape-label,.no-js .plr .plr__shape-label{ display:none; }
 .plr.is-reduced .plr__shape-list,.no-js .plr .plr__shape-list{
@@ -952,6 +964,11 @@
   color:var(--rose-dp);
 }
 .plr__shape-list i{ margin-inline:.45em; color:var(--plr-faint); }
+@media (max-width:640px){
+  .plr.is-reduced .plr__photos,.no-js .plr .plr__photos{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
 .plr.is-reduced .plr__final,   .no-js .plr .plr__final{
   margin-top:clamp(48px,8vh,96px); text-align:left;
 }

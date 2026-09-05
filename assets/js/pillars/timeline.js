@@ -76,34 +76,6 @@ CD.pillarsTimeline = (function () {
     return o;
   }
 
-  function contour(item, count) {
-    var out = new Float32Array(count * 2);
-    if (item.vertices) {
-      var v = item.vertices, lengths = new Float32Array(v.length - 1), total = 0;
-      for (var e = 0; e < v.length - 1; e++) {
-        var dx = v[e + 1][0] - v[e][0], dy = v[e + 1][1] - v[e][1];
-        lengths[e] = Math.sqrt(dx * dx + dy * dy); total += lengths[e];
-      }
-      var edge = 0, travelled = 0;
-      for (var j = 0; j < count; j++) {
-        var target = total * j / count;
-        while (edge < lengths.length - 1 && target > travelled + lengths[edge]) { travelled += lengths[edge]; edge++; }
-        var et = (target - travelled) / lengths[edge];
-        out[j * 2] = lerp(v[edge][0], v[edge + 1][0], et);
-        out[j * 2 + 1] = lerp(v[edge][1], v[edge + 1][1], et);
-      }
-      return out;
-    }
-    var pow = 2 / item.power;
-    for (var i = 0; i < count; i++) {
-      var a = -Math.PI / 2 + Math.PI * 2 * i / count;
-      var cx = Math.cos(a), sy = Math.sin(a);
-      out[i * 2] = 50 + item.rx * (cx < 0 ? -1 : 1) * Math.pow(Math.abs(cx), pow);
-      out[i * 2 + 1] = 50 + item.ry * (sy < 0 ? -1 : 1) * Math.pow(Math.abs(sy), pow);
-    }
-    return out;
-  }
-
   /* the mutable frame, built once */
   function createState(cfg) {
     var n = cfg.scenes.length, i;
@@ -114,14 +86,13 @@ CD.pillarsTimeline = (function () {
       intro:  { v: 0, y: 0, lines: [0, 0] },
       scenes: [],
       stone:  { x: 0, y: 0, s: 1, r: 0, o: 0, sh: 0, shT: 0 },
-      shape:  { points: new Float32Array(cfg.shapes.points * 2), contours: [], index: 0, local: 0, v: 0, flash: 0, contract: 1, turn: 0 },
+      shape:  { from: 0, to: 1, index: 0, local: 0, blend: 0, v: 0, flash: 0, contract: 1, turn: 0 },
       words:  [],
       beam:   { v: 0, x: 0 },
       iris:   cfg.iris.from,
       seal:   0
     };
     for (i = 0; i < n; i++) st.scenes.push({ motion: cfg.scenes[i].motion, vin: 0, vout: 0, v: 0 });
-    for (i = 0; i < cfg.shapes.items.length; i++) st.shape.contours.push(contour(cfg.shapes.items[i], cfg.shapes.points));
     for (i = 0; i < 3; i++) st.words.push({ v: 0, y: 0 });
     return st;
   }
@@ -155,20 +126,22 @@ CD.pillarsTimeline = (function () {
        written out in scenes.js rather than the desktop poses rescaled. */
     poseInto(narrow && cfg.mobileStone ? cfg.mobileStone : cfg.stone, p, st.stone);
 
-    /* One normalized contour moves through all five cuts. The optical beat
-       contracts, flashes, transforms and settles on each leg. */
+    /* The real stones hold at each cut, then cross through a compact optical
+       beat. A contraction plus a short luminance crest hides the hand-off,
+       preserving the impression of one object recomposing in light. */
     var SH = cfg.shapes, total = SH.items.length - 1;
     var shapeP = range(p, SH.inA, SH.outB) * total;
     var si = Math.min(total - 1, Math.floor(shapeP));
     var sl = shapeP >= total ? 1 : shapeP - si;
-    var se = easeIO(sl), ca = st.shape.contours[si], cb = st.shape.contours[si + 1];
-    for (i = 0; i < st.shape.points.length; i++) st.shape.points[i] = lerp(ca[i], cb[i], se);
+    st.shape.from = si;
+    st.shape.to = Math.min(total, si + 1);
+    st.shape.blend = smooth(range(sl, 0.30, 0.70));
     st.shape.index = Math.min(total, Math.floor(shapeP + 0.5));
     st.shape.local = sl;
     st.shape.v = easeOut(range(p, SH.inA - 0.035, SH.inA + 0.025)) * (1 - easeIn(range(p, SH.outB, SH.outB + 0.055)));
     st.shape.flash = Math.sin(Math.PI * sl) * st.shape.v;
-    st.shape.contract = 1 - 0.055 * Math.sin(Math.PI * sl);
-    st.shape.turn = -1.1 * Math.sin(Math.PI * sl);
+    st.shape.contract = 1 - 0.045 * Math.sin(Math.PI * sl);
+    st.shape.turn = -0.8 * Math.sin(Math.PI * sl);
 
     /* one statement at a time, each clearing before the next arrives — the
        last one clears too, so the beam and the aperture play against the
