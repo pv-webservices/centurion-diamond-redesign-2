@@ -981,6 +981,44 @@
   </div>
 </section>
 
+<!-- ============================================ 10 · RETAIL SHOWCASE
+     The supplied film is the sole source of ring motion. One canvas scrubs
+     a progressively loaded WebP sequence; the final frame remains in markup
+     for reduced-motion and no-script visitors. -->
+<section class="fin" id="retail-showcase" aria-labelledby="finTitle">
+  <div class="fin__stage">
+    <div class="fin__media" data-fin-media aria-hidden="true">
+      <canvas class="fin__canvas" data-fin-canvas width="1280" height="720"></canvas>
+      <img class="fin__poster" src="assets/img/retail-scrub/retail-095.webp"
+           alt="" width="1280" height="720" loading="lazy" decoding="async">
+    </div>
+
+    <div class="fin__vig" data-fin-vig aria-hidden="true"></div>
+    <div class="fin__grain" aria-hidden="true"></div>
+    <div class="fin__blush" data-fin-blush aria-hidden="true"></div>
+    <div class="fin__sweep" data-fin-sweep aria-hidden="true"></div>
+
+    <div class="fin__copy" data-fin-copy>
+      <div class="fin__copy-in">
+        <p class="fin__eyebrow" data-fin-eyebrow><i></i><span>Centurion at Retail</span></p>
+        <h2 class="fin__title" id="finTitle">
+          <span class="fin__line"><span>Want to see how the</span></span>
+          <span class="fin__line"><span class="is-em">Centurion Diamond</span></span>
+          <span class="fin__line"><span>looks in your store?</span></span>
+        </h2>
+        <p class="fin__body" data-fin-body>Bring the Centurion Collection to your jewelry case.</p>
+        <a class="btn fin__cta" href="#contact" data-fin-cta>
+          <span class="dot"></span> Contact Us
+        </a>
+      </div>
+    </div>
+
+    <div class="fin__progress" data-fin-progress aria-hidden="true">
+      <span>Rings / Retail</span><i><b data-fin-progress-bar></b></i><em data-fin-progress-value>00</em>
+    </div>
+  </div>
+</section>
+
 <!-- ============================================ 10 · EXCLUSIVITY — a different kind of standard
      The trade argument, and the only chapter on the page with no
      photography in it at all. Three figures arrive one row at a time and
@@ -1049,31 +1087,17 @@
   </div>
 </section>
 
-<!-- ============================================ 11 · RETAIL FINALE
-     Decorative ring layers are mounted from the nine Collection products,
-     making the Collection markup the single image/data source of truth. -->
-<section class="fin" id="contact" aria-labelledby="finTitle">
-  <div class="fin__stage">
-    <div class="fin__glow" data-fin-glow aria-hidden="true"></div>
-    <div class="fin__rings" data-fin-rings aria-hidden="true"></div>
-    <figure class="fin__case" data-fin-case aria-hidden="true">
-      <span class="fin__case-img">
-        <img src="assets/img/model/display-case-b-800.webp"
-             srcset="assets/img/model/display-case-b-560.webp 560w, assets/img/model/display-case-b-800.webp 800w, assets/img/model/display-case-b-1200.webp 1200w"
-             sizes="(max-width:900px) 92vw, 48vw"
-             alt="" width="1200" height="1479" loading="lazy" decoding="async">
-      </span>
-    </figure>
-    <div class="fin__copy" data-fin-copy>
-      <p class="fin__eyebrow"><i></i><span>Centurion at Retail</span><i></i></p>
-      <h2 class="fin__title" id="finTitle">Want to see how the<br>
-        <em>Centurion Diamond</em><br>looks in your store?</h2>
-      <p class="fin__body">Bring the Centurion Collection to your jewelry case.</p>
-      <!-- Replace href with the approved contact destination when supplied. -->
-      <a class="btn fin__cta" href="https://www.centuriondiamond.com" data-fin-cta>
-        <span class="dot"></span> Contact Us
-      </a>
-    </div>
+<!-- ============================================ CONTACT
+     Conventional destination retained after Exclusivity so every existing
+     #contact link continues to move forward through the page. -->
+<section class="contact" id="contact" aria-labelledby="contactTitle">
+  <div class="wrap contact__inner">
+    <p class="label"><b>08</b> Retail partnerships</p>
+    <h2 class="contact__title" id="contactTitle">Place the extraordinary<br><em>in your case.</em></h2>
+    <!-- Replace href with the approved contact destination when supplied. -->
+    <a class="btn contact__cta" href="https://www.centuriondiamond.com">
+      <span class="dot"></span> Contact Us
+    </a>
   </div>
 </section>
 
@@ -1137,6 +1161,7 @@
 <script defer src="assets/js/exclusive/index.js"></script>
 <script defer src="assets/js/finale/scenes.js"></script>
 <script defer src="assets/js/finale/timeline.js"></script>
+<script defer src="assets/js/finale/frames.js"></script>
 <script defer src="assets/js/finale/visual.js"></script>
 <script defer src="assets/js/finale/index.js"></script>
 <script defer src="assets/js/main.js"></script>

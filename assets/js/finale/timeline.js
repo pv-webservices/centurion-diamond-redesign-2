@@ -1,6 +1,6 @@
 /* ============================================================
-   11 · RETAIL FINALE — pure progress-to-state calculation.
-   The frame and its nested objects are allocated once and reused.
+   10 · RETAIL SHOWCASE — pure progress-to-state calculations.
+   The returned state is allocated once and reused on every scroll frame.
    ============================================================ */
 window.CD = window.CD || {};
 
@@ -8,60 +8,63 @@ CD.finaleTimeline = (function () {
   'use strict';
 
   function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
-  function range(p, a, b) { return clamp01((p - a) / (b - a)); }
+  function range(p, a, b) { return b === a ? (p >= b ? 1 : 0) : clamp01((p - a) / (b - a)); }
   function smooth(t) { return t * t * (3 - 2 * t); }
   function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
   function lerp(a, b, t) { return a + (b - a) * t; }
 
-  function poseInto(keys, p, out) {
-    var last = keys.length - 1, a, b, t, i;
-    if (p <= keys[0].p) { a = b = keys[0]; t = 0; }
-    else if (p >= keys[last].p) { a = b = keys[last]; t = 0; }
-    else {
-      for (i = 1; i <= last; i++) if (p <= keys[i].p) break;
-      a = keys[i - 1]; b = keys[i]; t = smooth(range(p, a.p, b.p));
+  function mappedTime(points, p) {
+    var last = points.length - 1;
+    if (p <= points[0].p) return points[0].t;
+    if (p >= points[last].p) return points[last].t;
+    for (var i = 1; i <= last; i++) {
+      if (p <= points[i].p) {
+        var a = points[i - 1], b = points[i];
+        return lerp(a.t, b.t, range(p, a.p, b.p));
+      }
     }
-    out.y = lerp(a.y, b.y, t);
-    out.s = lerp(a.s, b.s, t);
-    out.o = lerp(a.o, b.o, t);
-    out.crisp = lerp(a.crisp, b.crisp, t);
+    return 1;
   }
 
-  function createState(cfg) {
-    var st = {
-      glow: 0,
-      case: { y: 0, s: 1, o: 0, crisp: 0 },
-      rings: [],
-      copy: { v: 0, y: 24 }
+  function createState() {
+    return {
+      frame: 0,
+      media: { v: 0, scale: 1.03 },
+      vig: 1,
+      blush: 0,
+      sweep: { v: 0, x: -70 },
+      copy: { scrim: 0, eyebrow: 0, lines: [0, 0, 0], body: 0, cta: 0 },
+      progress: 0
     };
-    for (var i = 0; i < cfg.rings.length; i++) st.rings.push({ x: 0, y: 0, s: 1, r: 0, o: 0 });
-    return st;
   }
 
-  function frame(cfg, p, narrow, st) {
-    st.glow = easeOut(range(p, cfg.beats.room.inA, cfg.beats.room.inB));
-    poseInto(cfg.casePoses, p, st.case);
-    if (narrow) st.case.s *= cfg.mobile.caseScale;
+  function frame(cfg, p, frameCount, st) {
+    p = clamp01(p);
+    st.frame = Math.round(mappedTime(cfg.videoMap, p) * (frameCount - 1));
 
-    for (var i = 0; i < cfg.rings.length; i++) {
-      var src = cfg.rings[i], dst = st.rings[i];
-      var t = smooth(range(p, src.inA, src.inB));
-      var path = narrow ? cfg.mobile.pathScale : 1;
-      var arc = Math.sin(Math.PI * t) * (i % 2 ? -4.5 : 4.5) * path;
-      dst.x = lerp(src.x * path, src.tx, t) + arc;
-      dst.y = lerp(src.y * path, src.ty, t) - Math.sin(Math.PI * t) * 8 * path;
-      dst.r = lerp(src.r, src.tr, t);
-      dst.s = lerp(src.s * (narrow ? cfg.mobile.ringScale : 1), narrow ? .18 : .21, t);
-      /* Hold full presence until the ring is already inside the photograph;
-         the case layer occludes it first, then this finishes the conceal. */
-      dst.o = easeOut(range(p, src.inA - .055, src.inA + .015)) * (1 - smooth(range(t, .91, 1)));
+    st.media.v = easeOut(range(p, cfg.media.reveal.inA, cfg.media.reveal.inB));
+    st.media.scale = 1.03
+      - 0.02 * easeOut(range(p, cfg.media.firstSettle.inA, cfg.media.firstSettle.inB))
+      - 0.01 * smooth(range(p, cfg.media.finalSettle.inA, cfg.media.finalSettle.inB));
+
+    st.copy.scrim = smooth(range(p, cfg.copy.scrim.inA, cfg.copy.scrim.inB));
+    st.copy.eyebrow = easeOut(range(p, cfg.copy.eyebrow.inA, cfg.copy.eyebrow.inB));
+    for (var i = 0; i < st.copy.lines.length; i++) {
+      st.copy.lines[i] = easeOut(range(p, cfg.copy.lines[i].inA, cfg.copy.lines[i].inB));
     }
+    st.copy.body = easeOut(range(p, cfg.copy.body.inA, cfg.copy.body.inB));
+    st.copy.cta = easeOut(range(p, cfg.copy.cta.inA, cfg.copy.cta.inB));
 
-    var cv = easeOut(range(p, cfg.beats.copy.inA, cfg.beats.copy.inB));
-    st.copy.v = cv;
-    st.copy.y = (1 - cv) * 24;
+    var sw = cfg.media.sweep;
+    st.sweep.v = p <= sw.peak
+      ? smooth(range(p, sw.inA, sw.peak))
+      : 1 - smooth(range(p, sw.peak, sw.outB));
+    st.sweep.x = -70 + 140 * smooth(range(p, sw.inA, sw.outB));
+    st.blush = 0.18 * easeOut(range(p, 0.02, 0.18)) + 0.34 * st.sweep.v;
+    st.vig = 0.92 - 0.20 * easeOut(range(p, 0.00, 0.28)) + 0.16 * st.copy.scrim;
+    st.progress = p;
     return st;
   }
 
-  return { createState: createState, frame: frame };
+  return { createState: createState, frame: frame, clamp01: clamp01 };
 })();

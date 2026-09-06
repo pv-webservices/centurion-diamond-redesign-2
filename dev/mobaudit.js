@@ -4,7 +4,7 @@ const puppeteer=require('puppeteer');
 const T=ms=>new Promise(r=>setTimeout(r,ms));
 const SIZES=(process.env.SIZES||'390x844,393x852,412x915,430x932,360x800,768x1024').split(',').map(s=>s.split('x').map(Number));
 const LAND=process.env.LANDSCAPE==='1';
-const SEC={chero:8,anatomy:10,collection:12,worn:12,display:10};
+const SEC={chero:8,anatomy:10,collection:12,worn:12,display:10,'retail-showcase':10,exclusive:8};
 
 (async()=>{
  const b=await puppeteer.launch({headless:'new',args:['--no-sandbox','--autoplay-policy=no-user-gesture-required']});
@@ -33,7 +33,7 @@ const SEC={chero:8,anatomy:10,collection:12,worn:12,display:10};
       const root=document.getElementById(sec);
       const out={sw:de.scrollWidth,cw,off:[],hdr:[],wrap:[],ink:0};
       // any visible text block that leaves the frame or sits under the header
-      root.querySelectorAll('.cscene,.plr__copy,.cl__plate,.coll__lede,.coll__stmtT,.coll__finalT,.wrn__copy,.wrn__final,.dsp__copy,.plr__h2,.wrn__h2,.dsp__h2,.coll__h2,.cbtn,.coll__cta,.coll__nav,.coll__metals')
+      root.querySelectorAll('.cscene,.plr__copy,.cl__plate,.coll__lede,.coll__stmtT,.coll__finalT,.wrn__copy,.wrn__final,.dsp__copy,.fin__copy-in,.fin__progress,.plr__h2,.wrn__h2,.dsp__h2,.coll__h2,.cbtn,.coll__cta,.coll__nav,.coll__metals')
         .forEach(el=>{
           let o=1,n=el;
           while(n&&n!==document.body){o*=+getComputedStyle(n).opacity; if(getComputedStyle(n).visibility==='hidden'){o=0;break;} n=n.parentElement;}

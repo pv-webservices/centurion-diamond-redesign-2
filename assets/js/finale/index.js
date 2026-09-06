@@ -1,12 +1,14 @@
 /* ============================================================
-   11 · RETAIL FINALE — one master ScrollTrigger, matching every chapter.
+   10 · RETAIL SHOWCASE — one master ScrollTrigger.
+   Scroll is the only clock: progress maps to a source frame in both
+   directions, and decoded assets are drawn only when the image changes.
    ============================================================ */
 window.CD = window.CD || {};
 
 CD.initFinale = function initFinale() {
   'use strict';
-  var root = document.getElementById('contact');
-  if (!root || typeof gsap === 'undefined' || !CD.finale) return;
+  var root = document.getElementById('retail-showcase');
+  if (!root || typeof gsap === 'undefined' || !CD.finale || !CD.finaleFrames) return;
 
   var cfg = CD.finale;
   var T = CD.finaleTimeline;
@@ -20,7 +22,36 @@ CD.initFinale = function initFinale() {
 
   var el = V.mount(root);
   var narrow = window.matchMedia('(max-width:900px)').matches;
-  var state = T.createState(cfg);
+  var state = T.createState();
+  var progress = 0;
+  var raf = 0;
+  var frames;
+
+  function render() {
+    raf = 0;
+    V.render(el, T.frame(cfg, progress, frames.count(), state), frames);
+  }
+
+  function scheduleRender() {
+    if (!raf) raf = window.requestAnimationFrame(render);
+  }
+
+  frames = CD.finaleFrames.create(cfg, narrow, scheduleRender);
+  V.resize(el, frames.set(), narrow);
+  render();
+
+  var observer = null;
+  if ('IntersectionObserver' in window) {
+    observer = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      frames.start();
+      scheduleRender();
+      observer.disconnect();
+    }, { rootMargin: cfg.preload.rootMargin });
+    observer.observe(root);
+  } else {
+    frames.start();
+  }
 
   ScrollTrigger.create({
     trigger: root,
@@ -29,12 +60,28 @@ CD.initFinale = function initFinale() {
     pin: el.stage,
     pinSpacing: false,
     anticipatePin: 1,
-    onUpdate: function (self) { V.render(el, T.frame(cfg, self.progress, narrow, state)); }
+    onEnter: function () { frames.start(); },
+    onEnterBack: function () { frames.start(); },
+    onUpdate: function (self) {
+      progress = self.progress;
+      scheduleRender();
+    }
   });
 
+  var resizeRaf = 0;
   window.addEventListener('resize', function () {
-    narrow = window.matchMedia('(max-width:900px)').matches;
+    if (resizeRaf) return;
+    resizeRaf = window.requestAnimationFrame(function () {
+      resizeRaf = 0;
+      narrow = window.matchMedia('(max-width:900px)').matches;
+      frames.select(narrow);
+      V.resize(el, frames.set(), narrow);
+      scheduleRender();
+    });
   }, { passive: true });
 
-  V.render(el, T.frame(cfg, 0, narrow, state));
+  window.addEventListener('pagehide', function () {
+    if (observer) observer.disconnect();
+    frames.destroy();
+  }, { once: true });
 };

@@ -250,8 +250,8 @@
     if (window.CD && CD.initWorn) CD.initWorn();
     if (window.CD && CD.initMetals) CD.initMetals();
     if (window.CD && CD.initDisplay) CD.initDisplay();
-    if (window.CD && CD.initExclusive) CD.initExclusive();
     if (window.CD && CD.initFinale) CD.initFinale();
+    if (window.CD && CD.initExclusive) CD.initExclusive();
     ScrollTrigger.refresh();
   }
 

@@ -1,5 +1,6 @@
 /* ============================================================
-   11 · RETAIL FINALE — DOM mount and compositor-only rendering.
+   10 · RETAIL SHOWCASE — one canvas and restrained overlays.
+   Canvas sizing is isolated here; the timeline never reads layout.
    ============================================================ */
 window.CD = window.CD || {};
 
@@ -7,56 +8,98 @@ CD.finaleVisual = (function () {
   'use strict';
 
   function mount(root) {
-    var ringLayer = root.querySelector('[data-fin-rings]');
-    var products = document.querySelectorAll('#collection figure.cl[data-cl="product"]');
-    var rings = [];
-
-    Array.prototype.forEach.call(products, function (product) {
-      var source = product.querySelector('.cl__stone img');
-      if (!source) return;
-      var figure = document.createElement('figure');
-      figure.className = 'fin__ring';
-      figure.setAttribute('aria-hidden', 'true');
-      figure.dataset.cut = product.dataset.cut || '';
-      figure.dataset.metal = product.dataset.metal || '';
-      var image = source.cloneNode(true);
-      image.alt = '';
-      image.setAttribute('sizes', '(max-width:900px) 30vw, 16vw');
-      figure.appendChild(image);
-      ringLayer.appendChild(figure);
-      rings.push(figure);
-    });
-
+    var canvas = root.querySelector('[data-fin-canvas]');
     return {
       stage: root.querySelector('.fin__stage'),
-      glow: root.querySelector('[data-fin-glow]'),
-      case: root.querySelector('[data-fin-case]'),
-      caseImg: root.querySelector('.fin__case-img'),
-      rings: rings,
+      media: root.querySelector('[data-fin-media]'),
+      canvas: canvas,
+      ctx: canvas.getContext('2d', { alpha: false, desynchronized: true }),
+      poster: root.querySelector('.fin__poster'),
+      vig: root.querySelector('[data-fin-vig]'),
+      blush: root.querySelector('[data-fin-blush]'),
+      sweep: root.querySelector('[data-fin-sweep]'),
       copy: root.querySelector('[data-fin-copy]'),
-      cta: root.querySelector('[data-fin-cta]')
+      eyebrow: root.querySelector('[data-fin-eyebrow]'),
+      lines: Array.prototype.slice.call(root.querySelectorAll('.fin__line > span')),
+      body: root.querySelector('[data-fin-body]'),
+      cta: root.querySelector('[data-fin-cta]'),
+      progress: root.querySelector('[data-fin-progress]'),
+      progressBar: root.querySelector('[data-fin-progress-bar]'),
+      progressValue: root.querySelector('[data-fin-progress-value]'),
+      width: 0,
+      height: 0,
+      dpr: 1,
+      narrow: false,
+      lastDrawn: -1
     };
   }
 
-  function render(el, f) {
-    el.glow.style.opacity = f.glow.toFixed(3);
-    el.case.style.opacity = f.case.o.toFixed(3);
-    el.case.style.transform = 'translate3d(-50%,calc(-50% + ' + f.case.y.toFixed(2) + 'vh),0) scale(' + f.case.s.toFixed(4) + ')';
-    el.caseImg.style.opacity = (0.72 + f.case.crisp * 0.28).toFixed(3);
-
-    for (var i = 0; i < el.rings.length; i++) {
-      var r = f.rings[i], node = el.rings[i];
-      node.style.opacity = r.o.toFixed(3);
-      node.style.visibility = r.o < .003 ? 'hidden' : 'visible';
-      node.style.transform = 'translate3d(calc(-50% + ' + r.x.toFixed(2) + 'vw),calc(-50% + ' + r.y.toFixed(2) + 'vh),0) scale(' + r.s.toFixed(4) + ') rotate(' + r.r.toFixed(2) + 'deg)';
+  function resize(el, set, narrow) {
+    var rect = el.media.getBoundingClientRect();
+    var width = Math.max(1, Math.round(rect.width));
+    var height = Math.max(1, Math.round(rect.height));
+    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    var pixelWidth = Math.round(width * dpr);
+    var pixelHeight = Math.round(height * dpr);
+    el.narrow = narrow;
+    el.width = width;
+    el.height = height;
+    el.dpr = dpr;
+    if (el.canvas.width !== pixelWidth || el.canvas.height !== pixelHeight) {
+      el.canvas.width = pixelWidth;
+      el.canvas.height = pixelHeight;
+      el.lastDrawn = -1;
     }
-
-    el.copy.style.opacity = f.copy.v.toFixed(3);
-    el.copy.style.visibility = f.copy.v < .003 ? 'hidden' : 'visible';
-    el.copy.style.transform = 'translate3d(0,' + f.copy.y.toFixed(2) + 'px,0)';
-    el.copy.style.pointerEvents = f.copy.v > .92 ? 'auto' : 'none';
-    el.cta.style.pointerEvents = f.copy.v > .92 ? 'auto' : 'none';
+    el.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
-  return { mount: mount, render: render };
+  function draw(el, frame) {
+    if (!frame || frame.index === el.lastDrawn) return;
+    var image = frame.image;
+    var iw = image.naturalWidth || image.width;
+    var ih = image.naturalHeight || image.height;
+    var scale = el.narrow
+      ? Math.min(el.width / iw, el.height / ih)
+      : Math.max(el.width / iw, el.height / ih);
+    var width = iw * scale;
+    var height = ih * scale;
+    el.ctx.fillStyle = '#0A0A0B';
+    el.ctx.fillRect(0, 0, el.width, el.height);
+    el.ctx.drawImage(image, (el.width - width) / 2, (el.height - height) / 2, width, height);
+    el.lastDrawn = frame.index;
+    el.canvas.dataset.frame = frame.index;
+    el.canvas.classList.add('is-ready');
+  }
+
+  function reveal(node, value, distance) {
+    node.style.opacity = value.toFixed(3);
+    node.style.transform = 'translate3d(0,' + ((1 - value) * distance).toFixed(2) + 'px,0)';
+  }
+
+  function render(el, f, frames) {
+    frames.request(f.frame);
+    draw(el, frames.nearest(f.frame));
+
+    el.media.style.opacity = f.media.v.toFixed(3);
+    el.media.style.transform = 'scale(' + f.media.scale.toFixed(4) + ')';
+    el.vig.style.opacity = f.vig.toFixed(3);
+    el.blush.style.opacity = f.blush.toFixed(3);
+    el.sweep.style.opacity = f.sweep.v.toFixed(3);
+    el.sweep.style.transform = 'translate3d(' + f.sweep.x.toFixed(2) + 'vw,0,0) skewX(-14deg)';
+
+    el.copy.style.setProperty('--fin-scrim', f.copy.scrim.toFixed(3));
+    reveal(el.eyebrow, f.copy.eyebrow, 14);
+    for (var i = 0; i < el.lines.length; i++) {
+      el.lines[i].style.transform = 'translate3d(0,' + ((1 - f.copy.lines[i]) * 108).toFixed(2) + '%,0)';
+    }
+    reveal(el.body, f.copy.body, 18);
+    reveal(el.cta, f.copy.cta, 16);
+    el.cta.style.pointerEvents = f.copy.cta > 0.92 ? 'auto' : 'none';
+
+    el.progressBar.style.transform = 'scaleX(' + f.progress.toFixed(4) + ')';
+    var pct = Math.round(f.progress * 100);
+    el.progressValue.textContent = pct === 100 ? '100' : ('0' + pct).slice(-2);
+  }
+
+  return { mount: mount, resize: resize, render: render };
 })();

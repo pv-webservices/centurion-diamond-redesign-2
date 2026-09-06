@@ -50,8 +50,9 @@ The page is built as an argument, not a brochure — each section advances one c
 | 07 | **Worn** | Pinned 340vh. The photographs arrive in monochrome and find their colour, then gather into a spread |
 | 08 | **Metals** | Pinned 400vh. The ground becomes the metal; the gold panel retreats so Two Tone stands on the seam |
 | 09 | **Display** | Pinned 360vh. The retail preview — blush rose arriving as reflected light |
-| 10 | **Exclusivity** | Pinned 340vh. The retailer argument as a ledger. No photography at all |
-| 11 | **Retail finale** | All 9 Collection rings converge into the case before the Contact invitation |
+| 10 | **Retail showcase** | Pinned 460vh. The supplied film scrubs from empty blush display to the completed ring case |
+| 11 | **Exclusivity** | Pinned 340vh. The retailer argument as a ledger. No photography at all |
+| 12 | **Contact** | Compact forward anchor and retail-partnership CTA |
 
 ---
 
@@ -338,9 +339,9 @@ on the metal instead of on white.
 
 ### 09 · Display
 
-The page's controlled chromatic room. Metals above drains to ink and Exclusivity
-below opens on it, so the chapter can introduce the brand blush as reflected light
-without either seam having to negotiate a colour.
+The page's controlled chromatic room. Metals above drains to ink and the Retail
+Showcase below inherits it, so the chapter can introduce the brand blush as reflected
+light without either seam having to negotiate a colour.
 
 Its idea is that **the colour arrives as light**: a blush-rose source rises
 behind the case, spreads to fill the room, and falls away. What the walls hold is
@@ -357,7 +358,26 @@ then low with the copy over it — before the two cases come together, stepped,
 for the closing frame. Each case opens under a mask and carries a slow push
 inside its own frame (1.06 → 1.00, closing in for the pair). `CD.display.mobile`.
 
-### 10 · Exclusivity
+### 10 · Retail showcase
+
+The supplied eight-second retail film is the sole source of ring movement. It is
+encoded as a progressively loaded WebP sequence: 96 desktop frames at 1280×720 / 12
+fps (7.26 MiB) and 80 mobile frames at 720×405 / 10 fps (2.71 MiB). Desktop uses a
+careful cover fit; mobile preserves the full 16:9 frame inside an ink viewport.
+
+One canvas draws the nearest decoded frame. Master progress uses observed source
+beats rather than a linear clock: the empty case holds, the 1.5–6s assembly gets most
+of the travel, then the stable completed display holds behind the approved invitation.
+Scrolling upward selects the same frames in reverse. `frames.js` waits until the
+section enters a 180%-viewport preload margin, loads frame 0, the final frame and a
+sparse preview lattice first, then fills gaps while promoting the current target.
+
+Reduced-motion and no-JS modes skip the pin and canvas entirely. The final WebP frame,
+headline and CTA remain in ordinary document flow. The old cloned Collection-ring
+flight layer and its display-case compositor were removed; there is only one retail
+assembly experience.
+
+### 11 · Exclusivity
 
 The trade argument, and the only chapter on the page with **no photography in it
 at all** — stark type after three image-led chapters, which is the tonal shift
@@ -387,8 +407,8 @@ GSAP 3.15 + ScrollTrigger + Lenis smooth scroll, all vendored into
 `assets/js/main.js` covers the remaining sections: preloader, cursor, scroll reveals,
 marquee, image parallax, stat counters, video play-in-view and the header menu. The
 the hero, the Sparkle section, Anatomy of Brilliance, A Study in Light, the
-Collection, Worn, Metals, Display and Exclusivity each own their own module —
-nine chapters, all the same shape: `scenes.js` (timing), `timeline.js` (pure
+Collection, Worn, Metals, Display, Retail Showcase and Exclusivity each own their own module —
+ten chapters, all the same shape: `scenes.js` (timing), `timeline.js` (pure
 maths), `visual.js` (the only thing that touches the DOM), `index.js` (one
 ScrollTrigger). `main.js` keeps the preloader, cursor, marquee, reveals and
 header menu.
@@ -517,11 +537,11 @@ assets/js/collection/   the gallery
 assets/js/worn/         the diamond, in life
 assets/js/metals/       the ground becomes the metal
 assets/js/display/      the blush-lit retail preview
-assets/js/finale/       nine-ring jewelry-case conversion finale
+assets/js/finale/       supplied-film retail frame scrub and progressive cache
 assets/js/exclusive/    the trade argument, as a ledger
 assets/js/vendor/       gsap, ScrollTrigger, SplitText, lenis
 assets/fonts/           self-hosted Bodoni Moda + Jost (woff2)
-assets/img/{model,ring,brand}/   responsive WebP
+assets/img/{model,ring,brand,retail-scrub}/   responsive WebP and frame sequences
 assets/video/           mp4 + webm + posters
 dev/                    screenshot / perf / encode tooling (not shipped)
 ```
