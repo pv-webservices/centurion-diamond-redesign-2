@@ -1,5 +1,5 @@
 /* ============================================================
-   09 · DISPLAY — content timing + choreography, in master-progress
+   06 · AT RETAIL — content timing + choreography, in master-progress
    space (0..1).
 
    The chapter's one idea: the brand colour arrives as reflected light —

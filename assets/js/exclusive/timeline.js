@@ -1,5 +1,5 @@
 /* ============================================================
-   10 · EXCLUSIVITY — the timeline.
+   07 · EXCLUSIVITY — the timeline.
 
    Pure maths: master progress in, a plain description of the frame out.
    Nothing here touches the DOM.

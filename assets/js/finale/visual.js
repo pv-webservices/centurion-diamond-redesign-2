@@ -1,5 +1,5 @@
 /* ============================================================
-   10 · RETAIL SHOWCASE — one canvas and restrained overlays.
+   08 · CENTURION AT RETAIL — one canvas and restrained overlays.
    Canvas sizing is isolated here; the timeline never reads layout.
    ============================================================ */
 window.CD = window.CD || {};

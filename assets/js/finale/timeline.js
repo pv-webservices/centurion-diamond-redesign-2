@@ -1,5 +1,5 @@
 /* ============================================================
-   10 · RETAIL SHOWCASE — pure progress-to-state calculations.
+   08 · CENTURION AT RETAIL — pure progress-to-state calculations.
    The returned state is allocated once and reused on every scroll frame.
    ============================================================ */
 window.CD = window.CD || {};

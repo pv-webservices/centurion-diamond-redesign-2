@@ -1,5 +1,5 @@
 /* ============================================================
-   09 · DISPLAY — the renderer.
+   06 · AT RETAIL — the renderer.
 
    Takes a frame from CD.displayTimeline and writes it to the DOM. Per
    frame it touches transform and opacity, plus one background-color on the

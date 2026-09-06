@@ -1,5 +1,5 @@
 /* ============================================================
-   10 · RETAIL SHOWCASE — one master ScrollTrigger.
+   08 · CENTURION AT RETAIL — one master ScrollTrigger.
    Scroll is the only clock: progress maps to a source frame in both
    directions, and decoded assets are drawn only when the image changes.
    ============================================================ */

@@ -2234,7 +2234,7 @@
 }
 .mtl.is-reduced .mtl__statement p, .no-js .mtl .mtl__statement p{ max-width:34ch; }
 /* ============================================================
-   09 · DISPLAY — the Centurion experience.
+   06 · AT RETAIL — the Centurion experience.
 
    A controlled brand-lit room. The ground is written from JS as the
    ramp the light leaves on the walls; every stop stays dark enough that
@@ -2431,7 +2431,7 @@
   opacity:1 !important; transform:none !important; margin-inline:0 !important;
 }
 /* ============================================================
-   10 · EXCLUSIVITY — a different kind of standard.
+   07 · EXCLUSIVITY — a different kind of standard.
 
    Type only. On ink at both ends: Display above falls back to it and the
    CTA below is already there.
@@ -2605,7 +2605,7 @@
   pointer-events:auto !important;
 }
 /* ============================================================
-   10 · RETAIL SHOWCASE — the supplied film, scrubbed as WebP frames.
+   08 · CENTURION AT RETAIL — the supplied film, scrubbed as WebP frames.
    ============================================================ */
 .fin{ position:relative; height:460vh; background:var(--brand-black); }
 .fin__stage{ position:relative; width:100%; height:100svh; overflow:hidden; background:var(--brand-black); color:var(--brand-white); isolation:isolate; }
@@ -2633,27 +2633,28 @@
   background:linear-gradient(90deg,transparent,rgba(var(--brand-blush-rgb),.22),rgba(255,255,255,.11),transparent);
 }
 .fin__copy{
-  --fin-scrim:0; position:absolute; inset:0; z-index:5; display:grid; align-content:center; justify-content:end;
+  --fin-scrim:0; position:absolute; inset:0; z-index:5; display:grid; place-items:center; text-align:center;
   padding:calc(76px + env(safe-area-inset-top)) calc(var(--rail) + var(--gut)) calc(48px + env(safe-area-inset-bottom)); pointer-events:none;
 }
 .fin__copy::before{
   content:""; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:var(--fin-scrim);
-  background:linear-gradient(90deg,transparent 28%,rgba(var(--brand-black-rgb),.18) 47%,rgba(var(--brand-black-rgb),.88) 100%);
+  background:radial-gradient(ellipse 58% 48% at 50% 51%,rgba(var(--brand-black-rgb),.78) 0%,rgba(var(--brand-black-rgb),.52) 38%,rgba(var(--brand-black-rgb),.18) 68%,transparent 100%);
 }
-.fin__copy-in{ position:relative; z-index:1; width:min(46vw,680px); }
+.fin__copy-in{ position:relative; z-index:1; display:grid; justify-items:center; width:min(100%,900px); margin-inline:auto; }
 .fin__eyebrow{
-  display:flex; align-items:center; gap:1em; margin-bottom:clamp(18px,2.8vh,32px); color:var(--brand-blush-light); opacity:0;
+  display:flex; align-items:center; justify-content:center; gap:1em; margin-bottom:clamp(18px,2.8vh,32px); color:rgba(244,241,234,.72); opacity:0;
   font-size:9px; font-weight:500; letter-spacing:.42em; text-transform:uppercase; will-change:transform,opacity;
 }
-.fin__eyebrow i{ width:clamp(28px,3.2vw,52px); height:1px; background:currentColor; opacity:.58; }
-.fin__title{ font-family:var(--display); font-size:clamp(3rem,5.15vw,5.8rem); font-weight:400; line-height:.96; letter-spacing:-.04em; }
+.fin__eyebrow i{ width:clamp(28px,3.2vw,52px); height:1px; background:var(--brand-blush-light); opacity:.58; }
+.fin__eyebrow b{ color:var(--brand-blush-light); font-weight:500; }
+.fin__title{ width:min(100%,900px); font-family:var(--display); font-size:clamp(3rem,5.15vw,5.8rem); font-weight:400; line-height:.96; letter-spacing:-.04em; text-wrap:balance; }
 .fin__line{ display:block; overflow:hidden; padding-bottom:.06em; }
 .fin__line > span{ display:block; transform:translate3d(0,108%,0); will-change:transform; }
 .fin__line .is-em{ color:var(--brand-blush-light); font-style:italic; }
-.fin__body{ margin-top:clamp(18px,2.8vh,32px); max-width:42ch; opacity:0; color:rgba(244,241,234,.72); font-size:clamp(.9rem,1vw,1.04rem); will-change:transform,opacity; }
-.fin__cta{ margin-top:clamp(24px,3.8vh,42px); opacity:0; pointer-events:none; will-change:transform,opacity; }
+.fin__body{ margin:clamp(18px,2.8vh,32px) auto 0; max-width:42ch; opacity:0; color:rgba(244,241,234,.72); font-size:clamp(.9rem,1vw,1.04rem); will-change:transform,opacity; }
+.fin__cta{ min-height:46px; margin-top:clamp(24px,3.8vh,42px); opacity:0; pointer-events:none; will-change:transform,opacity; }
 .fin__progress{
-  position:absolute; z-index:6; left:calc(var(--rail) + var(--gut)); bottom:calc(30px + env(safe-area-inset-bottom));
+  position:absolute; z-index:6; left:50%; bottom:calc(30px + env(safe-area-inset-bottom)); translate:-50% 0;
   display:flex; align-items:center; gap:12px; pointer-events:none; color:rgba(244,241,234,.52);
   font-size:8px; font-weight:500; letter-spacing:.3em; text-transform:uppercase;
 }
@@ -2663,25 +2664,30 @@
 
 @media (max-width:900px){
   .fin{ height:400vh; }
-  .fin__copy{ align-content:end; justify-content:center; text-align:center; padding:calc(72px + env(safe-area-inset-top)) clamp(20px,6vw,34px) calc(42px + env(safe-area-inset-bottom)); }
-  .fin__copy::before{ background:linear-gradient(to bottom,transparent 35%,rgba(var(--brand-black-rgb),.20) 50%,rgba(var(--brand-black-rgb),.94) 100%); }
+  .fin__copy{ place-items:end center; padding:calc(72px + env(safe-area-inset-top)) clamp(20px,6vw,34px) calc(42px + env(safe-area-inset-bottom)); }
+  .fin__copy::before{ background:radial-gradient(ellipse 78% 43% at 50% 78%,rgba(var(--brand-black-rgb),.92) 0%,rgba(var(--brand-black-rgb),.62) 46%,rgba(var(--brand-black-rgb),.18) 75%,transparent 100%); }
   .fin__copy-in{ width:min(100%,560px); }
   .fin__eyebrow{ justify-content:center; margin-bottom:14px; }
-  .fin__title{ font-size:clamp(2.05rem,9.4vw,3.8rem); line-height:.98; }
+  .fin__title{ font-size:clamp(2rem,8.5vw,3.4rem); line-height:.98; }
   .fin__body{ margin:16px auto 0; max-width:30ch; }
   .fin__cta{ margin-top:20px; }
-  .fin__progress{ left:var(--gut); top:calc(76px + env(safe-area-inset-top)); bottom:auto; }
+  .fin__progress{ left:50%; top:calc(76px + env(safe-area-inset-top)); bottom:auto; }
 }
 @media (max-width:900px) and (orientation:landscape) and (max-height:520px){
   .fin{ height:360vh; }
-  .fin__copy{ align-content:center; justify-content:end; text-align:left; padding:64px 4vw 20px; }
-  .fin__copy::before{ background:linear-gradient(90deg,transparent 40%,rgba(var(--brand-black-rgb),.18) 54%,rgba(var(--brand-black-rgb),.92)); }
-  .fin__copy-in{ width:39vw; }
-  .fin__eyebrow{ justify-content:flex-start; margin-bottom:8px; font-size:7px; }
+  .fin__copy{ place-items:center; text-align:center; padding:56px 4vw 18px; }
+  .fin__copy::before{ background:radial-gradient(ellipse 52% 78% at center,rgba(var(--brand-black-rgb),.88),rgba(var(--brand-black-rgb),.46) 48%,transparent 100%); }
+  .fin__copy-in{ width:min(88vw,700px); }
+  .fin__eyebrow{ justify-content:center; margin-bottom:8px; font-size:7px; }
   .fin__title{ font-size:clamp(1.55rem,4vw,2.15rem); line-height:.94; }
-  .fin__body{ margin:8px 0 0; font-size:.72rem; }
+  .fin__body{ margin:8px auto 0; max-width:46ch; font-size:.72rem; }
   .fin__cta{ margin-top:10px; padding-block:.62rem; }
-  .fin__progress{ top:72px; font-size:7px; }
+  .fin__progress{ top:calc(82px + env(safe-area-inset-top)); font-size:7px; }
+}
+@media (max-width:360px){
+  .fin__eyebrow{ gap:.65em; font-size:7px; letter-spacing:.28em; }
+  .fin__eyebrow i{ width:22px; }
+  .fin__progress{ display:none; }
 }
 
 /* Reduced motion and no-JS: final film frame plus conversion copy in flow. */
@@ -2703,10 +2709,11 @@
 .fin.is-reduced .fin__cta,.no-js .fin .fin__cta{ opacity:1 !important; transform:none !important; pointer-events:auto; }
 .fin.is-reduced .fin__body,.no-js .fin .fin__body{ margin-inline:auto; }
 
-/* Compact forward contact destination retained after Exclusivity. */
-.contact{ padding:clamp(90px,14vh,170px) 0; background:var(--brand-black); color:var(--brand-white); }
-.contact__inner{ display:grid; justify-items:start; }
-.contact__title{ margin-top:clamp(24px,4vh,48px); font-family:var(--display); font-weight:400; font-size:clamp(3rem,7vw,7rem); line-height:.92; letter-spacing:-.04em; }
+/* 09 · RETAIL PARTNERSHIP — compact forward contact destination. */
+.contact{ padding:clamp(90px,14vh,150px) 0; background:var(--brand-black); color:var(--brand-white); }
+.contact__inner{ display:grid; justify-items:center; text-align:center; }
+.contact .label{ justify-content:center; }
+.contact__title{ max-width:1100px; margin-top:clamp(24px,4vh,48px); font-family:var(--display); font-weight:400; font-size:clamp(3rem,7vw,7rem); line-height:.92; letter-spacing:-.04em; text-wrap:balance; }
 .contact__title em{ color:var(--brand-blush-light); font-weight:400; }
 .contact__cta{ margin-top:clamp(32px,5vh,58px); }
 @media (max-width:640px){ .contact__title{ font-size:clamp(2.6rem,13vw,4.4rem); } }

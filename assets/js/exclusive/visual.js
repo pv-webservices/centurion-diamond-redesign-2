@@ -1,5 +1,5 @@
 /* ============================================================
-   10 · EXCLUSIVITY — the renderer.
+   07 · EXCLUSIVITY — the renderer.
 
    Takes a frame from CD.exclusiveTimeline and writes it to the DOM. Per
    frame it touches transform and opacity only.

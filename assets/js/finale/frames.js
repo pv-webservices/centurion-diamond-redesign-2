@@ -1,5 +1,5 @@
 /* ============================================================
-   10 · RETAIL SHOWCASE — responsive frame loading and cache.
+   08 · CENTURION AT RETAIL — responsive frame loading and cache.
    No images are requested until index.js marks the section as near. A small
    preview lattice loads first, then the gaps fill in the background; the
    current scroll target and its neighbours always jump to the front.

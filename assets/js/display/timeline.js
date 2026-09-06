@@ -1,5 +1,5 @@
 /* ============================================================
-   09 · DISPLAY — the timeline.
+   06 · AT RETAIL — the timeline.
 
    Pure maths: master progress in, a plain description of the frame out.
    Nothing here touches the DOM.

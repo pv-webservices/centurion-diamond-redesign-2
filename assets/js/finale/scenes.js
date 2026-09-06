@@ -1,5 +1,5 @@
 /* ============================================================
-   10 · RETAIL SHOWCASE — frame sets and editorial beats.
+   08 · CENTURION AT RETAIL — frame sets and editorial beats.
    Times were tuned against the supplied eight-second film: the display is
    empty through ~1.5s, ring placement dominates 1.5–6s, and the completed
    case settles from ~6.5s onward.

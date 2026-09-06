@@ -1,5 +1,5 @@
 /* ============================================================
-   10 · EXCLUSIVITY — orchestrator.
+   07 · EXCLUSIVITY — orchestrator.
 
    One pinned ScrollTrigger produces a single master progress value; the
    timeline turns it into a frame and the renderer writes it. Same shape as
