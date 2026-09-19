@@ -82,6 +82,9 @@ CD.finaleVisual = (function () {
 
     el.media.style.opacity = f.media.v.toFixed(3);
     el.media.style.transform = 'scale(' + f.media.scale.toFixed(4) + ')';
+    /* 75% of the frame's half-diagonal clears every corner */
+    el.media.style.clipPath = f.media.iris >= 1 ? 'none'
+      : 'circle(' + (6 + 69 * f.media.iris).toFixed(2) + '% at 50% 50%)';
     el.vig.style.opacity = f.vig.toFixed(3);
     el.blush.style.opacity = f.blush.toFixed(3);
     el.sweep.style.opacity = f.sweep.v.toFixed(3);

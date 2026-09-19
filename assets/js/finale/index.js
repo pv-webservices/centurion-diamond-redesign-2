@@ -53,6 +53,10 @@ CD.initFinale = function initFinale() {
     frames.start();
   }
 
+  /* overlaps Experience by a viewport (sections.css): hidden until its pin
+     takes over, so the two stages meet on one shared black frame */
+  function live(self) { root.classList.toggle('is-live', self.scroll() >= self.start - 2); }
+
   ScrollTrigger.create({
     trigger: root,
     start: 'top top',
@@ -62,7 +66,10 @@ CD.initFinale = function initFinale() {
     anticipatePin: 1,
     onEnter: function () { frames.start(); },
     onEnterBack: function () { frames.start(); },
+    onToggle: live,
+    onRefresh: live,
     onUpdate: function (self) {
+      live(self);
       progress = self.progress;
       scheduleRender();
     }

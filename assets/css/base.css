@@ -17,7 +17,9 @@
   --brand-white:       #F4F1EA;
 
   /* --- ink / ground --- */
-  --ink:        var(--brand-black);
+  /* working ground: a warm, softened black. --brand-black stays for the
+     locked finale and contact. */
+  --ink:        #151213;
   --ink-2:      #101012;
   --ink-3:      #17171A;
   --ink-4:      #202027;

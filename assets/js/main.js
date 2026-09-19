@@ -65,39 +65,7 @@
   /* ---------------------------------------------- preloader
      Deliberately brief. The old build showed ~5s of black before the hero
      appeared, which read as a broken page rather than a considered intro. */
-  function runPreloader(done) {
-    var pre = document.getElementById('pre');
-    var num = document.getElementById('preNum');
-    var bar = document.getElementById('preBar');
-    var curtain = document.getElementById('curtain');
-
-    if (REDUCED) {
-      gsap.set([pre, curtain], { display: 'none' });
-      done(); return;
-    }
-
-    document.body.classList.add('is-locked');
-    var counter = { v: 0 };
-    var tl = gsap.timeline({
-      onComplete: function () {
-        document.body.classList.remove('is-locked');
-        gsap.set([pre, curtain], { display: 'none' });
-      }
-    });
-
-    tl.to(bar, { scaleX: 1, duration: 1.05, ease: 'power2.inOut' }, 0)
-      .to(counter, {
-        v: 100, duration: 1.05, ease: 'power2.inOut',
-        onUpdate: function () {
-          num.textContent = String(Math.round(counter.v)).padStart(2, '0');
-        }
-      }, 0)
-      .to('.pre__inner', { opacity: 0, y: -14, duration: 0.4, ease: 'power2.in' }, 1.08)
-      .to(pre, { yPercent: -100, duration: 0.8, ease: 'expo.inOut' }, 1.2)
-      .to(curtain, { yPercent: -100, duration: 0.8, ease: 'expo.inOut' }, 1.28)
-      // hero starts while the curtain is still lifting — no dead black frame
-      .add(done, 1.34);
-  }
+  function runPreloader(done) { CD.runFacetPreloader(done, REDUCED); }
 
   /* hero lives in assets/js/hero/* — see CD.initHero */
 
@@ -243,14 +211,12 @@
     initCounters();
     initVideos();
     initHeader();
-    if (window.CD && CD.initSparkle) CD.initSparkle();
-    if (window.CD && CD.initPillars) CD.initPillars();
+    if (window.CD && CD.initJourney) CD.initJourney();
     if (window.CD && CD.initStudy) CD.initStudy();
-    if (window.CD && CD.initCollection) CD.initCollection();
-    if (window.CD && CD.initWorn) CD.initWorn();
-    if (window.CD && CD.initMetals) CD.initMetals();
-    if (window.CD && CD.initDisplay) CD.initDisplay();
+    if (window.CD && CD.initPillars) CD.initPillars();
+    if (window.CD && CD.initSparkle) CD.initSparkle();
     if (window.CD && CD.initExclusive) CD.initExclusive();
+    if (window.CD && CD.initDisplay) CD.initDisplay();
     if (window.CD && CD.initFinale) CD.initFinale();
     ScrollTrigger.refresh();
   }

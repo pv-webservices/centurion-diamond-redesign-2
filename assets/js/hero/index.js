@@ -61,8 +61,14 @@ CD.initHero = function initHero() {
   intro.fromTo('.chero__media', { scale: 1.12, opacity: 0 },
                                 { scale: 1, opacity: 1, duration: 1.9 }, 0)
        .fromTo('.chero__vig',   { opacity: 0 }, { opacity: 1, duration: 1.4 }, 0.2)
-       .fromTo('[data-hero-hint]', { opacity: 0, y: 12 },
-                                   { opacity: 1, y: 0, duration: 0.9 }, 0.85)
+       /* the hint fades in only as far as scroll allows: a visitor who is
+          already past the opening (restored scroll, anchor jump) never sees
+          it reappear over the closing frame */
+       .fromTo({ v: 0 }, { v: 0 }, { v: 1, duration: 0.9,
+          onUpdate: function () {
+            var h = document.querySelector('[data-hero-hint]');
+            if (h) h.style.opacity = (this.targets()[0].v * Math.max(0, 1 - progress / 0.06)).toFixed(3);
+          } }, 0.85)
        .fromTo('[data-hero-progress]', { opacity: 0 }, { opacity: 1, duration: 0.9 }, 0.95);
 
   // paint the first frame of the narrative immediately

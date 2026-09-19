@@ -50,7 +50,7 @@ CD.pillarsTimeline = (function () {
     var span = (win.outB - win.inA) / n, out = [];
     for (var i = 0; i < n; i++) {
       var s0 = win.inA + i * span;
-      out.push({ inA: s0, inB: s0 + span * 0.40, outA: s0 + span * 0.76, outB: s0 + span });
+      out.push({ inA: s0, inB: s0 + span * 0.20, outA: s0 + span * 0.82, outB: s0 + span });
     }
     return out;
   }
@@ -87,10 +87,7 @@ CD.pillarsTimeline = (function () {
       scenes: [],
       stone:  { x: 0, y: 0, s: 1, r: 0, o: 0, sh: 0, shT: 0 },
       shape:  { from: 0, to: 1, index: 0, local: 0, blend: 0, v: 0, flash: 0, contract: 1, turn: 0 },
-      words:  [],
-      beam:   { v: 0, x: 0 },
-      iris:   cfg.iris.from,
-      seal:   0
+      words:  []
     };
     for (i = 0; i < n; i++) st.scenes.push({ motion: cfg.scenes[i].motion, vin: 0, vout: 0, v: 0 });
     for (i = 0; i < 3; i++) st.words.push({ v: 0, y: 0 });
@@ -100,6 +97,7 @@ CD.pillarsTimeline = (function () {
   /* one frame of the chapter */
   function frame(cfg, p, narrow, st) {
     var B = cfg.beats, i;
+    st.progress = p;
 
     st.ground = rampAt(cfg.bgStops, p);
 
@@ -135,8 +133,8 @@ CD.pillarsTimeline = (function () {
     var sl = shapeP >= total ? 1 : shapeP - si;
     st.shape.from = si;
     st.shape.to = Math.min(total, si + 1);
-    st.shape.blend = smooth(range(sl, 0.30, 0.70));
-    st.shape.index = Math.min(total, Math.floor(shapeP + 0.5));
+    st.shape.blend = smooth(range(sl, 0.72, 0.94));
+    st.shape.index = Math.min(total, Math.floor(shapeP + 0.17));
     st.shape.local = sl;
     st.shape.v = easeOut(range(p, SH.inA - 0.035, SH.inA + 0.025)) * (1 - easeIn(range(p, SH.outB, SH.outB + 0.055)));
     st.shape.flash = Math.sin(Math.PI * sl) * st.shape.v;
@@ -144,8 +142,7 @@ CD.pillarsTimeline = (function () {
     st.shape.turn = -0.8 * Math.sin(Math.PI * sl);
 
     /* one statement at a time, each clearing before the next arrives — the
-       last one clears too, so the beam and the aperture play against the
-       stone alone */
+       last one clears too */
     var span = (B.final.outB - B.final.inA) / st.words.length;
     for (i = 0; i < st.words.length; i++) {
       var s0 = B.final.inA + i * span;
@@ -154,14 +151,6 @@ CD.pillarsTimeline = (function () {
       st.words[i].v = v * (1 - o);
       st.words[i].y = (1 - v) * 46 + o * -36;
     }
-
-    st.beam.v = band(p, B.beam);
-    st.beam.x = -48 + 96 * easeIO(range(p, B.beam.inA, B.beam.outB));
-
-    /* the close is a scaling aperture, not a page fade; `seal` only finishes
-       the last few per-cent once the hole is already tiny */
-    st.iris = lerp(cfg.iris.from, cfg.iris.to, easeIO(range(p, B.aperture.inA, B.aperture.inB)));
-    st.seal = easeIn(range(p, B.seal.inA, B.seal.inB));
 
     return st;
   }

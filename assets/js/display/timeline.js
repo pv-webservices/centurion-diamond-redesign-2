@@ -1,9 +1,5 @@
-/* ============================================================
-   06 · AT RETAIL — the timeline.
-
-   Pure maths: master progress in, a plain description of the frame out.
-   Nothing here touches the DOM.
-   ============================================================ */
+/* 07 / Centurion at Retail. Experience hands off into the original blush
+   lighting rig, then the registered display progression meets the locked finale. */
 window.CD = window.CD || {};
 
 CD.displayTimeline = (function () {
@@ -26,7 +22,7 @@ CD.displayTimeline = (function () {
   /* The wall: the room's one tint, mixed over the page's ink by the
      fraction the stop list asks for. Keeping it a single hue is what makes
      the colour a one-line decision — see `room` in scenes.js. */
-  var INK = [10, 10, 11];
+  var INK = [33, 26, 26];
   function wallAt(room, p) {
     var stops = room.stops, k = stops[stops.length - 1].k, i;
     for (i = 1; i < stops.length; i++) {
@@ -59,78 +55,28 @@ CD.displayTimeline = (function () {
   var GLOW_FIELDS = ['s', 'v'];
 
   function createState(cfg) {
-    var st = {
-      ground: '',
-      glow:   { s: 0.1, v: 0 },
-      intro:  { v: 0, y: 0, lines: [0, 0] },
-      scenes: [],
-      cases:  []
-    };
-    var i;
-    for (i = 0; i < cfg.beats.scenes.length; i++) st.scenes.push({ vin: 0, vout: 0, v: 0 });
-    /* `k` and `push` are written on narrow viewports only, and read there only */
-    for (i = 0; i < cfg.cases.length; i++) st.cases.push({ x: 0, y: 0, w: 20, o: 0, k: 1, push: 1 });
-    st.narrow = false;
+    return {ground:'',glow:{s:0,v:0},intro:{v:0,y:0,lines:[0,0]},scenes:[{},{ }],cases:cfg.hasExpansion?[{},{}]:[{}]};
+  }
+  function frame(cfg,p,narrow,st){
+    st.ground=wallAt(cfg.room,p);
+    if(p>.94){var fade=smooth(range(p,.94,1));var start=wallAt(cfg.room,.94).match(/\d+/g).map(Number);st.ground="rgb("+start.map(function(v,i){return Math.round(lerp(v,i===2?11:10,fade));}).join(",")+")";}
+    poseInto(cfg.glow,p,GLOW_FIELDS,st.glow);
+    var intro=cfg.intro;
+    var enter=easeOut(range(p,intro.inA,intro.inB)),leave=easeIn(range(p,intro.outA,intro.outB));
+    st.intro.v=enter*(1-leave);st.intro.y=-leave*12;st.intro.lines=[enter,enter];
+    var windows=cfg.hasExpansion?cfg.expansionBeats:cfg.referenceBeats;
+    windows.forEach(function(w,i){var sc=st.scenes[i];sc.vin=easeOut(range(p,w[0],w[1]));sc.vout=easeIn(range(p,w[2],w[3]));sc.v=sc.vin*(1-sc.vout);});
+    var expansion=cfg.hasExpansion?smooth(range(p,cfg.expansion.inA,cfg.expansion.inB)):0;
+    var on=easeOut(range(p,.20,.28)),off=1-easeIn(range(p,.96,1));
+    st.narrow=narrow;
+    st.cases.forEach(function(c,i){
+      var pose=narrow?cfg.pose.mobile:cfg.pose.desktop;
+      c.x=pose.x;c.y=pose.y;c.w=pose.w;c.scale=1-expansion*cfg.expansion.pullback;
+      c.o=on*off*(i===0?1-smooth(range(p,cfg.expansion.clearTenA,cfg.expansion.clearTenB)):1);
+      c.k=i===1?expansion:on;c.push=1;
+    });
+    if(!cfg.hasExpansion)st.cases[0].o=on*off;
     return st;
   }
-
-  function frame(cfg, p, narrow, st) {
-    var B = cfg.beats, i;
-
-    st.ground = wallAt(cfg.room, p);
-    poseInto(cfg.glow, p, GLOW_FIELDS, st.glow);
-
-    var introIn  = easeOut(range(p, B.intro.inA, B.intro.inB));
-    var introOut = easeIn(range(p, B.intro.outA, B.intro.outB));
-    st.intro.v = introIn * (1 - introOut);
-    st.intro.y = -introOut * 8;
-    for (i = 0; i < st.intro.lines.length; i++) st.intro.lines[i] = stagger(introIn, i * 0.22);
-
-    for (i = 0; i < st.scenes.length; i++) {
-      var w = B.scenes[i], sc = st.scenes[i];
-      sc.vin  = easeOut(range(p, w.inA, w.inB));
-      sc.vout = easeIn(range(p, w.outA, w.outB));
-      sc.v    = sc.vin * (1 - sc.vout);
-    }
-
-    st.narrow = !!narrow;
-    for (i = 0; i < st.cases.length; i++) {
-      var c = st.cases[i];
-      poseInto(cfg.cases[i].poses, p, CASE_FIELDS, c);
-      if (narrow && cfg.cases.length > 1) {
-        /* one case at a time, large, alternating with the copy — then the
-           two together for the closing frame */
-        var m = cfg.mobile;
-        var pairV = smooth(range(p, m.pairAt.inA, m.pairAt.inB));
-        var solo = m[cfg.cases[i].key];
-        var side = i === 0 ? -1 : 1;
-        c.x = lerp(solo.x, side * m.pair.x, pairV);
-        c.y = lerp(solo.y, m.pair.y + side * m.pair.step, pairV);
-        c.w = lerp(solo.w, m.pair.w, pairV);
-        /* the first case hands the frame over rather than sitting behind
-           the second, and comes back for the pair */
-        if (i === 0) {
-          var gone = smooth(range(p, m.swap.inA, m.swap.inB));
-          c.o *= Math.max(1 - gone, pairV);
-        }
-        var k = easeOut(range(p, cfg.cases[i].in, cfg.cases[i].in + m.reveal));
-        c.k = k;
-        c.push = lerp(m.push.from, m.push.to, smooth(k)) + m.push.pair * pairV;
-      } else if (narrow) {
-        var one = cfg.mobile.a;
-        c.x = one.x; c.y = one.y; c.w = one.w;
-        c.k = easeOut(range(p, cfg.cases[i].in, cfg.cases[i].in + cfg.mobile.reveal));
-        c.push = lerp(cfg.mobile.push.from, cfg.mobile.push.to, smooth(c.k));
-      }
-    }
-
-    return st;
-  }
-
-  return {
-    createState: createState, frame: frame, poseInto: poseInto, wallAt: wallAt,
-    stagger: stagger, band: band,
-    clamp01: clamp01, range: range, lerp: lerp,
-    easeIn: easeIn, easeOut: easeOut, smooth: smooth
-  };
+  return {createState:createState,frame:frame,poseInto:poseInto,wallAt:wallAt,stagger:stagger,band:band,clamp01:clamp01,range:range,lerp:lerp,easeIn:easeIn,easeOut:easeOut,smooth:smooth};
 })();

@@ -1,1169 +1,705 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Centurion Diamond — 100 Facets of Brilliance</title>
-<meta name="description" content="The Centurion Diamond is cut with 100 facets — nearly twice a traditional stone — engineered to capture and return more light. More facets, more brilliance.">
-<meta name="theme-color" content="#0A0A0B">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Centurion Diamond — 100 Facets of Brilliance</title>
+  <meta name="description"
+    content="The Centurion Diamond is cut with 100 facets — nearly twice a traditional stone — engineered to capture and return more light. More facets, more brilliance.">
+  <meta name="theme-color" content="#151213">
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Centurion Diamond — 100 Facets of Brilliance">
-<meta property="og:description" content="Cut with 100 facets. Engineered for light. More facets, more brilliance.">
-<meta property="og:image" content="assets/video/hero-scrub-poster.webp">
-<meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Centurion Diamond — 100 Facets of Brilliance">
+  <meta property="og:description" content="Cut with 100 facets. Engineered for light. More facets, more brilliance.">
+  <meta property="og:image" content="assets/video/hero-scrub-poster.webp">
+  <meta name="twitter:card" content="summary_large_image">
 
-<link rel="preload" as="font" type="font/woff2" href="assets/fonts/bodoni-moda-normal-400-latin.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="assets/fonts/jost-normal-300-latin.woff2" crossorigin>
-<link rel="stylesheet" href="assets/fonts/fonts.css">
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/bodoni-moda-normal-400-latin.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/jost-normal-300-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
+  <link rel="preload" as="image" href="assets/img/diamond-shapes/round-480.webp">
 
-<link rel="icon" href="assets/img/brand/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/sections.css">
+  <link rel="icon" href="assets/img/brand/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/sections.css">
 
-<!-- One poster per hero master, so a phone never pays for the landscape one.
+  <!-- One poster per hero master, so a phone never pays for the landscape one.
      The conditions mirror CD.heroVideo.pickSource exactly: portrait is a
-     <=720px viewport taller than 1.3x its width. -->
-<link rel="preload" as="image" href="assets/video/hero-scrub-poster.webp" fetchpriority="high"
-      media="(min-width:721px), (min-aspect-ratio:10/13)">
-<link rel="preload" as="image" href="assets/video/hero-scrub-portrait.webp" fetchpriority="high"
-      media="(max-width:720px) and (max-aspect-ratio:10/13)">
-<script>document.documentElement.className = document.documentElement.className.replace('no-js','js');</script>
+     <=860px viewport taller than 1.2x its width. -->
+  <link rel="preload" as="image" href="assets/video/hero-scrub-poster.webp" fetchpriority="high"
+    media="(min-width:861px), (min-aspect-ratio:5/6)">
+  <link rel="preload" as="image" href="assets/video/hero-scrub-portrait.webp" fetchpriority="high"
+    media="(max-width:860px) and (max-aspect-ratio:5/6)">
+  <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 </head>
+
 <body>
 
-<!-- ============================================ PRELOADER -->
-<div class="pre" id="pre" aria-hidden="true">
-  <div class="pre__inner">
-    <div class="pre__count"><span id="preNum">00</span><sup>facets</sup></div>
-    <div class="pre__bar"><i id="preBar"></i></div>
-    <div class="pre__word">Centurion Diamond</div>
+  <!-- ============================================ PRELOADER -->
+  <div class="pre" id="pre" aria-hidden="true">
+    <div class="pre__inner">
+      <div class="pre__count"><span id="preNum">00</span><sup>facets</sup></div>
+      <div class="pre__bar"><i id="preBar"></i></div>
+      <div class="pre__word">Centurion Diamond</div>
+    </div>
   </div>
-</div>
-<div class="pre__curtain" id="curtain" aria-hidden="true"></div>
+  <div class="pre__curtain" id="curtain" aria-hidden="true"></div>
 
-<!-- ============================================ CURSOR -->
-<div class="cur" id="cur" aria-hidden="true">
-  <svg viewBox="0 0 34 34"><polygon points="17,3 31,17 17,31 3,17"/></svg>
-</div>
+  <!-- ============================================ CURSOR -->
+  <div class="cur" id="cur" aria-hidden="true">
+    <svg viewBox="0 0 34 34">
+      <polygon points="17,3 31,17 17,31 3,17" />
+    </svg>
+  </div>
 
-<!-- ============================================ RAILS -->
-<div class="rail rail--l" aria-hidden="true"><span>Centurion Diamond &nbsp;/&nbsp; More Facets, More Brilliance</span></div>
-<div class="rail rail--r" aria-hidden="true"><span>Est. Brilliance &nbsp;/&nbsp; 100 Facet Cut</span></div>
+  <!-- ============================================ RAILS -->
+  <div class="rail rail--l" aria-hidden="true"><span>Centurion Diamond &nbsp;/&nbsp; More Facets, More Brilliance</span>
+  </div>
+  <div class="rail rail--r" aria-hidden="true"><span>Est. Brilliance &nbsp;/&nbsp; 100 Facet Cut</span></div>
 
-<!-- ============================================ HEADER
+  <!-- ============================================ HEADER
      Transparent over the cinematic stage. No opaque container; it recedes
      with hero progress rather than turning into a solid navbar. -->
-<header class="hdr" id="hdr">
-  <a class="hdr__mark" href="#top" aria-label="Centurion Diamond — home">
-    <img src="assets/img/brand/logo-light-320.webp"
-         srcset="assets/img/brand/logo-light-320.webp 320w, assets/img/brand/logo-light-520.webp 520w"
-         sizes="200px" alt="Centurion Diamond" width="820" height="207" decoding="async">
-  </a>
+  <header class="hdr" id="hdr">
+    <a class="hdr__mark" href="#top" aria-label="Centurion Diamond — home">
+      <img src="assets/img/brand/logo-light-320.webp"
+        srcset="assets/img/brand/logo-light-320.webp 320w, assets/img/brand/logo-light-520.webp 520w" sizes="200px"
+        alt="Centurion Diamond" width="820" height="207" decoding="async">
+    </a>
 
-  <nav class="hdr__nav" aria-label="Primary">
-    <a href="#cut">About Us</a>
-    <a href="#collection">Collection</a>
-    <a href="#worn">Craftsmanship</a>
-    <a href="#metals">Sustainability</a>
-    <a href="#display">Our Legacy</a>
-    <a href="#contact">Contact</a>
-  </nav>
+    <nav class="hdr__nav" aria-label="Primary">
+      <a href="#journey">Craftsmanship</a>
+      <a href="#cut">The Cut</a>
+      <a href="#anatomy">Shapes</a>
+      <a href="#exclusive">Experience</a>
+      <a href="#retail-showcase">At Retail</a>
+      <a href="#contact">Contact</a>
+    </nav>
 
-  <div class="hdr__end">
-    <a class="hdr__cta" href="#contact"><span>Inquire Now</span></a>
-    <button class="hdr__burger" id="navToggle" aria-expanded="false" aria-controls="navSheet">
-      <span class="sr-only">Open menu</span><i></i><i></i>
-    </button>
+    <div class="hdr__end">
+      <a class="hdr__cta" href="#contact"><span>Inquire Now</span></a>
+      <button class="hdr__burger" id="navToggle" aria-expanded="false" aria-controls="navSheet">
+        <span class="sr-only">Open menu</span><i></i><i></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="sheet" id="navSheet" aria-hidden="true">
+    <nav class="sheet__nav" aria-label="Mobile">
+      <a href="#journey"><em>01</em><span>Craftsmanship</span></a>
+      <a href="#cut"><em>02</em><span>The Cut</span></a>
+      <a href="#anatomy"><em>03</em><span>Shapes</span></a>
+      <a href="#exclusive"><em>04</em><span>Experience</span></a>
+      <a href="#retail-showcase"><em>05</em><span>At Retail</span></a>
+      <a href="#contact"><em>06</em><span>Contact</span></a>
+    </nav>
+    <p class="sheet__foot">More facets, more brilliance.</p>
   </div>
-</header>
 
-<div class="sheet" id="navSheet" aria-hidden="true">
-  <nav class="sheet__nav" aria-label="Mobile">
-    <a href="#cut"><em>01</em><span>About Us</span></a>
-    <a href="#collection"><em>02</em><span>Collection</span></a>
-    <a href="#worn"><em>03</em><span>Craftsmanship</span></a>
-    <a href="#metals"><em>04</em><span>Sustainability</span></a>
-    <a href="#display"><em>05</em><span>Our Legacy</span></a>
-    <a href="#contact"><em>06</em><span>Contact</span></a>
-  </nav>
-  <p class="sheet__foot">More facets, more brilliance.</p>
-</div>
+  <main id="top">
 
-<main id="top">
-
-<!-- ============================================ 01 · HERO — cinematic scroll stage
+    <!-- ============================================ 01 · HERO — cinematic scroll stage
      A tall scroll track with a pinned stage inside it. One master progress value
      drives the video scrub, the alternating statements, the header and the
      progress rule. Scenes come from assets/js/hero/scenes.js. -->
-<section class="chero" id="chero">
-  <div class="chero__stage">
+    <section class="chero" id="chero">
+      <div class="chero__stage">
 
-    <div class="chero__media">
-      <!-- the poster is set by assets/js/hero/video.js alongside the source it
+        <div class="chero__media">
+          <!-- the poster is set by assets/js/hero/video.js alongside the source it
            belongs to; the matching preload above is what puts it in cache -->
-      <video data-hero-video muted playsinline preload="auto"
-             aria-hidden="true" tabindex="-1"></video>
-    </div>
+          <video data-hero-video muted playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>
+        </div>
 
-    <div class="chero__vig" aria-hidden="true"></div>
-    <div class="chero__grain" aria-hidden="true"></div>
+        <div class="chero__vig" aria-hidden="true"></div>
+        <div class="chero__grain" aria-hidden="true"></div>
 
-    <div class="chero__narrative" data-hero-narrative></div>
+        <div class="chero__narrative" data-hero-narrative></div>
+        <noscript>
+          <div class="hero-static">
+            <p class="label">01 / 100 Facets of Brilliance</p>
+            <h1>Precision<br>in every facet.</h1>
+            <p>From exceptional rough to masterfully finished diamonds, every facet is shaped by precision.</p><a
+              class="btn" href="#journey">Explore our diamonds</a>
+          </div>
+        </noscript>
 
-    <div class="chero__hint" data-hero-hint aria-hidden="true">
-      <span>Scroll to discover</span><i></i>
-    </div>
+        <div class="chero__hint" data-hero-hint aria-hidden="true">
+          <span>Scroll to discover</span><i></i>
+        </div>
 
-    <div class="chero__prog" data-hero-progress aria-hidden="true">
-      <span data-prog-num>01 / 04</span>
-      <span class="chero__rule"><i data-prog-bar></i></span>
-    </div>
+        <div class="chero__prog" data-hero-progress aria-hidden="true">
+          <span data-prog-num>01 / 04</span>
+          <span class="chero__rule"><i data-prog-bar></i></span>
+        </div>
 
-  </div>
-</section>
+      </div>
+    </section>
 
-<!-- ============================================ 02 · THE SPARKLE — dark-to-light passage
-     Supersedes the old Manifesto + Proof sections, which told this same
-     57-vs-100 story (and carried this same headline). Keeps the #cut anchor. -->
-<section class="spk" id="cut">
-  <div class="spk__stage">
+    <!-- ============================================ 02 · THE DIAMOND JOURNEY
+     One stone, worked in place as the visitor scrolls: rough crystal, sawn
+     window, rounded preform, the finished 100-facet Round. A ring of 100
+     ticks lights up with the progress. Timing: assets/js/journey/index.js.
+     The stage images are an illustrative study (see the caption). -->
+    <section class="jny" id="journey" aria-labelledby="journeyTitle">
+      <div class="jny__stage">
+        <div class="jny__glow" data-jny-glow aria-hidden="true"></div>
+        <div class="jny__orbit" aria-hidden="true">
+          <svg class="jny__ring" data-jny-ring viewBox="0 0 400 400">
+            <circle class="jny__ring-base" cx="200" cy="200" r="196" />
+            <g data-jny-ticks></g>
+          </svg>
+        </div>
+        <figure class="jny__stone" data-jny-stone>
+          <span class="jny__imgs">
+            <img class="jny__img" data-jny-img="0" src="assets/img/journey/stage-1-rough-480.webp"
+              srcset="assets/img/journey/stage-1-rough-480.webp 480w, assets/img/journey/stage-1-rough-960.webp 960w"
+              sizes="(max-width:900px) 78vw, 42vw" width="960" height="960" alt="A natural rough diamond crystal"
+              loading="lazy" decoding="async">
+            <img class="jny__img" data-jny-img="1" src="assets/img/journey/stage-2-sawn-480.webp"
+              srcset="assets/img/journey/stage-2-sawn-480.webp 480w, assets/img/journey/stage-2-sawn-960.webp 960w"
+              sizes="(max-width:900px) 78vw, 42vw" width="960" height="960" alt="" loading="lazy" decoding="async">
+            <img class="jny__img" data-jny-img="2" src="assets/img/journey/stage-3-shaped-480.webp"
+              srcset="assets/img/journey/stage-3-shaped-480.webp 480w, assets/img/journey/stage-3-shaped-960.webp 960w"
+              sizes="(max-width:900px) 78vw, 42vw" width="960" height="960" alt="" loading="lazy" decoding="async">
+            <img class="jny__img" data-jny-img="3" src="assets/img/journey/stage-4-finished-480.webp"
+              srcset="assets/img/journey/stage-4-finished-480.webp 480w, assets/img/journey/stage-4-finished-960.webp 960w"
+              sizes="(max-width:900px) 78vw, 42vw" width="960" height="960" alt="" loading="lazy" decoding="async">
+          </span>
+          <svg class="jny__guides" data-jny-guides viewBox="0 0 480 480" aria-hidden="true">
+            <g fill="none" stroke="#e3bfbb" stroke-width="1">
+              <circle cx="240" cy="240" r="236" />
+              <circle cx="240" cy="240" r="140" />
+              <path d="M4 240H476M240 4V476M73 73L407 407M73 407L407 73" />
+            </g>
+          </svg>
+          <span class="jny__shine" aria-hidden="true"><i data-jny-shine></i></span>
+          <span class="jny__glints" data-jny-glints aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        </figure>
 
-    <div class="spk__sweep" data-spk-sweep aria-hidden="true"></div>
-    <div class="spk__grain" aria-hidden="true"></div>
+        <div class="jny__copy" data-jny-copy>
+          <p class="label"><b>02</b> The diamond journey</p>
+          <h2 id="journeyTitle">From exceptional<br><em>rough.</em></h2>
+          <p class="jny__b">It begins as a natural crystal, frosted and still unrevealed.</p>
+        </div>
+        <div class="jny__copy" data-jny-copy>
+          <p class="label">Opening the stone</p>
+          <h3>A first look<br><em>inside.</em></h3>
+          <p class="jny__b">A single polished window shows the light waiting within.</p>
+        </div>
+        <div class="jny__copy" data-jny-copy>
+          <p class="label">Precision in the making</p>
+          <h3>Shaped with<br><em>intention.</em></h3>
+          <p class="jny__b">The outline is rounded, and the first facets set the geometry to come.</p>
+        </div>
+        <div class="jny__copy" data-jny-copy>
+          <p class="label">100 facets of brilliance</p>
+          <h3>Masterfully<br><em>finished.</em></h3>
+          <p class="jny__b">One hundred facets, each placed to return the light.</p>
+        </div>
 
-    <!-- 01 · intro -->
-    <div class="spk__intro" data-spk-intro>
-      <p class="spk__eyebrow"><i></i><b>01</b><span>The Centurion Cut</span></p>
-      <h2 class="spk__h2">
-        <span class="spk__ln"><span>It&rsquo;s all about</span></span>
-        <span class="spk__ln"><span class="is-em">the sparkle.</span></span>
-      </h2>
-    </div>
+        <ol class="jny__rail" aria-hidden="true">
+          <li data-jny-step><b>01</b><span>Rough</span></li>
+          <li data-jny-step><b>02</b><span>Sawn</span></li>
+          <li data-jny-step><b>03</b><span>Shaped</span></li>
+          <li data-jny-step><b>04</b><span>Finished</span></li>
+          <i class="jny__rail-line"><i data-jny-rail></i></i>
+        </ol>
+        <p class="jny__note">An illustrative study of rough to polished form</p>
+      </div>
+    </section>
 
-    <!-- 02 · the cut, and 03 · the two worlds (same objects, repositioned) -->
-    <div class="spk__field" data-spk-field>
-      <figure class="cut" data-cut="centurion">
-        <span class="cut__disc">
-          <span class="cut__rail" aria-hidden="true"><svg viewBox="0 0 400 400"><g data-ticks></g></svg></span>
-          <img src="assets/img/brand/cut-centurion-face-a257.webp"
-               alt="The Centurion Diamond cut, shown with its 100-facet geometry"
-               width="257" height="258" loading="lazy" decoding="async">
-        </span>
-        <figcaption class="cut__meta">
-          <span class="cut__label" data-cut-label>Centurion</span>
-          <span class="cut__num"><b data-count-to="100">0</b></span>
-          <span class="cut__unit">Facets</span>
-          <span class="cut__note">Patent-pending geometry</span>
-        </figcaption>
-      </figure>
+    <!-- ============================================ 03 · THE CENTURION CUT — see the difference
+     The light arrives, then the comparison is made by scroll: a traditional
+     57-facet stone, the Centurion 100-facet cut wiping over it while the count
+     runs 57 to 100, the two side by side, and one closing line.
+     Diagrams are the client deck's own. Timing: assets/js/sparkle/. -->
+    <section class="spk" id="cut" aria-labelledby="spkTitle">
+      <div class="spk__stage">
+        <div class="spk__sweep" data-spk-sweep aria-hidden="true"></div>
 
-      <figure class="cut" data-cut="traditional">
-        <span class="cut__disc">
-          <span class="cut__rail" aria-hidden="true"><svg viewBox="0 0 400 400"><g data-ticks></g></svg></span>
-          <img src="assets/img/brand/cut-traditional-face-a245.webp"
-               alt="A traditional round brilliant cut, shown with its 57-facet geometry"
-               width="245" height="244" loading="lazy" decoding="async">
-        </span>
-        <figcaption class="cut__meta">
-          <span class="cut__label" data-cut-label>Traditional</span>
-          <span class="cut__num"><b data-count-to="57">0</b></span>
-          <span class="cut__unit">Facets</span>
-          <span class="cut__note">The industry standard</span>
-        </figcaption>
-      </figure>
-    </div>
+        <div class="spk__intro" data-spk-intro>
+          <p class="spk__eyebrow"><i></i><b>03</b><span>The Centurion Cut</span></p>
+          <h2 class="spk__h2" id="spkTitle"><span>It&rsquo;s all about</span><span class="is-em">the sparkle.</span>
+          </h2>
+        </div>
 
-    <!-- supporting line, deck copy -->
-    <p class="spk__lede" data-spk-lede>
-      The Centurion Diamond is designed with 100 facets, creating a distinctive
-      play of light and sparkle.
-    </p>
+        <!-- the two stones: one slot each, the Centurion first wipes over the traditional -->
+        <div class="spk__pair" data-spk-pair>
+          <figure class="spk__cut" data-spk-cut="centurion">
+            <span class="spk__disc">
+              <svg class="spk__rail" viewBox="0 0 400 400" aria-hidden="true">
+                <g data-spk-ticks="100"></g>
+              </svg>
+              <span class="spk__img spk__img--trad" data-spk-under><img src="assets/img/cut/traditional-57-560.webp"
+                  srcset="assets/img/cut/traditional-57-560.webp 560w, assets/img/cut/traditional-57-960.webp 960w"
+                  sizes="(max-width:900px) 64vw, 36vw" width="960" height="960"
+                  alt="A traditional round brilliant, shown with its 57-facet geometry" decoding="async"></span>
+              <span class="spk__img" data-spk-over><img src="assets/img/cut/centurion-100-560.webp"
+                  srcset="assets/img/cut/centurion-100-560.webp 560w, assets/img/cut/centurion-100-960.webp 960w"
+                  sizes="(max-width:900px) 64vw, 36vw" width="960" height="960"
+                  alt="The Centurion Diamond cut, shown with its 100-facet geometry" decoding="async"></span>
+              <i class="spk__wipe" data-spk-wipe aria-hidden="true"><b></b></i>
+            </span>
+            <figcaption class="spk__meta">
+              <span class="spk__label" data-spk-label>Traditional</span>
+              <span class="spk__num" data-spk-num>57</span>
+              <span class="spk__unit">Facets</span>
+              <span class="spk__note" data-spk-note>The industry standard</span>
+            </figcaption>
+          </figure>
 
-    <!-- 04 · outro -->
-    <div class="spk__outro" data-spk-outro aria-hidden="true">
-      <span class="spk__word" data-spk-word="0">More facets.</span>
-      <span class="spk__word" data-spk-word="1">More sparkle.</span>
-      <span class="spk__word" data-spk-word="2">See the difference.</span>
-    </div>
+          <figure class="spk__cut spk__cut--trad" data-spk-cut="traditional">
+            <span class="spk__disc">
+              <svg class="spk__rail" viewBox="0 0 400 400" aria-hidden="true">
+                <g data-spk-ticks="57"></g>
+              </svg>
+              <span class="spk__img"><img src="assets/img/cut/traditional-57-560.webp"
+                  srcset="assets/img/cut/traditional-57-560.webp 560w, assets/img/cut/traditional-57-960.webp 960w"
+                  sizes="(max-width:900px) 64vw, 36vw" width="960" height="960"
+                  alt="A traditional round brilliant, shown with its 57-facet geometry" decoding="async"></span>
+            </span>
+            <figcaption class="spk__meta">
+              <span class="spk__label">Traditional</span>
+              <span class="spk__num">57</span>
+              <span class="spk__unit">Facets</span>
+              <span class="spk__note">The industry standard</span>
+            </figcaption>
+          </figure>
+        </div>
 
-    <div class="spk__rule" data-spk-rule aria-hidden="true"><i></i></div>
-  </div>
+        <p class="spk__lede" data-spk-lede>The Centurion Diamond is designed with 100 facets, creating a distinctive
+          play of light and sparkle.</p>
 
-  <!-- hands the bright world back to the dark sections below -->
-  <div class="spk__handoff" aria-hidden="true"></div>
-</section>
+        <div class="spk__outro" data-spk-outro>
+          <p class="spk__close">See the <em>difference.</em></p>
+        </div>
+      </div>
+    </section>
 
-<!-- ============================================ 03 · ANATOMY OF BRILLIANCE
-     A pinned editorial chapter: one benefit owns the viewport at a time,
-     with a single Centurion stone recomposing between them. The four texts
-     live here (not in JS) so the chapter still reads with scripting off;
-     timing and choreography are in assets/js/pillars/scenes.js. -->
-<section class="plr" id="anatomy" aria-labelledby="plrTitle">
-  <div class="plr__stage">
+    <section class="plr" id="anatomy" aria-labelledby="plrTitle">
+      <div class="plr__stage">
 
-    <div class="plr__sweep" data-plr-sweep aria-hidden="true"></div>
-    <div class="plr__grain" aria-hidden="true"></div>
+        <div class="plr__sweep" data-plr-sweep aria-hidden="true"></div>
+        <div class="plr__grain" aria-hidden="true"></div>
 
-    <!-- One continuous loose diamond. The five supplied stones were isolated
+        <!-- One continuous loose diamond. The five supplied stones were isolated
          from their white grounds, then optically blended by the progress
          renderer so the chapter keeps its single-object choreography. -->
-    <figure class="plr__stone" data-plr-stone aria-hidden="true">
-      <span class="plr__stone-in">
-        <span class="plr__photos">
-          <img class="plr__shape-photo" data-plr-photo src="assets/img/diamond-shapes/round-480.webp" srcset="assets/img/diamond-shapes/round-480.webp 480w, assets/img/diamond-shapes/round-960.webp 960w" sizes="(max-width: 560px) 86vw, (max-width: 900px) 76vw, 31vw" width="953" height="960" alt="" loading="lazy" decoding="async">
-          <img class="plr__shape-photo" data-plr-photo src="assets/img/diamond-shapes/oval-480.webp" srcset="assets/img/diamond-shapes/oval-480.webp 480w, assets/img/diamond-shapes/oval-960.webp 960w" sizes="(max-width: 560px) 86vw, (max-width: 900px) 76vw, 31vw" width="653" height="960" alt="" loading="lazy" decoding="async">
-          <img class="plr__shape-photo" data-plr-photo src="assets/img/diamond-shapes/radiant-480.webp" srcset="assets/img/diamond-shapes/radiant-480.webp 480w, assets/img/diamond-shapes/radiant-960.webp 960w" sizes="(max-width: 560px) 86vw, (max-width: 900px) 76vw, 31vw" width="782" height="960" alt="" loading="lazy" decoding="async">
-          <img class="plr__shape-photo" data-plr-photo src="assets/img/diamond-shapes/emerald-480.webp" srcset="assets/img/diamond-shapes/emerald-480.webp 480w, assets/img/diamond-shapes/emerald-960.webp 960w" sizes="(max-width: 560px) 86vw, (max-width: 900px) 76vw, 31vw" width="955" height="960" alt="" loading="lazy" decoding="async">
-          <img class="plr__shape-photo" data-plr-photo src="assets/img/diamond-shapes/cushion-480.webp" srcset="assets/img/diamond-shapes/cushion-480.webp 480w, assets/img/diamond-shapes/cushion-960.webp 960w" sizes="(max-width: 560px) 86vw, (max-width: 900px) 76vw, 31vw" width="713" height="960" alt="" loading="lazy" decoding="async">
-        </span>
-        <span class="plr__shape-label" data-plr-shape-label>Round</span>
-        <span class="plr__shape-list">Round <i>/</i> Oval <i>/</i> Radiant <i>/</i> Emerald <i>/</i> Cushion</span>
-      </span>
-    </figure>
+        <figure class="plr__stone" data-plr-stone aria-hidden="true">
+          <span class="plr__stone-in">
+            <span class="plr__photos">
+              <img class="plr__shape-photo" data-plr-photo src="assets/img/diamond-shapes/round-480.webp"
+                srcset="assets/img/diamond-shapes/round-480.webp 480w, assets/img/diamond-shapes/round-960.webp 960w"
+                sizes="(max-width: 560px) 86vw, (max-width: 900px) 76vw, 31vw" width="953" height="960" alt=""
+                loading="lazy" decoding="async">
+              <img class="plr__shape-photo" data-plr-photo src="assets/img/diamond-shapes/oval-480.webp"
+                srcset="assets/img/diamond-shapes/oval-480.webp 480w, assets/img/diamond-shapes/oval-960.webp 960w"
+                sizes="(max-width: 560px) 86vw, (max-width: 900px) 76vw, 31vw" width="653" height="960" alt=""
+                loading="lazy" decoding="async">
+              <img class="plr__shape-photo" data-plr-photo src="assets/img/diamond-shapes/radiant-480.webp"
+                srcset="assets/img/diamond-shapes/radiant-480.webp 480w, assets/img/diamond-shapes/radiant-960.webp 960w"
+                sizes="(max-width: 560px) 86vw, (max-width: 900px) 76vw, 31vw" width="782" height="960" alt=""
+                loading="lazy" decoding="async">
+            </span>
+            <span class="plr__shape-label" data-plr-shape-label>Round</span>
+            <span class="plr__shape-list">Round <i>/</i> Oval <i>/</i> Radiant</span>
+          </span>
+        </figure>
 
-    <!-- opening -->
-    <div class="plr__intro" data-plr-intro>
-      <p class="plr__eyebrow"><i></i><b>01</b><span>The Centurion Advantage</span></p>
-      <h2 class="plr__h2" id="plrTitle">
-        <span class="plr__ln"><span>Anatomy of</span></span>
-        <span class="plr__ln"><span class="is-em">brilliance</span></span>
-      </h2>
-    </div>
+        <!-- opening -->
+        <div class="plr__intro" data-plr-intro>
+          <p class="plr__eyebrow"><i></i><b>04</b><span>The Centurion Advantage</span></p>
+          <h2 class="plr__h2" id="plrTitle">
+            <span class="plr__ln"><span>Anatomy of</span></span>
+            <span class="plr__ln"><span class="is-em">brilliance</span></span>
+          </h2>
+        </div>
 
-    <!-- 01 -->
-    <article class="plr__scene" data-plr-scene="0" data-side="left" data-motion="rise">
-      <div class="plr__copy">
-        <p class="plr__n"><b>01</b><i></i><span>&#47; 04</span></p>
-        <h3 class="plr__t">
-          <span class="plr__ln"><span>More facets,</span></span>
-          <span class="plr__ln"><span class="is-em">more sparkle.</span></span>
-        </h3>
-        <p class="plr__b">Extra facets mean more light reflections, resulting in a
-          dazzling play of fire and brilliance.</p>
+        <!-- 01 -->
+        <article class="plr__scene" data-plr-scene="0" data-side="left" data-motion="rise">
+          <div class="plr__copy">
+            <p class="plr__n"><b>01</b><i></i><span>&#47; 04</span></p>
+            <h3 class="plr__t">
+              <span class="plr__ln"><span>100 facets,</span></span>
+              <span class="plr__ln"><span class="is-em">precisely shaped.</span></span>
+            </h3>
+            <p class="plr__b">Extra facets mean more light reflections, resulting in a
+              dazzling play of fire and brilliance.</p>
+          </div>
+        </article>
+
+        <!-- 02 -->
+        <article class="plr__scene" data-plr-scene="1" data-side="right" data-motion="clip">
+          <div class="plr__copy">
+            <p class="plr__n"><b>02</b><i></i><span>&#47; 04</span></p>
+            <h3 class="plr__t">
+              <span class="plr__ln"><span>Unmatched</span></span>
+              <span class="plr__ln"><span class="is-em">brilliance.</span></span>
+            </h3>
+            <p class="plr__b">The advanced cut amplifies the diamond&rsquo;s glow, making
+              it shine even in the softest light.</p>
+          </div>
+        </article>
+
+        <!-- 03 -->
+        <article class="plr__scene" data-plr-scene="2" data-side="left" data-motion="slide">
+          <div class="plr__copy">
+            <p class="plr__n"><b>03</b><i></i><span>&#47; 04</span></p>
+            <h3 class="plr__t">
+              <span class="plr__ln"><span>Refined</span></span>
+              <span class="plr__ln"><span class="is-em">elegance.</span></span>
+            </h3>
+            <p class="plr__b">A modern take on classic beauty, crafted for those who
+              desire exceptional sparkle and distinction.</p>
+          </div>
+        </article>
+
+        <!-- 04 -->
+        <article class="plr__scene" data-plr-scene="3" data-side="center" data-motion="scale">
+          <div class="plr__copy">
+            <p class="plr__n"><b>04</b><i></i><span>&#47; 04</span></p>
+            <h3 class="plr__t">
+              <span class="plr__ln"><span>There is</span></span>
+              <span class="plr__ln"><span>no gimmick.</span></span>
+            </h3>
+            <p class="plr__b">It is just better brilliance &mdash; visible to the naked,
+              untrained eye.</p>
+          </div>
+        </article>
+
+        <!-- closing statement, and the bridge into the Light Study -->
+        <div class="plr__final" data-plr-final>
+          <span class="plr__word" data-plr-word="0">One design philosophy.</span>
+          <span class="plr__word" data-plr-word="1">Across every shape.</span>
+          <span class="plr__word" data-plr-word="2">The Centurion family.</span>
+        </div>
+
+        <div class="plr__family" data-plr-family aria-label="Centurion diamond shapes"></div>
+        <svg class="plr__iris" data-plr-iris aria-hidden="true" focusable="false" viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid slice">
+          <mask id="plrIris" maskUnits="userSpaceOnUse" x="-100" y="-100" width="300" height="300">
+            <rect x="-100" y="-100" width="300" height="300" fill="#fff" />
+            <circle class="plr__ir" cx="50" cy="50" r="50" fill="#000" />
+          </mask>
+          <rect x="-100" y="-100" width="300" height="300" fill="#151213" mask="url(#plrIris)" />
+          <circle class="plr__ir" cx="50" cy="50" r="50" fill="none" stroke="rgba(216,201,182,.5)" stroke-width=".55" />
+        </svg>
       </div>
-    </article>
+    </section>
 
-    <!-- 02 -->
-    <article class="plr__scene" data-plr-scene="1" data-side="right" data-motion="clip">
-      <div class="plr__copy">
-        <p class="plr__n"><b>02</b><i></i><span>&#47; 04</span></p>
-        <h3 class="plr__t">
-          <span class="plr__ln"><span>Unmatched</span></span>
-          <span class="plr__ln"><span class="is-em">brilliance.</span></span>
-        </h3>
-        <p class="plr__b">The advanced cut amplifies the diamond&rsquo;s glow, making
-          it shine even in the softest light.</p>
-      </div>
-    </article>
+    <section class="sty" id="study" aria-labelledby="styTitle">
+      <div class="sty__stage">
 
-    <!-- 03 -->
-    <article class="plr__scene" data-plr-scene="2" data-side="left" data-motion="slide">
-      <div class="plr__copy">
-        <p class="plr__n"><b>03</b><i></i><span>&#47; 04</span></p>
-        <h3 class="plr__t">
-          <span class="plr__ln"><span>Refined</span></span>
-          <span class="plr__ln"><span class="is-em">elegance.</span></span>
-        </h3>
-        <p class="plr__b">A modern take on classic beauty, crafted for those who
-          desire exceptional sparkle and distinction.</p>
-      </div>
-    </article>
+        <!-- the subject -->
+        <div class="sty__media" data-sty-media aria-hidden="true">
+          <span class="sty__glow" data-sty-glow></span>
+          <video class="sty__vid" data-sty-video data-manual muted playsinline preload="none" tabindex="-1"
+            poster="assets/video/light-scrub-poster.webp"></video>
+        </div>
 
-    <!-- 04 -->
-    <article class="plr__scene" data-plr-scene="3" data-side="center" data-motion="scale">
-      <div class="plr__copy">
-        <p class="plr__n"><b>04</b><i></i><span>&#47; 04</span></p>
-        <h3 class="plr__t">
-          <span class="plr__ln"><span>There is</span></span>
-          <span class="plr__ln"><span>no gimmick.</span></span>
-        </h3>
-        <p class="plr__b">It is just better brilliance &mdash; visible to the naked,
-          untrained eye.</p>
-      </div>
-    </article>
-
-    <!-- closing statement, and the bridge into the Light Study -->
-    <div class="plr__final" data-plr-final>
-      <span class="plr__word" data-plr-word="0">More facets.</span>
-      <span class="plr__word" data-plr-word="1">More brilliance.</span>
-      <span class="plr__word" data-plr-word="2">See the difference.</span>
-    </div>
-
-    <div class="plr__beam" data-plr-beam aria-hidden="true"></div>
-    <svg class="plr__iris" data-plr-iris aria-hidden="true" focusable="false"
-         viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-      <mask id="plrIris" maskUnits="userSpaceOnUse" x="-100" y="-100" width="300" height="300">
-        <rect x="-100" y="-100" width="300" height="300" fill="#fff"/>
-        <circle class="plr__ir" cx="50" cy="50" r="50" fill="#000"/>
-      </mask>
-      <rect x="-100" y="-100" width="300" height="300" fill="#0A0A0B" mask="url(#plrIris)"/>
-      <circle class="plr__ir" cx="50" cy="50" r="50" fill="none"
-              stroke="rgba(216,201,182,.5)" stroke-width=".55"/>
-    </svg>
-    <div class="plr__seal" data-plr-seal aria-hidden="true"></div>
-  </div>
-</section>
-
-<!-- ============================================ 04 · A STUDY IN LIGHT
-     A pinned optical study. Anatomy of Brilliance closes by sealing its
-     aperture to --ink; this stage opens on --ink with its own aperture
-     shut, so the two share a frame rather than a fade.
-
-     The aperture is four ink shutters. It is what opens the clip out of
-     the dark, what makes room for the type — the frame re-centres on
-     whatever is left open, so the stone is never behind a word — and what
-     compresses the light back into the single line that hands off to the
-     marquee below.
-
-     Copy lives here so the chapter still reads with scripting off;
-     choreography is in assets/js/study/scenes.js. The video source is set
-     by assets/js/study/video.js — it picks a scrub-optimised master, which
-     is a different file from the one a plain <video> would stream. -->
-<section class="sty" id="study" aria-labelledby="styTitle">
-  <div class="sty__stage">
-
-    <!-- the subject -->
-    <div class="sty__media" data-sty-media aria-hidden="true">
-      <span class="sty__glow" data-sty-glow></span>
-      <video class="sty__vid" data-sty-video data-manual muted playsinline
-             preload="none" tabindex="-1"
-             poster="assets/video/light-scrub-poster.webp"></video>
-    </div>
-
-    <!-- optical traces. Held for short beats, never more than one idea at
+        <!-- optical traces. Held for short beats, never more than one idea at
          a time, and never stating a measurement. The 160x90 view box is
          the clip's own frame, so a trace sits on the stone. -->
-    <svg class="sty__optics" data-sty-optics aria-hidden="true" focusable="false"
-         viewBox="0 0 160 90" preserveAspectRatio="xMidYMid meet">
-      <g data-sty-optics-g>
-        <g class="sty__rule" data-sty-rule>
-          <line x1="26" y1="84" x2="134" y2="84"/>
-          <line x1="26" y1="81.6" x2="26" y2="86.4"/>
-          <line x1="134" y1="81.6" x2="134" y2="86.4"/>
-          <line x1="80" y1="82.6" x2="80" y2="85.4"/>
-        </g>
-        <g class="sty__reticle" data-sty-reticle>
-          <ellipse cx="80" cy="48" rx="38" ry="33"/>
-          <ellipse cx="80" cy="48" rx="47" ry="40" class="is-dash"/>
-          <line x1="27" y1="48" x2="35" y2="48"/>
-          <line x1="125" y1="48" x2="133" y2="48"/>
-          <line x1="80" y1="9"  x2="80" y2="15"/>
-          <line x1="80" y1="81" x2="80" y2="87"/>
-        </g>
-        <g class="sty__facets" data-sty-facets></g>
-        <g class="sty__points" data-sty-points>
-          <circle cx="46"  cy="44" r="0.7"/>
-          <circle cx="66"  cy="34" r="0.7"/>
-          <circle cx="96"  cy="38" r="0.7"/>
-          <circle cx="118" cy="50" r="0.7"/>
-          <circle cx="80"  cy="79" r="0.7"/>
-        </g>
-      </g>
-    </svg>
+        <svg class="sty__optics" data-sty-optics aria-hidden="true" focusable="false" viewBox="0 0 160 90"
+          preserveAspectRatio="xMidYMid meet">
+          <g data-sty-optics-g>
+            <g class="sty__rule" data-sty-rule>
+              <line x1="26" y1="84" x2="134" y2="84" />
+              <line x1="26" y1="81.6" x2="26" y2="86.4" />
+              <line x1="134" y1="81.6" x2="134" y2="86.4" />
+              <line x1="80" y1="82.6" x2="80" y2="85.4" />
+            </g>
+            <g class="sty__reticle" data-sty-reticle>
+              <ellipse cx="80" cy="48" rx="38" ry="33" />
+              <ellipse cx="80" cy="48" rx="47" ry="40" class="is-dash" />
+              <line x1="27" y1="48" x2="35" y2="48" />
+              <line x1="125" y1="48" x2="133" y2="48" />
+              <line x1="80" y1="9" x2="80" y2="15" />
+              <line x1="80" y1="81" x2="80" y2="87" />
+            </g>
+            <g class="sty__facets" data-sty-facets></g>
+            <g class="sty__points" data-sty-points>
+              <circle cx="46" cy="44" r="0.7" />
+              <circle cx="66" cy="34" r="0.7" />
+              <circle cx="96" cy="38" r="0.7" />
+              <circle cx="118" cy="50" r="0.7" />
+              <circle cx="80" cy="79" r="0.7" />
+            </g>
+          </g>
+        </svg>
 
-    <!-- light crossing the stone -->
-    <div class="sty__beam" data-sty-beam aria-hidden="true"></div>
+        <!-- light crossing the stone -->
+        <div class="sty__beam" data-sty-beam aria-hidden="true"></div>
 
-    <!-- the aperture, and the hairline along its inner edge -->
-    <div class="sty__sh sty__sh--t" data-sty-sh="t" aria-hidden="true"></div>
-    <div class="sty__sh sty__sh--b" data-sty-sh="b" aria-hidden="true"></div>
-    <div class="sty__sh sty__sh--l" data-sty-sh="l" aria-hidden="true"></div>
-    <div class="sty__sh sty__sh--r" data-sty-sh="r" aria-hidden="true"></div>
-    <div class="sty__edge sty__edge--t" data-sty-edge="t" aria-hidden="true"></div>
-    <div class="sty__edge sty__edge--b" data-sty-edge="b" aria-hidden="true"></div>
+        <!-- the aperture, and the hairline along its inner edge -->
+        <div class="sty__sh sty__sh--t" data-sty-sh="t" aria-hidden="true"></div>
+        <div class="sty__sh sty__sh--b" data-sty-sh="b" aria-hidden="true"></div>
+        <div class="sty__sh sty__sh--l" data-sty-sh="l" aria-hidden="true"></div>
+        <div class="sty__sh sty__sh--r" data-sty-sh="r" aria-hidden="true"></div>
+        <div class="sty__edge sty__edge--t" data-sty-edge="t" aria-hidden="true"></div>
+        <div class="sty__edge sty__edge--b" data-sty-edge="b" aria-hidden="true"></div>
 
-    <!-- that line, leaving: down to the foot of the stage, then left,
-         which is the direction the marquee below is already travelling -->
-    <div class="sty__exit" data-sty-exit aria-hidden="true"></div>
+        <!-- where that line folds away at the close -->
+        <i class="sty__spark" data-sty-spark aria-hidden="true"></i>
 
-    <!-- opening -->
-    <div class="sty__intro" data-sty-intro>
-      <p class="sty__eyebrow"><i></i><b>03</b><span id="styTitle">A Study in Light</span></p>
-    </div>
+        <!-- opening -->
+        <div class="sty__intro" data-sty-intro>
+          <p class="sty__eyebrow"><i></i><b>05</b><span id="styTitle">A Study in Light</span></p>
+        </div>
 
-    <!-- 01 · light enters -->
-    <article class="sty__scene" data-sty-scene="0" data-side="left">
-      <div class="sty__copy">
-        <h2 class="sty__t">
-          <span class="sty__ln"><span>Light</span></span>
-          <span class="sty__ln"><span class="is-em">enters.</span></span>
-        </h2>
+        <!-- 01 · light enters -->
+        <article class="sty__scene" data-sty-scene="0" data-side="left">
+          <div class="sty__copy">
+            <h2 class="sty__t">
+              <span class="sty__ln"><span>Light</span></span>
+              <span class="sty__ln"><span class="is-em">enters.</span></span>
+            </h2>
+          </div>
+        </article>
+
+        <!-- 02 · light moves -->
+        <article class="sty__scene" data-sty-scene="1" data-side="right">
+          <div class="sty__copy">
+            <h2 class="sty__t">
+              <span class="sty__ln"><span>Light</span></span>
+              <span class="sty__ln"><span class="is-em">moves.</span></span>
+            </h2>
+          </div>
+        </article>
+
+        <!-- 03 · light returns — the conceptual centre of the chapter -->
+        <article class="sty__scene" data-sty-scene="2" data-side="left">
+          <div class="sty__copy">
+            <h2 class="sty__t">
+              <span class="sty__ln"><span>Light</span></span>
+              <span class="sty__ln"><span class="is-em">returns.</span></span>
+            </h2>
+            <p class="sty__b">Where a traditional stone lets light slip through the
+              pavilion, the Centurion geometry turns it back toward you.</p>
+          </div>
+        </article>
+
+        <!-- 04 · the number, bracketing the stone rather than covering it -->
+        <article class="sty__scene sty__scene--fig" data-sty-scene="3" data-side="center">
+          <div class="sty__copy">
+            <p class="sty__fig"><span class="sty__ln"><span>100</span></span></p>
+            <p class="sty__figlabel"><span class="sty__ln"><span>Facets</span></span></p>
+          </div>
+        </article>
+
+        <!-- 05 · the proposition, in the deck's own words -->
+        <article class="sty__scene" data-sty-scene="4" data-side="right">
+          <div class="sty__copy sty__copy--narrow">
+            <p class="sty__lead">
+              <span class="sty__ln"><span>The Centurion Diamond is designed with 100 facets,
+                  creating a distinctive play of light and sparkle.</span></span>
+            </p>
+          </div>
+        </article>
+
       </div>
-    </article>
+    </section>
 
-    <!-- 02 · light moves -->
-    <article class="sty__scene" data-sty-scene="1" data-side="right">
-      <div class="sty__copy">
-        <h2 class="sty__t">
-          <span class="sty__ln"><span>Light</span></span>
-          <span class="sty__ln"><span class="is-em">moves.</span></span>
-        </h2>
+    <!-- ============================================ 06 · CENTURION EXPERIENCE
+     Campaign frames, then the retailer's case for stocking (restored from the
+     original Exclusivity chapter; the bridal "9 settings" figure is retired
+     with the bridal collection). Copy lives here so the chapter reads with
+     scripting off; timing is in assets/js/exclusive/scenes.js. -->
+    <section class="exc exp" id="exclusive" aria-labelledby="excTitle">
+      <div class="exc__stage">
+        <article class="exp__frame exp__opening" data-exp-frame>
+          <p class="label"><b>06</b> Centurion Experience</p>
+          <h2 id="excTitle">The Centurion<br><em>experience.</em></h2>
+        </article>
+        <article class="exp__frame exp__mineral" data-exp-frame>
+          <h3>Every centre stone<br>is a <em>100 facet</em><br>Centurion Diamond.</h3>
+        </article>
+        <article class="exp__frame exp__standard" data-exp-frame>
+          <p class="label">Exclusivity</p>
+          <h3>A different kind<br><em>of standard.</em></h3>
+        </article>
+        <article class="exp__frame exp__case" data-exp-frame>
+          <div class="exp__ledger">
+            <div class="exp__row" data-exp-item><span class="exp__rule" aria-hidden="true"></span>
+              <p class="exp__n">100</p>
+              <p class="exp__l">Facets per centre stone</p>
+            </div>
+            <div class="exp__row" data-exp-item><span class="exp__rule" aria-hidden="true"></span>
+              <p class="exp__n">43<sup>+</sup></p>
+              <p class="exp__l">More facets than a traditional cut</p>
+            </div>
+          </div>
+          <div class="exp__claims">
+            <p class="exp__claim" data-exp-item>Because the Centurion Diamond is patent-pending, the collection is
+              exclusive to you. Customers cannot price-shop it against other retailers or online sellers &mdash; nothing
+              like it exists elsewhere.</p>
+            <p class="exp__claim" data-exp-item>The result is a protected margin on a piece that sells itself across the
+              counter, and a premium collection that lifts the average ticket rather than discounting it.</p>
+          </div>
+        </article>
+        <article class="exp__frame exp__unshoppable" data-exp-frame>
+          <h3>Unshoppable<br><em>by design.</em></h3><a class="btn exp__cta" href="#contact"><span class="dot"></span>
+            Enquire about stocking</a>
+        </article>
       </div>
-    </article>
+    </section>
 
-    <!-- 03 · light returns — the conceptual centre of the chapter -->
-    <article class="sty__scene" data-sty-scene="2" data-side="left">
-      <div class="sty__copy">
-        <h2 class="sty__t">
-          <span class="sty__ln"><span>Light</span></span>
-          <span class="sty__ln"><span class="is-em">returns.</span></span>
-        </h2>
-        <p class="sty__b">Where a traditional stone lets light slip through the
-          pavilion, the Centurion geometry turns it back toward you.</p>
+    <!-- 07 · At Retail — hidden for now. Remove `hidden` to restore it; its
+     init (assets/js/display/index.js) skips a hidden section. -->
+    <section class="dsp" id="display" aria-labelledby="dspTitle" hidden>
+      <div class="dsp__stage">
+
+        <div class="dsp__glow" data-dsp-glow aria-hidden="true"></div>
+
+        <figure class="dsp__case" data-dsp-case style="--ar:1200/1480; --mar:4/5; --mpos:50% 46%">
+          <img src="assets/img/model/display-case-a-800.webp"
+            srcset="assets/img/model/display-case-a-560.webp 560w, assets/img/model/display-case-a-800.webp 800w, assets/img/model/display-case-a-1200.webp 1200w"
+            sizes="(max-width:900px) 96vw, 27vw" alt="The Centurion Diamond retail display case, angled view"
+            width="1200" height="1480" loading="lazy" decoding="async">
+        </figure>
+        <!-- opening -->
+        <div class="dsp__intro" data-dsp-intro>
+          <p class="dsp__eyebrow"><i></i><b>07</b><span>At Retail</span></p>
+          <h2 class="dsp__h2" id="dspTitle">
+            <span class="dsp__ln"><span>Made for</span></span>
+            <span class="dsp__ln"><span class="is-em">the showcase.</span></span>
+          </h2>
+        </div>
+
+        <!-- 01 · the case -->
+        <article class="dsp__scene" data-dsp-scene="0" data-side="right">
+          <div class="dsp__copy">
+            <h3 class="dsp__t">
+              <span class="dsp__ln"><span>A case built</span></span>
+              <span class="dsp__ln"><span class="is-em">to be noticed</span></span>
+            </h3>
+            <p class="dsp__b">The Centurion Collection comes with a thoughtfully crafted
+              display, distinguished by its sophisticated branded presentation.</p>
+          </div>
+        </article>
+
+        <!-- 02 · what arrives -->
+        <article class="dsp__scene" data-dsp-scene="1" data-side="right">
+          <div class="dsp__copy">
+            <h3 class="dsp__t">
+              <span class="dsp__ln"><span>Delivered ready</span></span>
+              <span class="dsp__ln"><span class="is-em">to merchandise</span></span>
+            </h3>
+            <p class="dsp__b">The collection arrives as a complete statement,
+              not a loose assortment.</p>
+          </div>
+        </article>
+
       </div>
-    </article>
+    </section>
 
-    <!-- 04 · the number, bracketing the stone rather than covering it -->
-    <article class="sty__scene sty__scene--fig" data-sty-scene="3" data-side="center">
-      <div class="sty__copy">
-        <p class="sty__fig"><span class="sty__ln"><span>100</span></span></p>
-        <p class="sty__figlabel"><span class="sty__ln"><span>Facets</span></span></p>
+    <!-- 08 / Locked approved finale -->
+    <section class="fin" id="retail-showcase" aria-labelledby="finTitle">
+      <div class="fin__stage">
+        <div class="fin__media" data-fin-media aria-hidden="true">
+          <canvas class="fin__canvas" data-fin-canvas width="1280" height="720"></canvas>
+          <img class="fin__poster" src="assets/img/retail-scrub/retail-095.webp" alt="" width="1280" height="720"
+            loading="lazy" decoding="async">
+        </div>
+
+        <div class="fin__vig" data-fin-vig aria-hidden="true"></div>
+        <div class="fin__grain" aria-hidden="true"></div>
+        <div class="fin__blush" data-fin-blush aria-hidden="true"></div>
+        <div class="fin__sweep" data-fin-sweep aria-hidden="true"></div>
+
+        <div class="fin__copy" data-fin-copy>
+          <div class="fin__copy-in">
+            <p class="fin__eyebrow" data-fin-eyebrow><i></i><b>07</b><span>Centurion at Retail</span><i></i></p>
+            <h2 class="fin__title" id="finTitle">
+              <span class="fin__line"><span>Want to see how the</span></span>
+              <span class="fin__line"><span class="is-em">Centurion Diamond</span></span>
+              <span class="fin__line"><span>looks in your store?</span></span>
+            </h2>
+            <p class="fin__body" data-fin-body>Bring the Centurion Collection to your jewelry case.</p>
+            <a class="btn fin__cta" href="#contact" data-fin-cta>
+              <span class="dot"></span> Contact Us
+            </a>
+          </div>
+        </div>
+
+        <div class="fin__progress" data-fin-progress aria-hidden="true">
+          <span>Rings / Retail</span><i><b data-fin-progress-bar></b></i><em data-fin-progress-value>00</em>
+        </div>
       </div>
-    </article>
-
-    <!-- 05 · the proposition, in the deck's own words -->
-    <article class="sty__scene" data-sty-scene="4" data-side="right">
-      <div class="sty__copy sty__copy--narrow">
-        <p class="sty__lead">
-          <span class="sty__ln"><span>The Centurion Diamond is designed with 100 facets,
-            creating a distinctive play of light and sparkle.</span></span>
-        </p>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<!-- ============================================ 05 · MARQUEE -->
-<div class="marq" aria-hidden="true">
-  <div class="marq__track" id="marq">
-    <span>More Facets <b>&#9670;</b> <em>More Brilliance</em> <b>&#9670;</b></span>
-    <span>More Facets <b>&#9670;</b> <em>More Brilliance</em> <b>&#9670;</b></span>
-  </div>
-</div>
-
-<!-- ============================================ 06 · THE COLLECTION — the gallery
-     A pinned light zone that opens through the same aperture that closed
-     Anatomy of Brilliance, then travels a horizontal rail of the nine SKUs.
-
-     Every reference, shape, carat, metal and setting weight below is the
-     deck's own — they live here rather than in JS so the catalogue survives
-     with scripting off. Choreography is in assets/js/collection/scenes.js. -->
-<section class="coll" id="collection" aria-labelledby="collTitle">
-  <div class="coll__stage">
-    <div class="coll__grain" data-coll-grain aria-hidden="true"></div>
-
-    <!-- the rail of nine stones and two plates of them worn -->
-    <div class="coll__rail" data-coll-rail>
-
-      <figure class="cl" data-cl="product" data-metal="platinum" data-n="01" data-cut="Radiant">
-        <span class="cl__stone">
-          <img src="assets/img/ring/ring-radiant-3-pt-600.webp"
-               srcset="assets/img/ring/ring-radiant-3-pt-420.webp 420w,
-                       assets/img/ring/ring-radiant-3-pt-600.webp 600w,
-                       assets/img/ring/ring-radiant-3-pt-797.webp 797w"
-               sizes="(max-width:900px) 84vw, 36vw"
-               alt="Radiant-cut 3.00 carat Centurion Diamond ring in platinum"
-               width="797" height="999" loading="lazy" decoding="async">
-        </span>
-        <figcaption class="cl__plate">
-          <span class="cl__sku">RG064179-RA-3</span>
-          <span class="cl__cut">Radiant</span>
-          <span class="cl__ct">3.00 cts</span>
-          <span class="cl__spec">Platinum <i>&middot;</i> 0.63 ctw</span>
-        </figcaption>
-      </figure>
-
-      <figure class="cl" data-cl="product" data-metal="yellow" data-n="02" data-cut="Radiant">
-        <span class="cl__stone">
-          <img src="assets/img/ring/ring-radiant-25-yg-600.webp"
-               srcset="assets/img/ring/ring-radiant-25-yg-420.webp 420w,
-                       assets/img/ring/ring-radiant-25-yg-600.webp 600w,
-                       assets/img/ring/ring-radiant-25-yg-735.webp 735w"
-               sizes="(max-width:900px) 84vw, 36vw"
-               alt="Radiant-cut 2.50 carat Centurion Diamond ring in 14K yellow gold"
-               width="735" height="876" loading="lazy" decoding="async">
-        </span>
-        <figcaption class="cl__plate">
-          <span class="cl__sku">RG056241-RA-2.5</span>
-          <span class="cl__cut">Radiant</span>
-          <span class="cl__ct">2.50 cts</span>
-          <span class="cl__spec">14K Yellow <i>&middot;</i> 0.34 ctw</span>
-        </figcaption>
-      </figure>
-
-      <figure class="cl cl--life" data-cl="life" data-n="" data-cut="In wear">
-        <span class="cl__frame">
-          <img src="assets/img/model/ed-hands-rings-900.webp"
-               srcset="assets/img/model/ed-hands-rings-600.webp 600w,
-                       assets/img/model/ed-hands-rings-900.webp 900w,
-                       assets/img/model/ed-hands-rings-1400.webp 1400w"
-               sizes="(max-width:900px) 92vw, 40vw"
-               alt="Model wearing five Centurion Diamond rings across both hands"
-               width="1400" height="2231" loading="lazy" decoding="async">
-        </span>
-        <figcaption class="cl__plate cl__plate--life">
-          <span class="cl__sku">The collection, worn</span>
-        </figcaption>
-      </figure>
-
-      <figure class="cl" data-cl="product" data-metal="two-tone" data-n="03" data-cut="Oval">
-        <span class="cl__stone">
-          <img src="assets/img/ring/ring-oval-25-tt-600.webp"
-               srcset="assets/img/ring/ring-oval-25-tt-420.webp 420w,
-                       assets/img/ring/ring-oval-25-tt-600.webp 600w,
-                       assets/img/ring/ring-oval-25-tt-738.webp 738w"
-               sizes="(max-width:900px) 84vw, 36vw"
-               alt="Oval-cut 2.50 carat Centurion Diamond ring in 14K two tone gold"
-               width="738" height="899" loading="lazy" decoding="async">
-        </span>
-        <figcaption class="cl__plate">
-          <span class="cl__sku">RG064180OV2.5HE</span>
-          <span class="cl__cut">Oval</span>
-          <span class="cl__ct">2.50 cts</span>
-          <span class="cl__spec">14K Two Tone <i>&middot;</i> 0.54 ctw</span>
-        </figcaption>
-      </figure>
-
-      <figure class="cl" data-cl="product" data-metal="platinum" data-n="04" data-cut="Emerald" style="--fit:1.16">
-        <span class="cl__stone">
-          <img src="assets/img/ring/ring-emerald-2-pt-600.webp"
-               srcset="assets/img/ring/ring-emerald-2-pt-420.webp 420w,
-                       assets/img/ring/ring-emerald-2-pt-600.webp 600w,
-                       assets/img/ring/ring-emerald-2-pt-900.webp 900w"
-               sizes="(max-width:900px) 84vw, 36vw"
-               alt="Emerald-cut 2.00 carat Centurion Diamond three stone ring in platinum"
-               width="900" height="648" loading="lazy" decoding="async">
-        </span>
-        <figcaption class="cl__plate">
-          <span class="cl__sku">RG064181-EM-2</span>
-          <span class="cl__cut">Emerald</span>
-          <span class="cl__ct">2.00 cts</span>
-          <span class="cl__spec">Platinum <i>&middot;</i> 1.00 ctw</span>
-        </figcaption>
-      </figure>
-
-      <figure class="cl" data-cl="product" data-metal="two-tone" data-n="05" data-cut="Oval" style="--fit:1.10">
-        <span class="cl__stone">
-          <img src="assets/img/ring/ring-oval-2-tt-600.webp"
-               srcset="assets/img/ring/ring-oval-2-tt-420.webp 420w,
-                       assets/img/ring/ring-oval-2-tt-600.webp 600w,
-                       assets/img/ring/ring-oval-2-tt-900.webp 900w"
-               sizes="(max-width:900px) 84vw, 36vw"
-               alt="Oval-cut 2.00 carat Centurion Diamond ring in 14K two tone gold"
-               width="900" height="718" loading="lazy" decoding="async">
-        </span>
-        <figcaption class="cl__plate">
-          <span class="cl__sku">RG055381-OV-2</span>
-          <span class="cl__cut">Oval</span>
-          <span class="cl__ct">2.00 cts</span>
-          <span class="cl__spec">14K Two Tone <i>&middot;</i> 0.45 ctw</span>
-        </figcaption>
-      </figure>
-
-      <figure class="cl cl--life" data-cl="life" data-n="" data-cut="In wear">
-        <span class="cl__frame">
-          <img src="assets/img/model/ed-radiant-collar-900.webp"
-               srcset="assets/img/model/ed-radiant-collar-600.webp 600w,
-                       assets/img/model/ed-radiant-collar-900.webp 900w,
-                       assets/img/model/ed-radiant-collar-1400.webp 1400w"
-               sizes="(max-width:900px) 92vw, 40vw"
-               alt="Model wearing a radiant-cut Centurion Diamond ring at the collarbone"
-               width="1400" height="2049" loading="lazy" decoding="async">
-        </span>
-        <figcaption class="cl__plate cl__plate--life">
-          <span class="cl__sku">In the softest light</span>
-        </figcaption>
-      </figure>
-
-      <figure class="cl" data-cl="product" data-metal="platinum" data-n="06" data-cut="Oval" style="--fit:.98">
-        <span class="cl__stone">
-          <img src="assets/img/ring/ring-oval-25-pt-600.webp"
-               srcset="assets/img/ring/ring-oval-25-pt-420.webp 420w,
-                       assets/img/ring/ring-oval-25-pt-600.webp 600w,
-                       assets/img/ring/ring-oval-25-pt-802.webp 802w"
-               sizes="(max-width:900px) 84vw, 36vw"
-               alt="Oval-cut 2.50 carat Centurion Diamond solitaire in platinum"
-               width="802" height="1035" loading="lazy" decoding="async">
-        </span>
-        <figcaption class="cl__plate">
-          <span class="cl__sku">RG055388-OV-3</span>
-          <span class="cl__cut">Oval</span>
-          <span class="cl__ct">2.50 cts</span>
-          <span class="cl__spec">Platinum <i>&middot;</i> 0.096 ctw</span>
-        </figcaption>
-      </figure>
-
-      <figure class="cl" data-cl="product" data-metal="platinum" data-n="07" data-cut="Round" style="--fit:1.08">
-        <span class="cl__stone">
-          <img src="assets/img/ring/ring-round-2-pt-600.webp"
-               srcset="assets/img/ring/ring-round-2-pt-420.webp 420w,
-                       assets/img/ring/ring-round-2-pt-600.webp 600w,
-                       assets/img/ring/ring-round-2-pt-900.webp 900w"
-               sizes="(max-width:900px) 84vw, 36vw"
-               alt="Round brilliant 2.00 carat Centurion Diamond ring in platinum"
-               width="900" height="764" loading="lazy" decoding="async">
-        </span>
-        <figcaption class="cl__plate">
-          <span class="cl__sku">RG064182RD2HE</span>
-          <span class="cl__cut">Round</span>
-          <span class="cl__ct">2.00 cts</span>
-          <span class="cl__spec">Platinum <i>&middot;</i> 0.32 ctw</span>
-        </figcaption>
-      </figure>
-
-      <figure class="cl" data-cl="product" data-metal="platinum" data-n="08" data-cut="Radiant" style="--fit:1.08">
-        <span class="cl__stone">
-          <img src="assets/img/ring/ring-radiant-3-pt-b-600.webp"
-               srcset="assets/img/ring/ring-radiant-3-pt-b-420.webp 420w,
-                       assets/img/ring/ring-radiant-3-pt-b-600.webp 600w,
-                       assets/img/ring/ring-radiant-3-pt-b-900.webp 900w"
-               sizes="(max-width:900px) 84vw, 36vw"
-               alt="Radiant-cut 3.00 carat Centurion Diamond ring with graduated band in platinum"
-               width="900" height="777" loading="lazy" decoding="async">
-        </span>
-        <figcaption class="cl__plate">
-          <span class="cl__sku">RG059659-RD-3</span>
-          <span class="cl__cut">Radiant</span>
-          <span class="cl__ct">3.00 cts</span>
-          <span class="cl__spec">Platinum <i>&middot;</i> 0.95 ctw</span>
-        </figcaption>
-      </figure>
-
-      <figure class="cl" data-cl="product" data-metal="two-tone" data-n="09" data-cut="Cushion" style="--fit:.98">
-        <span class="cl__stone">
-          <img src="assets/img/ring/ring-cushion-3-tt-600.webp"
-               srcset="assets/img/ring/ring-cushion-3-tt-420.webp 420w,
-                       assets/img/ring/ring-cushion-3-tt-600.webp 600w,
-                       assets/img/ring/ring-cushion-3-tt-731.webp 731w"
-               sizes="(max-width:900px) 84vw, 36vw"
-               alt="Cushion-cut 3.00 carat Centurion Diamond ring in 14K two tone gold"
-               width="731" height="987" loading="lazy" decoding="async">
-        </span>
-        <figcaption class="cl__plate">
-          <span class="cl__sku">RG055388-CU10.0</span>
-          <span class="cl__cut">Cushion</span>
-          <span class="cl__ct">3.00 cts</span>
-          <span class="cl__spec">14K Two Tone <i>&middot;</i> 0.09 ctw</span>
-        </figcaption>
-      </figure>
-
-    </div>
-
-    <!-- opening -->
-    <header class="coll__intro" data-coll-intro>
-      <div class="coll__introL">
-        <p class="coll__eyebrow"><i></i><b>02</b><span>The Collection</span></p>
-        <h2 class="coll__h2" id="collTitle">
-          <span class="coll__ln"><span>Bridal,</span></span>
-          <span class="coll__ln"><span class="is-em">reconsidered</span></span>
-        </h2>
-      </div>
-      <p class="coll__lede">
-        Built exclusively in Platinum and 14K gold. Every centre stone is a
-        100-facet Centurion Diamond.
-      </p>
-    </header>
-
-    <!-- the gallery holds while this takes the frame -->
-    <div class="coll__stmt" data-coll-stmt>
-      <p class="coll__stmtT">
-        <span class="coll__ln"><span>Every centre stone</span></span>
-        <span class="coll__ln"><span>is a <em class="is-em">100-facet</em></span></span>
-        <span class="coll__ln"><span>Centurion Diamond.</span></span>
-      </p>
-    </div>
-
-    <!-- material families — editorial selectors, not availability filters -->
-    <div class="coll__metals" data-coll-metals>
-      <p class="coll__metalsL">Material</p>
-      <button type="button" data-metal="all" aria-pressed="true">All nine</button>
-      <button type="button" data-metal="platinum" aria-pressed="false">Platinum</button>
-      <button type="button" data-metal="yellow" aria-pressed="false">14K Yellow</button>
-      <button type="button" data-metal="two-tone" aria-pressed="false">Two Tone</button>
-    </div>
-
-    <!-- counter, progress rule, and the two small controls -->
-    <div class="coll__nav" data-coll-nav>
-      <button class="coll__arw" type="button" data-coll-prev aria-label="Previous piece"><i></i></button>
-      <span class="coll__count" data-coll-count><b data-coll-i>01</b><i>/</i><s>09</s></span>
-      <span class="coll__now" data-coll-cut>Radiant</span>
-      <span class="coll__bar"><i data-coll-bar></i></span>
-      <button class="coll__arw coll__arw--n" type="button" data-coll-next aria-label="Next piece"><i></i></button>
-    </div>
-
-    <!-- the last frame -->
-    <div class="coll__final" data-coll-final>
-      <span class="coll__hero" aria-hidden="true">
-        <img src="assets/img/ring/ring-radiant-3-pt-600.webp"
-             srcset="assets/img/ring/ring-radiant-3-pt-420.webp 420w,
-                     assets/img/ring/ring-radiant-3-pt-600.webp 600w,
-                     assets/img/ring/ring-radiant-3-pt-797.webp 797w"
-             sizes="(max-width:900px) 74vw, 26vw"
-             alt="" width="797" height="999" loading="lazy" decoding="async">
-      </span>
-      <p class="coll__finalT">
-        <span class="coll__ln"><span>The Centurion Collection</span></span>
-        <span class="coll__ln"><span class="is-em">Discover every design.</span></span>
-      </p>
-      <a class="coll__cta" href="#worn" data-coll-cta>
-        <span class="dot"></span> Explore the collection
-        <i aria-hidden="true">&rarr;</i>
-      </a>
-    </div>
-
-    <!-- the aperture from Anatomy of Brilliance, run in reverse -->
-    <svg class="coll__iris" data-coll-iris aria-hidden="true" focusable="false"
-         viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-      <mask id="collIris" maskUnits="userSpaceOnUse" x="-10" y="-10" width="120" height="120">
-        <rect x="-10" y="-10" width="120" height="120" fill="#fff"/>
-        <circle class="coll__ir" cx="50" cy="50" r="50" fill="#000"/>
-      </mask>
-      <rect x="-10" y="-10" width="120" height="120" fill="#0A0A0B" mask="url(#collIris)"/>
-      <circle class="coll__ir" cx="50" cy="50" r="50" fill="none"
-              stroke="rgba(216,201,182,.45)" stroke-width=".55"/>
-    </svg>
-  </div>
-</section>
-
-<!-- ============================================ 07 · WORN — the diamond, in life
-     A pinned chapter between two ink sections. The Collection above ramps
-     its ground to `--ink`; the Metals chapter below opens on it, so this
-     one simply holds it.
-
-     Its one idea: the photographs arrive in the page's own monochrome and
-     find their colour as the chapter goes, then gather into a spread of
-     every moment it has shown. The colour arrives in the pictures rather
-     than in the room — this is studio photography, and pretending the
-     ground is candlelight would be inventing something the imagery does
-     not contain.
-
-     Copy lives here so the chapter still reads with scripting off;
-     choreography is in assets/js/worn/scenes.js. -->
-<section class="wrn" id="worn" aria-labelledby="wrnTitle">
-  <div class="wrn__stage">
-
-    <!-- every plate lives in this layer, which carries the one filter that
-         takes the chapter from monochrome to colour -->
-    <div class="wrn__film" data-wrn-film aria-hidden="true">
-
-      <figure class="wrn__plate" data-wrn-plate style="--ar:900/1242; --mar:3/4;  --mpos:50% 42%">
-        <img src="assets/img/model/ed-radiant-cheek-900.webp"
-             srcset="assets/img/model/ed-radiant-cheek-600.webp 600w, assets/img/model/ed-radiant-cheek-900.webp 900w, assets/img/model/ed-radiant-cheek-1400.webp 1400w"
-             sizes="(max-width:900px) 100vw, 28vw"
-             alt="" width="1400" height="1932" loading="lazy" decoding="async">
-      </figure>
-
-      <figure class="wrn__plate" data-wrn-plate style="--ar:760/349; --mar:4/5;  --mpos:56% 50%">
-        <img src="assets/img/model/ed-hands-silk-1200.webp"
-             srcset="assets/img/model/ed-hands-silk-760.webp 760w, assets/img/model/ed-hands-silk-1200.webp 1200w, assets/img/model/ed-hands-silk-1800.webp 1800w"
-             sizes="(max-width:900px) 100vw, 27vw"
-             alt="" width="1800" height="827" loading="lazy" decoding="async">
-      </figure>
-
-      <figure class="wrn__plate" data-wrn-plate style="--ar:760/587; --mar:2/3;  --mpos:60% 44%">
-        <img src="assets/img/model/ed-black-coat-hands-1200.webp"
-             srcset="assets/img/model/ed-black-coat-hands-760.webp 760w, assets/img/model/ed-black-coat-hands-1200.webp 1200w, assets/img/model/ed-black-coat-hands-1800.webp 1800w"
-             sizes="(max-width:900px) 100vw, 30vw"
-             alt="" width="1800" height="1391" loading="lazy" decoding="async">
-      </figure>
-
-      <figure class="wrn__plate" data-wrn-plate style="--ar:900/1317; --mar:4/5;  --mpos:48% 54%">
-        <img src="assets/img/model/ed-oval-shirt-900.webp"
-             srcset="assets/img/model/ed-oval-shirt-600.webp 600w, assets/img/model/ed-oval-shirt-900.webp 900w, assets/img/model/ed-oval-shirt-1400.webp 1400w"
-             sizes="(max-width:900px) 100vw, 14vw"
-             alt="" width="1400" height="2049" loading="lazy" decoding="async">
-      </figure>
-
-      <figure class="wrn__plate" data-wrn-plate style="--ar:760/587; --mar:3/4;  --mpos:47% 42%">
-        <img src="assets/img/model/ed-portrait-red-1200.webp"
-             srcset="assets/img/model/ed-portrait-red-760.webp 760w, assets/img/model/ed-portrait-red-1200.webp 1200w, assets/img/model/ed-portrait-red-1800.webp 1800w"
-             sizes="(max-width:900px) 100vw, 16vw"
-             alt="" width="1800" height="1391" loading="lazy" decoding="async">
-      </figure>
-
-      <figure class="wrn__plate" data-wrn-plate style="--ar:900/1295; --mar:9/16; --mpos:58% 40%">
-        <img src="assets/img/model/ed-cushion-pinch-900.webp"
-             srcset="assets/img/model/ed-cushion-pinch-600.webp 600w, assets/img/model/ed-cushion-pinch-900.webp 900w, assets/img/model/ed-cushion-pinch-1400.webp 1400w"
-             sizes="(max-width:900px) 100vw, 12vw"
-             alt="" width="1400" height="2015" loading="lazy" decoding="async">
-      </figure>
-
-    </div>
-
-    <!-- opening -->
-    <div class="wrn__intro" data-wrn-intro>
-      <p class="wrn__eyebrow"><i></i><b>04</b><span>Worn</span></p>
-      <h2 class="wrn__h2" id="wrnTitle">
-        <span class="wrn__ln"><span>The diamond,</span></span>
-        <span class="wrn__ln"><span class="is-em">in life.</span></span>
-      </h2>
-    </div>
-
-    <!-- 01 · the claim -->
-    <article class="wrn__scene" data-wrn-scene="0" data-side="right">
-      <div class="wrn__copy">
-        <h3 class="wrn__t">
-          <span class="wrn__ln"><span>Made to be</span></span>
-          <span class="wrn__ln"><span class="is-em">looked at twice</span></span>
-        </h3>
-        <p class="wrn__b">Perfect for bridal rings and timeless jewellery, the
-          Centurion collection transforms light into an extraordinary spectacle.</p>
-      </div>
-    </article>
-
-    <!-- 02 · the light people actually live in -->
-    <article class="wrn__scene" data-wrn-scene="1" data-side="left">
-      <div class="wrn__copy">
-        <h3 class="wrn__t">
-          <span class="wrn__ln"><span>A stone that</span></span>
-          <span class="wrn__ln"><span class="is-em">works indoors</span></span>
-        </h3>
-        <p class="wrn__b">Most diamonds need a spotlight. The Centurion cut was
-          engineered for restaurant light, window light, candlelight &mdash; the
-          light people actually live in.</p>
-      </div>
-    </article>
-
-    <!-- the spread: every moment the chapter has shown, at once, in colour -->
-    <div class="wrn__gather" data-wrn-gather>
-      <p class="wrn__final">
-        <span class="wrn__ln"><span>See the difference.</span></span>
-        <span class="wrn__ln"><span class="is-em">Feel the radiance.</span></span>
-      </p>
-      <span class="wrn__rule" data-wrn-rule aria-hidden="true"></span>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============================================ 08 · METALS — the ground becomes the metal
-     Worn above ends on ink and this stage opens on it; it drains back to
-     the same ink for Display below.
-
-     Two full-bleed panels wipe across on a shared diagonal — platinum,
-     then yellow gold over it. For the third beat the gold panel retreats
-     rather than a third panel arriving, so the two metals end up side by
-     side with the two-tone ring standing on the seam. That is the deck's
-     claim made visible: three settings, only ever two metals.
-
-     Copy lives here so the chapter still reads with scripting off;
-     choreography is in assets/js/metals/scenes.js. -->
-<section class="mtl" id="metals" aria-labelledby="mtlTitle">
-  <div class="mtl__stage">
-
-    <!-- the ground -->
-    <div class="mtl__panel mtl__panel--pt" data-mtl-panel="pt" aria-hidden="true"></div>
-    <div class="mtl__panel mtl__panel--yg" data-mtl-panel="yg" aria-hidden="true"></div>
-    <div class="mtl__veil" aria-hidden="true"></div>
-
-    <!-- one ring per metal, alpha-keyed so it stands on the metal itself -->
-    <figure class="mtl__ring" data-mtl-ring style="--ar:722/925">
-      <img src="assets/img/ring/ring-radiant-3-pt-cut-722.webp"
-           srcset="assets/img/ring/ring-radiant-3-pt-cut-600.webp 600w, assets/img/ring/ring-radiant-3-pt-cut-722.webp 722w"
-           sizes="(max-width:900px) 52vw, 22vw"
-           alt="" width="722" height="925" loading="lazy" decoding="async">
-    </figure>
-    <figure class="mtl__ring" data-mtl-ring style="--ar:660/804">
-      <img src="assets/img/ring/ring-radiant-25-yg-cut-660.webp"
-           srcset="assets/img/ring/ring-radiant-25-yg-cut-600.webp 600w, assets/img/ring/ring-radiant-25-yg-cut-660.webp 660w"
-           sizes="(max-width:900px) 52vw, 20vw"
-           alt="" width="660" height="804" loading="lazy" decoding="async">
-    </figure>
-    <figure class="mtl__ring" data-mtl-ring style="--ar:657/912">
-      <img src="assets/img/ring/ring-cushion-3-tt-cut-657.webp"
-           srcset="assets/img/ring/ring-cushion-3-tt-cut-600.webp 600w, assets/img/ring/ring-cushion-3-tt-cut-657.webp 657w"
-           sizes="(max-width:900px) 52vw, 21vw"
-           alt="" width="657" height="912" loading="lazy" decoding="async">
-    </figure>
-
-    <!-- opening -->
-    <div class="mtl__intro" data-mtl-intro>
-      <p class="mtl__eyebrow"><i></i><b>05</b><span>Materials</span></p>
-      <h2 class="mtl__h2" id="mtlTitle">
-        <span class="mtl__ln"><span>Two metals.</span></span>
-        <span class="mtl__ln"><span class="is-em">One standard.</span></span>
-      </h2>
-    </div>
-
-    <!-- 01 · platinum -->
-    <article class="mtl__scene" data-mtl-scene="0" data-side="right">
-      <div class="mtl__copy">
-        <h3 class="mtl__t"><span class="mtl__ln"><span>Platinum</span></span></h3>
-        <p class="mtl__b">Denser, rarer, and naturally white. With gold at a historic
-          high, platinum now sits close to 14K white gold &mdash; while holding a far
-          higher perceived value.</p>
-      </div>
-    </article>
-
-    <!-- 02 · 14K yellow -->
-    <article class="mtl__scene" data-mtl-scene="1" data-side="left">
-      <div class="mtl__copy">
-        <h3 class="mtl__t"><span class="mtl__ln"><span>14K Yellow</span></span></h3>
-        <p class="mtl__b">A warm ground that pushes the stone forward. The contrast
-          between yellow metal and a colourless centre reads brighter to the eye.</p>
-      </div>
-    </article>
-
-    <!-- 03 · two tone — the ring stands on the seam between the other two -->
-    <article class="mtl__scene" data-mtl-scene="2" data-side="right">
-      <div class="mtl__copy">
-        <h3 class="mtl__t"><span class="mtl__ln"><span>Two Tone</span></span></h3>
-        <p class="mtl__b">A white head cradling the centre stone, carried on a yellow
-          shank. The setting disappears; the diamond does not.</p>
-      </div>
-    </article>
-
-    <!-- the closing claim, as the room drains back to ink -->
-    <div class="mtl__statement" data-mtl-statement>
-      <p>The entire collection is built in Platinum and 14K&nbsp;Yellow &mdash;
-        no exceptions, no substitutions.</p>
-    </div>
-
-    <div class="mtl__drain" data-mtl-drain aria-hidden="true"></div>
-  </div>
-</section>
-
-<!-- ============================================ 06 · AT RETAIL — the Centurion experience
-     A restrained preview of the retail environment. Its idea is that the
-     brand blush arrives as reflected light: a controlled source
-     rises behind the case, spreads to fill the room, and falls away. What
-     the walls hold is only ever what the light leaves there.
-
-     Copy lives here so the chapter still reads with scripting off;
-     choreography is in assets/js/display/scenes.js. -->
-<section class="dsp" id="display" aria-labelledby="dspTitle">
-  <div class="dsp__stage">
-
-    <div class="dsp__glow" data-dsp-glow aria-hidden="true"></div>
-
-    <figure class="dsp__case" data-dsp-case style="--ar:1200/1480; --mar:4/5; --mpos:50% 46%">
-      <img src="assets/img/model/display-case-a-800.webp"
-           srcset="assets/img/model/display-case-a-560.webp 560w, assets/img/model/display-case-a-800.webp 800w, assets/img/model/display-case-a-1200.webp 1200w"
-           sizes="(max-width:900px) 96vw, 27vw"
-           alt="The Centurion Diamond retail display case, angled view"
-           width="1200" height="1480" loading="lazy" decoding="async">
-    </figure>
-    <!-- opening -->
-    <div class="dsp__intro" data-dsp-intro>
-      <p class="dsp__eyebrow"><i></i><b>06</b><span>At Retail</span></p>
-      <h2 class="dsp__h2" id="dspTitle">
-        <span class="dsp__ln"><span>The Centurion</span></span>
-        <span class="dsp__ln"><span class="is-em">experience.</span></span>
-      </h2>
-    </div>
-
-    <!-- 01 · the case -->
-    <article class="dsp__scene" data-dsp-scene="0" data-side="right">
-      <div class="dsp__copy">
-        <h3 class="dsp__t">
-          <span class="dsp__ln"><span>A case built</span></span>
-          <span class="dsp__ln"><span class="is-em">to be noticed</span></span>
-        </h3>
-        <p class="dsp__b">The Centurion Collection comes with a thoughtfully crafted
-          display, distinguished by its sophisticated branded presentation.</p>
-      </div>
-    </article>
-
-    <!-- 02 · what arrives -->
-    <article class="dsp__scene" data-dsp-scene="1" data-side="left">
-      <div class="dsp__copy">
-        <h3 class="dsp__t">
-          <span class="dsp__ln"><span>Delivered ready</span></span>
-          <span class="dsp__ln"><span class="is-em">to merchandise</span></span>
-        </h3>
-        <p class="dsp__b">The collection arrives as a complete statement,
-          not a loose assortment.</p>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<!-- ============================================ 07 · EXCLUSIVITY — a different kind of standard
-     The trade argument, and the only chapter on the page with no
-     photography in it at all. Three figures arrive one row at a time and
-     stay, each with its own rule drawing under it, while the case for
-     stocking builds beside them — a ledger, not a stat card.
-
-     Display above falls back to ink and the CTA below is already ink, so
-     both seams hold without doing anything.
-
-     Every figure and every sentence is the deck's own. Copy lives here so
-     the chapter still reads with scripting off; choreography is in
-     assets/js/exclusive/scenes.js. -->
-<section class="exc" id="exclusive" aria-labelledby="excTitle">
-  <div class="exc__stage">
-
-    <!-- opening -->
-    <div class="exc__intro" data-exc-intro>
-      <p class="exc__eyebrow"><i></i><b>07</b><span>Exclusivity</span></p>
-      <h2 class="exc__h2" id="excTitle">
-        <span class="exc__ln"><span>A different kind</span></span>
-        <span class="exc__ln"><span class="is-em">of standard.</span></span>
-      </h2>
-    </div>
-
-    <!-- the ledger -->
-    <div class="exc__ledger" data-exc-ledger>
-      <div class="exc__row" data-exc-row>
-        <span class="exc__rule" aria-hidden="true"></span>
-        <p class="exc__n">100</p>
-        <p class="exc__l">Facets per centre stone</p>
-      </div>
-      <div class="exc__row" data-exc-row>
-        <span class="exc__rule" aria-hidden="true"></span>
-        <p class="exc__n">43<sup>+</sup></p>
-        <p class="exc__l">More facets than a traditional cut</p>
-      </div>
-      <div class="exc__row" data-exc-row>
-        <span class="exc__rule" aria-hidden="true"></span>
-        <p class="exc__n">9</p>
-        <p class="exc__l">Settings in the debut collection</p>
-      </div>
-    </div>
-
-    <!-- the case for stocking, one claim at a time -->
-    <div class="exc__claims">
-      <p class="exc__claim" data-exc-claim>Because the Centurion Diamond is
-        patent-pending, the collection is exclusive to you. Customers cannot
-        price-shop it against other retailers or online sellers &mdash; nothing
-        like it exists elsewhere.</p>
-      <p class="exc__claim" data-exc-claim>The result is a protected margin on a
-        piece that sells itself across the counter, and a premium collection that
-        lifts the average ticket rather than discounting it.</p>
-    </div>
-
-    <!-- the last frame -->
-    <div class="exc__close" data-exc-close>
-      <p class="exc__closeT">
-        <span class="exc__ln"><span>Unshoppable</span></span>
-        <span class="exc__ln"><span class="is-em">by design.</span></span>
-      </p>
-      <a class="btn exc__cta" href="#contact" data-exc-cta>
-        <span class="dot"></span> Enquire about stocking
-      </a>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============================================ 08 · CENTURION AT RETAIL
-     The supplied film is the sole source of ring motion. One canvas scrubs
-     a progressively loaded WebP sequence; the final frame remains in markup
-     for reduced-motion and no-script visitors. -->
-<section class="fin" id="retail-showcase" aria-labelledby="finTitle">
-  <div class="fin__stage">
-    <div class="fin__media" data-fin-media aria-hidden="true">
-      <canvas class="fin__canvas" data-fin-canvas width="1280" height="720"></canvas>
-      <img class="fin__poster" src="assets/img/retail-scrub/retail-095.webp"
-           alt="" width="1280" height="720" loading="lazy" decoding="async">
-    </div>
-
-    <div class="fin__vig" data-fin-vig aria-hidden="true"></div>
-    <div class="fin__grain" aria-hidden="true"></div>
-    <div class="fin__blush" data-fin-blush aria-hidden="true"></div>
-    <div class="fin__sweep" data-fin-sweep aria-hidden="true"></div>
-
-    <div class="fin__copy" data-fin-copy>
-      <div class="fin__copy-in">
-        <p class="fin__eyebrow" data-fin-eyebrow><i></i><b>08</b><span>Centurion at Retail</span><i></i></p>
-        <h2 class="fin__title" id="finTitle">
-          <span class="fin__line"><span>Want to see how the</span></span>
-          <span class="fin__line"><span class="is-em">Centurion Diamond</span></span>
-          <span class="fin__line"><span>looks in your store?</span></span>
-        </h2>
-        <p class="fin__body" data-fin-body>Bring the Centurion Collection to your jewelry case.</p>
-        <a class="btn fin__cta" href="#contact" data-fin-cta>
+    </section>
+
+    <!-- ============================================ 09 · RETAIL PARTNERSHIP
+     Conventional destination retained after Centurion at Retail so every existing
+     #contact link continues to move forward through the page. -->
+    <section class="contact" id="contact" aria-labelledby="contactTitle">
+      <div class="wrap contact__inner">
+        <p class="label"><b>08</b> Retail Partnership</p>
+        <h2 class="contact__title" id="contactTitle">Place the extraordinary<br><em>in your case.</em></h2>
+        <!-- Replace href with the approved contact destination when supplied. -->
+        <a class="btn contact__cta" href="https://www.centuriondiamond.com">
           <span class="dot"></span> Contact Us
         </a>
       </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================ FOOTER -->
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot__row">
+        <small>&copy; <span id="yr">2026</span> Centurion Diamond — 100 Facets of Brilliance</small>
+        <nav class="foot__links" aria-label="Footer">
+          <a href="#cut">The Cut</a>
+          <a href="#anatomy">Shapes</a>
+          <a href="#exclusive">Experience</a>
+          <a href="https://www.centuriondiamond.com">centuriondiamond.com</a>
+        </nav>
+      </div>
     </div>
+  </footer>
 
-    <div class="fin__progress" data-fin-progress aria-hidden="true">
-      <span>Rings / Retail</span><i><b data-fin-progress-bar></b></i><em data-fin-progress-value>00</em>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ 09 · RETAIL PARTNERSHIP
-     Conventional destination retained after Centurion at Retail so every existing
-     #contact link continues to move forward through the page. -->
-<section class="contact" id="contact" aria-labelledby="contactTitle">
-  <div class="wrap contact__inner">
-    <p class="label"><b>09</b> Retail Partnership</p>
-    <h2 class="contact__title" id="contactTitle">Place the extraordinary<br><em>in your case.</em></h2>
-    <!-- Replace href with the approved contact destination when supplied. -->
-    <a class="btn contact__cta" href="https://www.centuriondiamond.com">
-      <span class="dot"></span> Contact Us
-    </a>
-  </div>
-</section>
-
-</main>
-
-<!-- ============================================ FOOTER -->
-<footer class="foot">
-  <div class="wrap">
-    <div class="foot__row">
-      <small>&copy; <span id="yr">2026</span> Centurion Diamond — 100 Facets of Brilliance</small>
-      <nav class="foot__links" aria-label="Footer">
-        <a href="#cut">The Cut</a>
-        <a href="#collection">Collection</a>
-        <a href="#metals">Metals</a>
-        <a href="https://www.centuriondiamond.com">centuriondiamond.com</a>
-      </nav>
-    </div>
-  </div>
-</footer>
-
-<script defer src="assets/js/vendor/gsap.min.js"></script>
-<script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
-<script defer src="assets/js/vendor/SplitText.min.js"></script>
-<script defer src="assets/js/vendor/lenis.min.js"></script>
-<script defer src="assets/js/hero/scenes.js"></script>
-<script defer src="assets/js/hero/video.js"></script>
-<script defer src="assets/js/hero/narrative.js"></script>
-<script defer src="assets/js/hero/header.js"></script>
-<script defer src="assets/js/hero/progress.js"></script>
-<script defer src="assets/js/hero/index.js"></script>
-<script defer src="assets/js/sparkle/scenes.js"></script>
-<script defer src="assets/js/sparkle/index.js"></script>
-<script defer src="assets/js/pillars/scenes.js"></script>
-<script defer src="assets/js/pillars/timeline.js"></script>
-<script defer src="assets/js/pillars/visual.js"></script>
-<script defer src="assets/js/pillars/index.js"></script>
-<script defer src="assets/js/study/scenes.js"></script>
-<script defer src="assets/js/study/timeline.js"></script>
-<script defer src="assets/js/study/visual.js"></script>
-<script defer src="assets/js/study/video.js"></script>
-<script defer src="assets/js/study/index.js"></script>
-<script defer src="assets/js/collection/scenes.js"></script>
-<script defer src="assets/js/collection/timeline.js"></script>
-<script defer src="assets/js/collection/visual.js"></script>
-<script defer src="assets/js/collection/index.js"></script>
-<script defer src="assets/js/worn/scenes.js"></script>
-<script defer src="assets/js/worn/timeline.js"></script>
-<script defer src="assets/js/worn/visual.js"></script>
-<script defer src="assets/js/worn/index.js"></script>
-<script defer src="assets/js/metals/scenes.js"></script>
-<script defer src="assets/js/metals/timeline.js"></script>
-<script defer src="assets/js/metals/visual.js"></script>
-<script defer src="assets/js/metals/index.js"></script>
-<script defer src="assets/js/display/scenes.js"></script>
-<script defer src="assets/js/display/timeline.js"></script>
-<script defer src="assets/js/display/visual.js"></script>
-<script defer src="assets/js/display/index.js"></script>
-<script defer src="assets/js/exclusive/scenes.js"></script>
-<script defer src="assets/js/exclusive/timeline.js"></script>
-<script defer src="assets/js/exclusive/visual.js"></script>
-<script defer src="assets/js/exclusive/index.js"></script>
-<script defer src="assets/js/finale/scenes.js"></script>
-<script defer src="assets/js/finale/timeline.js"></script>
-<script defer src="assets/js/finale/frames.js"></script>
-<script defer src="assets/js/finale/visual.js"></script>
-<script defer src="assets/js/finale/index.js"></script>
-<script defer src="assets/js/main.js"></script>
+  <script defer src="assets/js/vendor/gsap.min.js"></script>
+  <script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="assets/js/vendor/SplitText.min.js"></script>
+  <script defer src="assets/js/vendor/lenis.min.js"></script>
+  <script defer src="assets/js/diamond-assets.js"></script>
+  <script defer src="assets/js/preloader.js"></script>
+  <script defer src="assets/js/journey/index.js"></script>
+  <script defer src="assets/js/hero/scenes.js"></script>
+  <script defer src="assets/js/hero/video.js"></script>
+  <script defer src="assets/js/hero/narrative.js"></script>
+  <script defer src="assets/js/hero/header.js"></script>
+  <script defer src="assets/js/hero/progress.js"></script>
+  <script defer src="assets/js/hero/index.js"></script>
+  <script defer src="assets/js/sparkle/scenes.js"></script>
+  <script defer src="assets/js/sparkle/index.js"></script>
+  <script defer src="assets/js/pillars/scenes.js"></script>
+  <script defer src="assets/js/pillars/timeline.js"></script>
+  <script defer src="assets/js/pillars/visual.js"></script>
+  <script defer src="assets/js/pillars/family.js"></script>
+  <script defer src="assets/js/pillars/index.js"></script>
+  <script defer src="assets/js/study/scenes.js"></script>
+  <script defer src="assets/js/study/timeline.js"></script>
+  <script defer src="assets/js/study/visual.js"></script>
+  <script defer src="assets/js/study/video.js"></script>
+  <script defer src="assets/js/study/index.js"></script>
+  <script defer src="assets/js/display/scenes.js"></script>
+  <script defer src="assets/js/display/timeline.js"></script>
+  <script defer src="assets/js/display/visual.js"></script>
+  <script defer src="assets/js/display/index.js"></script>
+  <script defer src="assets/js/exclusive/scenes.js"></script>
+  <script defer src="assets/js/exclusive/timeline.js"></script>
+  <script defer src="assets/js/exclusive/visual.js"></script>
+  <script defer src="assets/js/exclusive/index.js"></script>
+  <script defer src="assets/js/finale/scenes.js"></script>
+  <script defer src="assets/js/finale/timeline.js"></script>
+  <script defer src="assets/js/finale/frames.js"></script>
+  <script defer src="assets/js/finale/visual.js"></script>
+  <script defer src="assets/js/finale/index.js"></script>
+  <script defer src="assets/js/main.js"></script>
 </body>
+
 </html>

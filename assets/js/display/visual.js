@@ -1,10 +1,5 @@
-/* ============================================================
-   06 · AT RETAIL — the renderer.
-
-   Takes a frame from CD.displayTimeline and writes it to the DOM. Per
-   frame it touches transform and opacity, plus one background-color on the
-   stage — which is what the light leaves on the walls.
-   ============================================================ */
+/* 07 / Centurion at Retail. Experience hands off into the original blush
+   lighting rig, then the registered display progression meets the locked finale. */
 window.CD = window.CD || {};
 
 CD.displayVisual = (function () {
@@ -51,12 +46,11 @@ CD.displayVisual = (function () {
       if (c.o < 0.004) continue;
       node.style.setProperty('--w', c.w.toFixed(2) + 'vw');
       node.style.transform =
-        'translate3d(' + c.x.toFixed(2) + 'vw,' + c.y.toFixed(2) + 'vh,0)';
+        'translate3d(' + c.x.toFixed(2) + 'vw,' + c.y.toFixed(2) + 'vh,0) scale(' + c.scale.toFixed(4) + ')';
       /* the mask the case opens under, and the push inside its own frame.
          Written on every frame, narrow or not, so a rotation back to a wide
          viewport does not leave a phone's mask behind on the element. */
-      node.style.clipPath = f.narrow
-        ? 'inset(' + ((1 - c.k) * 100).toFixed(2) + '% 0 0 0)' : '';
+      node.style.clipPath = 'inset(' + ((1 - c.k) * 100).toFixed(2) + '% 0 0 0)';
       el.caseImgs[i].style.transform = f.narrow
         ? 'scale(' + c.push.toFixed(4) + ')' : '';
     }

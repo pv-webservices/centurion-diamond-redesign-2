@@ -52,8 +52,8 @@ CD.studyVideo = (function () {
 
   /* A seekable clip has to be buffered, so it cannot be fetched lazily at
      the section's own edge — but nor should it compete with the hero's
-     master for the first paint. It starts loading a viewport and a half
-     out, which on this page is most of Anatomy of Brilliance. */
+     master for the first paint. It starts loading three viewports
+     out, which on this page is Anatomy of Brilliance's benefits. */
   function begin() {
     if (video.src) return;
     pickSource(video);          // assigning src is what starts the fetch
@@ -67,7 +67,7 @@ CD.studyVideo = (function () {
       if (!entries[0].isIntersecting) return;
       io.disconnect();
       begin();
-    }, { rootMargin: '150% 0px 150% 0px' });
+    }, { rootMargin: '300% 0px 300% 0px' });
     io.observe(section || video);
   }
 

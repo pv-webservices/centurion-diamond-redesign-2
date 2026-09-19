@@ -52,7 +52,7 @@ CD.finale = {
   },
 
   media: {
-    reveal: { inA: 0.000, inB: 0.080 },
+    reveal: { inA: 0.000, inB: 0.090 },   // the film irises open out of the black
     firstSettle: { inA: 0.000, inB: 0.680 },
     finalSettle: { inA: 0.720, inB: 0.940 },
     sweep: { inA: 0.700, peak: 0.765, outB: 0.835 }

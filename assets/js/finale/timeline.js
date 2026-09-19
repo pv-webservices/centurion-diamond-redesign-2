@@ -29,7 +29,7 @@ CD.finaleTimeline = (function () {
   function createState() {
     return {
       frame: 0,
-      media: { v: 0, scale: 1.03 },
+      media: { v: 0, scale: 1.03, iris: 1 },
       vig: 1,
       blush: 0,
       sweep: { v: 0, x: -70 },
@@ -42,8 +42,10 @@ CD.finaleTimeline = (function () {
     p = clamp01(p);
     st.frame = Math.round(mappedTime(cfg.videoMap, p) * (frameCount - 1));
 
-    st.media.v = easeOut(range(p, cfg.media.reveal.inA, cfg.media.reveal.inB));
-    st.media.scale = 1.03
+    var rv = range(p, cfg.media.reveal.inA, cfg.media.reveal.inB);
+    st.media.v = easeOut(clamp01(rv * 2.2));
+    st.media.iris = smooth(rv);
+    st.media.scale = 1.03 + 0.07 * (1 - easeOut(rv))
       - 0.02 * easeOut(range(p, cfg.media.firstSettle.inA, cfg.media.firstSettle.inB))
       - 0.01 * smooth(range(p, cfg.media.finalSettle.inA, cfg.media.finalSettle.inB));
 

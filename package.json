@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx -y serve -l 4321 .",
+    "dev": "npx -y serve -l 4321 .",
     "shots": "node dev/shot.js ./dev/shots 1440 900 d",
     "perf": "node dev/perf.js"
   },

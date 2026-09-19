@@ -1,23 +1,38 @@
-/* ============================================================
-   06 · AT RETAIL — orchestrator.
-
-   One pinned ScrollTrigger produces a single master progress value; the
-   timeline turns it into a frame and the renderer writes it. Same shape as
-   every other chapter on the page.
-
-   Metals above drains to ink and Exclusivity below opens on it, so this
-   chapter can take the page's one chromatic room without either seam
-   having to negotiate a colour.
-   ============================================================ */
+/* 07 / Centurion at Retail. Experience hands off into the original blush
+   lighting rig, then the registered display progression meets the locked finale. */
 window.CD = window.CD || {};
 
 CD.initDisplay = function initDisplay() {
   'use strict';
 
   var root = document.getElementById('display');
-  if (!root || typeof gsap === 'undefined' || !CD.display) return;
+  if (!root || root.hidden || typeof gsap === 'undefined' || !CD.display) return;
 
+  if (root.dataset.mounted) return;
+  root.dataset.mounted='true';
   var cfg = CD.display;
+  var assets=CD.retailAssets;
+  cfg.hasTen=!!assets.ten.src;
+  cfg.hasExpansion=!!(assets.ten.src && assets.twentyFive.src);
+  root.dataset.retailMode=cfg.hasExpansion?'10-to-25':cfg.hasTen?'10-piece':'reference';
+  var first=root.querySelector('[data-dsp-case] img');
+  var source=cfg.hasTen?assets.ten:assets.reference;
+  first.src=source.src;
+  if(source.srcset)first.srcset=source.srcset;else first.removeAttribute('srcset');
+  first.alt=cfg.hasTen?'Approved Centurion ten-piece display':'Existing Centurion retail presentation reference';
+  if(cfg.hasExpansion){
+    var figure=root.querySelector('[data-dsp-case]').cloneNode(true);
+    figure.setAttribute('data-dsp-expansion','');
+    var image=figure.querySelector('img');image.src=assets.twentyFive.src;
+    if(assets.twentyFive.srcset)image.srcset=assets.twentyFive.srcset;else image.removeAttribute('srcset');
+    image.alt='Approved Centurion twenty-five-piece display';
+    root.querySelector('.dsp__stage').insertBefore(figure,root.querySelector('[data-dsp-intro]'));
+  }
+  var titles=root.querySelectorAll('[data-dsp-scene] .dsp__t');
+  var bodies=root.querySelectorAll('[data-dsp-scene] .dsp__b');
+  if(cfg.hasTen){titles[0].innerHTML='<span class="dsp__ln"><span>10 pieces.</span></span><span class="dsp__ln"><span class="is-em">One experience.</span></span>';}
+  if(cfg.hasExpansion){titles[1].innerHTML='<span class="dsp__ln"><span>25 pieces.</span></span><span class="dsp__ln"><span class="is-em">The complete presentation.</span></span>';bodies[1].textContent='The Centurion retail experience, expanded.';}
+
   var T = CD.displayTimeline;
   var V = CD.displayVisual;
   var el = V.mount(root);

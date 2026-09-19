@@ -23,13 +23,12 @@ CD.pillars = {
 
   beats: {
     sweep:    { inA: 0.000, inB: 0.045, outA: 0.070, outB: 0.115 },
-    intro:    { inA: 0.035, inB: 0.130, outA: 0.150, outB: 0.198 },
+    /* already set when the stage arrives, so The Cut's close hands straight
+       to this title with no empty frame between the two */
+    intro:    { inA: -0.040, inB: 0.000, outA: 0.170, outB: 0.198 },
     /* the four scenes divide this window evenly */
     scenes:   { inA: 0.198, outB: 0.800 },
-    final:    { inA: 0.808, outB: 0.958 },
-    beam:     { inA: 0.946, inB: 0.966, outA: 0.972, outB: 0.996 },
-    aperture: { inA: 0.950, inB: 0.994 },
-    seal:     { inA: 0.982, inB: 1.000 }
+    final:    { inA: 0.808, outB: 0.958 }
   },
 
   /* per-scene choreography. `motion` selects the reveal treatment, `side`
@@ -46,13 +45,7 @@ CD.pillars = {
   shapes: {
     inA: 0.205,
     outB: 0.790,
-    items: [
-      { name: 'Round' },
-      { name: 'Oval' },
-      { name: 'Radiant' },
-      { name: 'Emerald' },
-      { name: 'Cushion' }
-    ]
+    items: CD.diamondShapes.filter(function (shape) { return !!shape.src; })
   },
 
   /* the stone is one continuous object across the chapter — these are the
@@ -97,9 +90,5 @@ CD.pillars = {
     { p: 0.945, x:   0, y:  10, s: 1.02, r:  0, o: 0.38, sh: 0 },   // backdrop to the statements
     { p: 0.975, x:   0, y:   0, s: 1.18, r:  0, o: 1.00, sh: 1 },   // type clears, stone owns the frame
     { p: 1.000, x:   0, y:  -1, s: 1.26, r:  0, o: 1.00, sh: 0 }
-  ],
-
-  /* aperture close — scale of the iris circle in the SVG mask. 1.4 clears the
-     viewport corners on every tested ratio; the seal finishes the last sliver. */
-  iris: { from: 1.4, to: 0.03 }
+  ]
 };

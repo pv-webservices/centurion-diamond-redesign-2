@@ -58,8 +58,9 @@ CD.studyTimeline = (function () {
       media:  { x: 0, s: 1, o: 0, br: 0.3, ct: 1.3 },
       edge:   { o: 0, w: 0, y: 0.5 },
       beam:   { v: 0, x: 0 },
+      spark:  0,
+      ground: '',
       optics: { v: 0, x: 0, s: 1, rule: 0, points: 0, reticle: 0, facets: 0, spin: 0 },
-      exit:   { v: 0, x: 0, y: 0, w: 1 },
       time:   0,
       _k:     [null, null, 0]
     };
@@ -131,18 +132,26 @@ CD.studyTimeline = (function () {
     var eSettle = easeOut(range(p, E.settle[0], E.settle[1]));
     var eClose  = easeIn (range(p, E.close[0],  E.close[1]));
     var eGone   = easeIn (range(p, E.gone[0],   E.gone[1]));
-    st.edge.w = eOpen;
+    st.edge.w = eOpen * (1 - eGone);                      // folds to its centre
     /* The hairline marks the edge of the light, which is the aperture on a
        wide viewport and the letterboxed band on a narrow one — otherwise it
        would draw a line across empty ink where the clip does not reach. */
     st.edge.y = narrow
       ? Math.max(tb, 0.5 - (vp.fh * st.media.s) / 2 / vp.h)
       : tb;
-    st.edge.o = clamp01(eOpen * lerp(1, 0.26, eSettle) + eClose * 0.92) * (1 - eGone);
+    st.edge.o = clamp01(eOpen * lerp(1, 0.26, eSettle) + eClose * 0.92) * (1 - eGone * eGone);
 
     /* ---------- light crossing the stone ---------- */
-    st.beam.v = band(p, B.beam);
-    st.beam.x = -46 + 92 * easeIO(range(p, B.beam.inA, B.beam.outB));
+    /* the opening sweep is wide-only: on a letterboxed phone it would run
+       past the band into the empty ink above and below */
+    for (i = 0; i < B.beams.length; i++) {
+      var bw = B.beams[i], bv = narrow && i === 0 ? 0 : band(p, bw);
+      if (bv > 0 || i === 0) {
+        st.beam.v = bv;
+        st.beam.x = -46 + 92 * easeIO(range(p, bw.inA, bw.outB));
+        if (bv > 0) break;
+      }
+    }
 
     /* ---------- optical traces ----------
        They ride the same offset as the frame, so a reticle stays on the
@@ -158,19 +167,14 @@ CD.studyTimeline = (function () {
     st.optics.s = st.media.s;
     st.optics.spin = range(p, O.reticle.inA, O.facets.outB) * 26;   // degrees
 
-    /* ---------- the handoff into the marquee ----------
-       The two shutter edges have already met in the middle; this is that
-       line leaving — down to the foot of the stage, then left, which is the
-       direction the marquee below is already travelling. */
-    var X = B.exit;
-    /* it does not fade out — the last frame of the section is this line
-       sitting on the marquee's own rule, and the two then travel up the
-       page together, which is the whole handoff */
-    st.exit.v = easeOut(range(p, X.on[0], X.on[1])) * (1 - easeIn(range(p, X.off[0], X.off[1])) * 0.30);
-    st.exit.y = 49.5 * easeIO(range(p, X.drop[0], X.drop[1]));         // vh — the stage's foot,
-                                                                     //      which is the marquee's rule
-    st.exit.x = -38 * easeIn(range(p, X.run[0], X.run[1]));          // vw
-    st.exit.w = lerp(1, 0.42, easeIn(range(p, X.run[0], X.run[1])));
+    /* ---------- the close ----------
+       The shut line folds to a point, a glint marks where it went, and the
+       ground settles on the Experience chapter's own colour, so the next
+       stage opens on exactly this frame. */
+    st.spark = Math.sin(Math.PI * range(p, B.spark[0], B.spark[1]));
+    var g = smooth(range(p, B.ground[0], B.ground[1])), G = cfg.groundTo;
+    st.ground = 'rgb(' + Math.round(lerp(21, G[0], g)) + ',' + Math.round(lerp(18, G[1], g)) + ',' +
+                         Math.round(lerp(19, G[2], g)) + ')';
 
     /* ---------- the clip ---------- */
     st.time = clipTime(cfg.clip, p, st._k);

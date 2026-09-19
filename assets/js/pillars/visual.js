@@ -67,9 +67,6 @@ CD.pillarsVisual = (function () {
       shapeLabel:q('[data-plr-shape-label]'),
       words:  Array.prototype.slice.call(root.querySelectorAll('[data-plr-word]')),
       final:  q('[data-plr-final]'),
-      beam:   q('[data-plr-beam]'),
-      iris:   Array.prototype.slice.call(root.querySelectorAll('[data-plr-iris] .plr__ir')),
-      seal:   q('[data-plr-seal]'),
       _bg:    ''      // last ground written, so a held colour is not re-set
     };
   }
@@ -153,13 +150,6 @@ CD.pillarsVisual = (function () {
       if (wd.v > loudest) loudest = wd.v;
     }
     el.final.style.visibility = loudest < 0.004 ? 'hidden' : 'visible';
-
-    /* --- handoff into the Light Study --- */
-    el.beam.style.opacity = f.beam.v.toFixed(3);
-    el.beam.style.transform = 'translate3d(' + f.beam.x.toFixed(2) + 'vw,0,0) skewX(-8deg)';
-    var ir = 'scale(' + f.iris.toFixed(4) + ')';
-    for (var c = 0; c < el.iris.length; c++) el.iris[c].style.transform = ir;
-    el.seal.style.opacity = f.seal.toFixed(3);
   }
 
   return { mount: mount, render: render, MOTION: MOTION };

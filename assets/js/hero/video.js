@@ -31,7 +31,8 @@ CD.heroVideo = (function () {
      master to portrait would show ~26% of its width — a slice of the stone. */
   function pickSource(v) {
     var vw = window.innerWidth, vh = window.innerHeight;
-    var portrait = vw <= 720 && vh / vw > 1.3;
+    /* phones and portrait tablets: the viewport is narrow and clearly taller than wide */
+    var portrait = vw <= 860 && vh / vw > 1.2;
     var w = vw * (window.devicePixelRatio > 1.5 ? 1.3 : 1);
     var file = portrait ? 'hero-scrub-portrait.mp4'
              : w >= 1200 ? 'hero-scrub-1280.mp4'

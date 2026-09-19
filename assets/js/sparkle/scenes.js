@@ -1,45 +1,38 @@
 /* ============================================================
-   Sparkle section — content + choreography, in master-progress space (0..1).
-   Copy is taken from the client deck; no invented performance claims.
+   03 · THE CENTURION CUT — see the difference.
+   Master progress 0..1 across the pinned stage. Every beat has an entrance,
+   a long hold and an exit, so nothing reads as rushed (client note: "the
+   scroll after this is too fast").
+   Copy is the client deck's; no invented claims.
    ============================================================ */
 window.CD = window.CD || {};
 
 CD.sparkle = {
-  /* dark hero ground -> warm mineral light. Directional values from the brief,
-     pulled toward the project's own ink/bone tokens at either end. */
+  /* ground: the Journey's ink -> warm mineral light. It ends on exactly the
+     tone Anatomy of Brilliance opens on, so the two read as one space. */
   bgStops: [
-    { p: 0.00, c: [10, 10, 11] },     // --ink, continuous with the hero
-    { p: 0.07, c: [21, 21, 21] },
-    { p: 0.13, c: [92, 90, 88] },
-    { p: 0.19, c: [216, 213, 208] },
-    { p: 0.26, c: [243, 241, 238] },  // warm mineral, not sterile white
-    { p: 0.94, c: [243, 241, 238] },
-    { p: 1.00, c: [236, 233, 228] }
+    { p: 0.00, c: [21, 18, 19] },     // --ink, continuous with the Journey
+    { p: 0.05, c: [30, 26, 27] },
+    { p: 0.11, c: [110, 105, 102] },
+    { p: 0.17, c: [222, 218, 212] },
+    { p: 0.22, c: [243, 241, 238] },
+    { p: 0.90, c: [243, 241, 238] },
+    { p: 1.00, c: [236, 233, 228] }   // = Anatomy's first frame
   ],
+  /* type colour follows the ground: bone on dark, graphite on light */
+  inkLight: [244, 241, 234],
+  inkDark: [26, 25, 23],
+  inkSwitch: [0.10, 0.16],
 
   beats: {
-    sweep:      { inA: 0.02, inB: 0.13, outA: 0.15, outB: 0.24 },
-    intro:      { inA: 0.10, inB: 0.23, outA: 0.26, outB: 0.33 },
-    facet:      { inA: 0.34, inB: 0.45, outA: 0.50, outB: 0.58 },
-    compare:    { inA: 0.49, inB: 0.62, outA: 0.80, outB: 0.90 },
-    outro:      { inA: 0.86, inB: 0.95 }
+    sweep:   { inA: 0.02, inB: 0.10, outA: 0.13, outB: 0.21 },
+    intro:   { inA: 0.03, inB: 0.08, outA: 0.20, outB: 0.24 },
+    single:  { inA: 0.24, inB: 0.30 },                 // traditional 57 arrives, centred
+    wipe:    { inA: 0.34, inB: 0.56 },                 // Centurion 100 wipes over it; count 57 -> 100
+    split:   { inA: 0.62, inB: 0.70 },                 // the two side by side
+    lede:    { inA: 0.68, inB: 0.73, outA: 0.80, outB: 0.83 },
+    pairOut: { inA: 0.80, inB: 0.85 },
+    outro:   { inA: 0.84, inB: 0.89 }                  // See the difference, held to the end
   },
-
-  /* the two worlds — approved cut diagrams from the deck */
-  cuts: [
-    {
-      key: 'centurion', side: 'l', label: 'Centurion', count: 100, ticks: 100,
-      note: 'Patent-pending geometry',
-      img: 'assets/img/brand/cut-centurion-face',
-      widths: [301]
-    },
-    {
-      key: 'traditional', side: 'r', label: 'Traditional', count: 57, ticks: 57,
-      note: 'The industry standard',
-      img: 'assets/img/brand/cut-traditional-face',
-      widths: [291]
-    }
-  ],
-
-  outro: ['More facets.', 'More sparkle.', 'See the difference.']
+  counts: { from: 57, to: 100 }
 };

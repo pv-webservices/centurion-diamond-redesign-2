@@ -4,7 +4,7 @@ const puppeteer=require('puppeteer');
 const T=ms=>new Promise(r=>setTimeout(r,ms));
 const SIZES=(process.env.SIZES||'390x844,393x852,412x915,430x932,360x800,768x1024').split(',').map(s=>s.split('x').map(Number));
 const LAND=process.env.LANDSCAPE==='1';
-const SEC_ALL={chero:8,anatomy:10,collection:12,worn:12,display:10,exclusive:8,'retail-showcase':10};
+const SEC_ALL={chero:8,journey:8,study:10,anatomy:10,cut:10,exclusive:8,display:10,'retail-showcase':10};
 const SEC=process.env.SECTIONS
  ? Object.fromEntries(process.env.SECTIONS.split(',').map(name=>[name,SEC_ALL[name]||8]))
  : SEC_ALL;

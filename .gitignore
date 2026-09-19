@@ -3,3 +3,4 @@ node_modules/
 *.log
 dev/shots/
 dev/fp-*.json
+dev/hero-video-refs/

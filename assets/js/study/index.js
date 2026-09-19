@@ -7,9 +7,10 @@
    section and Anatomy of Brilliance, so all four share the page's one
    Lenis/GSAP setup and never open a scroll listener of their own.
 
-   The chapter inherits the exact frame Anatomy of Brilliance closes on:
-   its aperture seals to `--ink`, and this stage opens on `--ink` with the
-   shutters shut. There is nothing to fade between the two.
+   The chapter inherits the exact frame Anatomy of Brilliance closes on —
+   one hairline across ink — and opens by parting it. The section overlaps
+   Anatomy by a viewport (sections.css), so this pin starts the moment that
+   one ends; the stage stays hidden until then (`is-live`).
    ============================================================ */
 window.CD = window.CD || {};
 
@@ -52,6 +53,16 @@ CD.initStudy = function initStudy() {
   root.classList.toggle('is-contain', narrow);
   V.measure(el, narrow);
 
+  /* The opening that used to dwell on shut shutters now plays briskly: the
+     first OPEN_AT of the scroll covers the timeline up to OPEN_TO, where the
+     aperture is open and the first statement arrives. */
+  var OPEN_AT = 0.065, OPEN_TO = 0.14;
+  function inner(p) {
+    return p <= OPEN_AT ? p / OPEN_AT * OPEN_TO
+                        : OPEN_TO + (p - OPEN_AT) / (1 - OPEN_AT) * (1 - OPEN_TO);
+  }
+  function live(self) { root.classList.toggle('is-live', self.scroll() >= self.start - 2); }
+
   ScrollTrigger.create({
     trigger: root,
     start: 'top top',
@@ -59,8 +70,11 @@ CD.initStudy = function initStudy() {
     pin: el.stage,
     pinSpacing: false,
     anticipatePin: 1,
+    onToggle: live,
+    onRefresh: live,
     onUpdate: function (self) {
-      var f = T.frame(cfg, self.progress, narrow, el.vp, state);
+      live(self);
+      var f = T.frame(cfg, inner(self.progress), narrow, el.vp, state);
       V.render(el, f);
       CD.studyVideo.setTime(f.time);
     }

@@ -87,11 +87,12 @@ CD.studyVisual = (function () {
       points:  q('[data-sty-points]'),
       reticle: q('[data-sty-reticle]'),
       facets:  facetG,
-      exit:    q('[data-sty-exit]'),
+      spark:   q('[data-sty-spark]'),
       intro:   q('[data-sty-intro]'),
       scenes:  scenes,
       vp:      { w: 0, h: 0, fw: 0, fh: 0 },   // stage + clip-frame metrics
-      _f:      ''                              // last filter string written
+      _f:      '',                             // last filter string written
+      _g:      ''                              // last ground written
     };
   }
 
@@ -152,11 +153,10 @@ CD.studyVisual = (function () {
     el.edgeB.style.opacity = eo;
     el.edgeB.style.transform = 'translate3d(0,-' + y + 'px,0) scaleX(' + w + ')';
 
-    /* --- the handoff into the marquee --- */
-    el.exit.style.opacity = f.exit.v.toFixed(3);
-    el.exit.style.transform =
-      'translate3d(' + f.exit.x.toFixed(2) + 'vw,' + f.exit.y.toFixed(2) + 'vh,0) ' +
-      'scaleX(' + f.exit.w.toFixed(4) + ')';
+    /* --- the close --- */
+    el.spark.style.opacity = f.spark.toFixed(3);
+    el.spark.style.transform = 'translate(-50%,-50%) scale(' + (0.4 + f.spark * 0.8).toFixed(3) + ') rotate(' + (f.spark * 45).toFixed(1) + 'deg)';
+    if (f.ground !== el._g) { el.stage.style.setProperty('--sty-ground', f.ground); el._g = f.ground; }
 
     /* --- copy --- */
     el.intro.style.opacity = f.intro.v.toFixed(3);

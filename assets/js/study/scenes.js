@@ -18,37 +18,43 @@ CD.study = {
      One scene owns the frame at a time. `inA/inB` ease in, `outA/outB`
      ease out — the same window shape the hero and Anatomy use. */
   beats: {
-    intro:  { inA: 0.025, inB: 0.078, outA: 0.104, outB: 0.156 },
+    intro:  { inA: 0.025, inB: 0.049, outA: 0.125, outB: 0.156 },
     scenes: [
-      { inA: 0.135, inB: 0.214, outA: 0.256, outB: 0.312 },   // 01 · light enters
-      { inA: 0.452, inB: 0.528, outA: 0.570, outB: 0.626 },   // 02 · light moves
-      { inA: 0.630, inB: 0.706, outA: 0.736, outB: 0.784 },   // 03 · light returns
-      { inA: 0.782, inB: 0.842, outA: 0.856, outB: 0.884 },   // 04 · 100 facets
-      { inA: 0.880, inB: 0.918, outA: 0.930, outB: 0.952 }    // 05 · the proposition
+      {inA:.15,inB:.18,outA:.29,outB:.32},
+      {inA:.34,inB:.37,outA:.48,outB:.51},
+      {inA:.53,inB:.56,outA:.67,outB:.70},
+      {inA:.72,inB:.75,outA:.83,outB:.85},
+      {inA:.86,inB:.88,outA:.95,outB:.965}
     ],
 
-    /* the aperture's own hairline: it strikes out of the dark, recedes to a
-       frame, and returns as the shutters close on it */
-    edge:   { open: [0.005, 0.060], settle: [0.080, 0.220],
-              close: [0.940, 0.978], gone: [0.980, 0.992] },
+    /* the aperture's own hairline. It is already drawn at 0 — it is the
+       line Anatomy's family finale closes on — splits as the shutters part,
+       recedes to a frame, returns as they shut, then folds to a point */
+    edge:   { open: [-0.02, 0.000], settle: [0.030, 0.160],
+              close: [0.950, 0.982], gone: [0.982, 0.998] },
 
-    /* the light bar that crosses the stone while "light moves" holds */
-    beam:   { inA: 0.428, inB: 0.482, outA: 0.556, outB: 0.612 },
+    /* light crossing the stone: once as the aperture first opens, once
+       while "light moves" holds */
+    beams:  [
+      { inA: 0.050, inB: 0.075, outA: 0.105, outB: 0.140 },
+      { inA: 0.428, inB: 0.452, outA: 0.578, outB: 0.612 }
+    ],
 
-    /* the closing beam — converged line, dropped to the stage foot, then
-       streaked left so the marquee below inherits its direction */
-    exit:   { on: [0.972, 0.984], drop: [0.974, 0.996],
-              run: [0.980, 1.000], off: [0.994, 1.000] }
+    /* the close: a glint where the line folds away, and the ground easing
+       to the Experience chapter's own, so that chapter opens on this frame */
+    spark:  [0.980, 1.000],
+    ground: [0.975, 1.000]
   },
+  groundTo: [28, 22, 23],   // = .exp .exc__stage
 
   /* ---------------------------------------------------------- optics
      Technical traces, each held for a short beat and never more than one
      idea at a time. Nothing here states a measurement. */
   optics: {
-    rule:    { inA: 0.404, inB: 0.470, outA: 0.560, outB: 0.612 },  // measurement rule
-    points:  { inA: 0.444, inB: 0.500, outA: 0.548, outB: 0.598 },  // facet light points
-    reticle: { inA: 0.618, inB: 0.678, outA: 0.716, outB: 0.768 },  // observation rings
-    facets:  { inA: 0.748, inB: 0.812, outA: 0.856, outB: 0.898 }   // the facet traces
+    rule:    { inA: 0.404, inB: 0.434, outA: 0.581, outB: 0.612 },  // measurement rule
+    points:  { inA: 0.444, inB: 0.469, outA: 0.568, outB: 0.598 },  // facet light points
+    reticle: { inA: 0.618, inB: 0.645, outA: 0.737, outB: 0.768 },  // observation rings
+    facets:  { inA: 0.748, inB: 0.777, outA: 0.873, outB: 0.898 }   // the facet traces
   },
   facetTicks: 32,          // traces around the ring — a texture, not a count
 
@@ -68,11 +74,11 @@ CD.study = {
      o opacity · br brightness · ct contrast
   */
   stage: [
-    { p: 0.000, tb: 0.500, sl: 0.000, sr: 0.000, s: 1.06, o: 0.00, br: 0.28, ct: 1.34 },
-    { p: 0.070, tb: 0.496, sl: 0.000, sr: 0.000, s: 1.08, o: 0.45, br: 0.32, ct: 1.30 },
-    { p: 0.140, tb: 0.440, sl: 0.100, sr: 0.000, s: 1.12, o: 0.62, br: 0.40, ct: 1.24 },
-    { p: 0.205, tb: 0.330, sl: 0.400, sr: 0.000, s: 1.24, o: 0.80, br: 0.50, ct: 1.20 },  // 01 · left
-    { p: 0.300, tb: 0.290, sl: 0.400, sr: 0.000, s: 1.22, o: 0.92, br: 0.64, ct: 1.13 },
+    { p: 0.000, tb: 0.500, sl: 0.000, sr: 0.000, s: 1.12, o: 0.80, br: 0.46, ct: 1.28 },  // shut on the line
+    { p: 0.070, tb: 0.345, sl: 0.000, sr: 0.000, s: 1.08, o: 0.90, br: 0.58, ct: 1.22 },  // the line parts
+    { p: 0.140, tb: 0.380, sl: 0.120, sr: 0.000, s: 1.12, o: 0.92, br: 0.60, ct: 1.20 },
+    { p: 0.205, tb: 0.330, sl: 0.400, sr: 0.000, s: 1.24, o: 0.94, br: 0.62, ct: 1.18 },  // 01 · left
+    { p: 0.300, tb: 0.290, sl: 0.400, sr: 0.000, s: 1.22, o: 0.96, br: 0.70, ct: 1.13 },
     { p: 0.400, tb: 0.168, sl: 0.200, sr: 0.000, s: 1.14, o: 1.00, br: 0.84, ct: 1.08 },  // emergence
     { p: 0.462, tb: 0.120, sl: 0.000, sr: 0.320, s: 1.09, o: 1.00, br: 0.96, ct: 1.04 },  // swings right
     { p: 0.530, tb: 0.104, sl: 0.000, sr: 0.380, s: 1.07, o: 1.00, br: 1.00, ct: 1.02 },  // 02 · right
@@ -83,8 +89,8 @@ CD.study = {
     { p: 0.888, tb: 0.104, sl: 0.000, sr: 0.400, s: 1.06, o: 1.00, br: 0.98, ct: 1.04 },  // 05 · right
     { p: 0.930, tb: 0.096, sl: 0.000, sr: 0.400, s: 1.06, o: 1.00, br: 0.99, ct: 1.03 },
     { p: 0.958, tb: 0.034, sl: 0.000, sr: 0.000, s: 1.04, o: 1.00, br: 1.08, ct: 1.00 },  // type clears
-    { p: 0.980, tb: 0.500, sl: 0.000, sr: 0.000, s: 1.05, o: 1.00, br: 1.24, ct: 1.02 },  // shut
-    { p: 1.000, tb: 0.500, sl: 0.000, sr: 0.000, s: 1.05, o: 1.00, br: 1.24, ct: 1.02 }
+    { p: 0.984, tb: 0.500, sl: 0.000, sr: 0.000, s: 1.07, o: 1.00, br: 1.24, ct: 1.02 },  // shut
+    { p: 1.000, tb: 0.500, sl: 0.000, sr: 0.000, s: 1.07, o: 1.00, br: 1.24, ct: 1.02 }
   ],
 
   /* Narrow and tall: no side shutters, a shallower letterbox, and the frame
