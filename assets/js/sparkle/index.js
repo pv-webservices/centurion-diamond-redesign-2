@@ -86,7 +86,11 @@ CD.initSparkle = function initSparkle() {
     var split = smooth(range(p, B.split.inA, B.split.inB));
     var out = smooth(range(p, B.pairOut.inA, B.pairOut.inB));
 
-    el.over.style.clipPath = 'inset(0 ' + ((1 - wipe) * 100).toFixed(2) + '% 0 0)';
+    /* once the wipe lands, drop the clip and the stone underneath entirely:
+       nothing of the traditional can fringe the Centurion's finished edge */
+    var landed = wipe >= 0.999;
+    el.over.style.clipPath = landed ? 'none' : 'inset(0 ' + ((1 - wipe) * 100).toFixed(2) + '% 0 0)';
+    el.under.style.visibility = landed ? 'hidden' : 'visible';
     el.wipe.style.left = (wipe * 100).toFixed(2) + '%';
     el.wipe.style.opacity = (Math.sin(wipe * Math.PI) * 1.2).toFixed(3);
 
@@ -106,7 +110,7 @@ CD.initSparkle = function initSparkle() {
     /* positions: one centred stone, then the pair side by side. On phones the
        single stone starts larger and both shrink to share the width. */
     var gap = narrow ? 24 : 19;                               // vw from centre
-    var sPair = narrow ? 0.66 : 1;
+    var sPair = narrow ? 0.6 : 1;                             // keeps the two tick rings apart
     var s = 1 + (sPair - 1) * split;
     var enterY = (1 - single) * 40;
     el.cen.style.transform = 'translate3d(' + (-split * gap).toFixed(2) + 'vw,' + enterY.toFixed(1) + 'px,0) scale(' + s.toFixed(4) + ')';

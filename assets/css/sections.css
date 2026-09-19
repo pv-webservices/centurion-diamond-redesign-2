@@ -2756,9 +2756,16 @@ body.has-cursor .cur{ opacity:1; }
 .spk__pair{position:absolute;inset:0;z-index:3;visibility:hidden;}
 .spk__cut{position:absolute;left:50%;top:41%;width:var(--spk-d);margin:0;translate:-50% -50%;will-change:transform,opacity;opacity:0;}
 .spk__disc{position:relative;display:block;width:100%;aspect-ratio:1;}
+/* one round contact shadow, drawn by the disc rather than by each image: the
+   wipe clips the Centurion image to a rectangle, and a shadow on the image
+   was clipped with it — a squared, blurred cut at the stone's lower corners */
+.spk__disc::before{content:"";position:absolute;inset:.8%;border-radius:50%;pointer-events:none;
+  box-shadow:0 24px 44px -10px rgba(60,44,40,.22),0 6px 14px -4px rgba(60,44,40,.10);}
 .spk__img{position:absolute;inset:0;}
-.spk__img img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 22px 36px rgba(60,44,40,.16));}
-.spk__rail{position:absolute;inset:-11%;width:122%;height:122%;overflow:visible;}
+.spk__img img{display:block;width:100%;height:100%;object-fit:contain;}
+/* max-width:none: base.css caps svg at 100%, which shrank the ring and
+   pulled it left, hiding its right half behind the stone */
+.spk__rail{position:absolute;inset:-11%;width:122%;height:122%;max-width:none;overflow:visible;}
 .spk__rail line{stroke:rgba(26,25,23,.12);stroke-width:1;transition:stroke .25s;}
 .spk__rail line.is-major{stroke-width:1.5;}
 .spk__rail line.is-lit{stroke:rgba(26,25,23,.55);}
@@ -2776,7 +2783,8 @@ body.has-cursor .cur{ opacity:1; }
 .spk__note{margin-top:.9svh;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#9a918b;}
 .spk.is-centurion [data-spk-cut="centurion"] .spk__num{color:#1a1917;}
 .spk.is-centurion [data-spk-cut="centurion"] .spk__label{color:#a0706f;}
-.spk__cut--trad .spk__img img{filter:drop-shadow(0 22px 36px rgba(60,44,40,.1)) saturate(.85);}
+.spk__cut--trad .spk__img img{filter:saturate(.85);}
+.spk__cut--trad .spk__disc::before{box-shadow:0 22px 40px -10px rgba(60,44,40,.16),0 6px 12px -4px rgba(60,44,40,.07);}
 .spk__lede{position:absolute;left:50%;bottom:7svh;translate:-50% 0;z-index:4;width:min(88vw,46ch);text-align:center;font-size:clamp(.92rem,1.05vw,1.08rem);line-height:1.7;color:#4d4642;opacity:0;visibility:hidden;}
 /* the close */
 .spk__outro{position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;}
