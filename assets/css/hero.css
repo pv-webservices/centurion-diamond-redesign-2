@@ -1,0 +1,406 @@
+/* ============================================================
+   01 · HERO — From Innovation to Brilliance
+   The four-shot lab-grown storyboard as a pinned scroll stage.
+
+   Frames are placed in image space. Each scene carries its subject's focal
+   point (--fx / --fy, 0..1 of the 1920×1080 frame); the plate is sized to
+   cover the stage and offset so that point stays in shot at any aspect
+   ratio. Overlays that belong to the picture (the laser, the turning stone,
+   the rim light) are positioned in % of the plate, so they stay locked to
+   the photograph through every camera move.
+   ============================================================ */
+
+.hx{
+  --hx-ink: var(--ink);
+  --hx-ink-rgb: 21,18,19;
+  --hx-champagne: #F2D9BE;
+  position:relative; background:var(--hx-ink);
+}
+.js .hx:not(.is-reduced){ height:540svh; }
+
+.hx__stage{
+  position:relative; height:100svh; width:100%;
+  overflow:hidden; background:var(--hx-ink); isolation:isolate;
+  container-type:size;
+}
+
+/* ---------------------------------------------- the frames */
+.hx__scenes{
+  position:absolute; inset:0; z-index:0;
+  transform:translate3d(var(--px,0px),var(--py,0px),0);
+}
+.hx__scene{ position:absolute; inset:0; margin:0; overflow:hidden; }
+.js .hx:not(.is-reduced) .hx__scene:not(:first-child){ visibility:hidden; }
+
+.hx__plate{
+  --W: max(100cqw, 177.7778cqh);
+  --H: calc(var(--W) * .5625);
+  position:absolute; width:var(--W); height:var(--H);
+  left:clamp(calc(100cqw - var(--W)), calc(50cqw - var(--fx) * var(--W)), 0px);
+  top: clamp(calc(100cqh - var(--H)), calc(50cqh - var(--fy) * var(--H)), 0px);
+  transform-origin:calc(var(--fx) * 100%) calc(var(--fy) * 100%);
+  will-change:transform;
+}
+.hx__plate > img{ position:absolute; inset:0; width:100%; height:100%; max-width:none; }
+
+/* Craft — the laser's contact point (66.9%, 46.3% of the frame) */
+.hx__laser{ position:absolute; left:66.9%; top:46.3%; width:0; height:0; }
+.hx__laser i{
+  position:absolute; left:0; top:0; width:7.5cqmin; aspect-ratio:1;
+  translate:-50% -50%; border-radius:50%;
+  background:radial-gradient(circle, #fff 0 6%, rgba(255,226,196,.9) 12%, rgba(255,170,120,.35) 32%, transparent 68%);
+  mix-blend-mode:screen; opacity:var(--laser,0);
+  animation:hx-flicker 1.9s steps(9) infinite;
+}
+@keyframes hx-flicker{
+  0%,100%{transform:scale(1)} 22%{transform:scale(.82)} 41%{transform:scale(1.1)}
+  63%{transform:scale(.9)} 81%{transform:scale(1.04)}
+}
+
+/* Reveal — the stone itself, lifted out of the same frame so it can turn on
+   its own axis while the floor and its reflection stay put. Measured from
+   the master: centre (72.6%, 47.8%), diameter 37.3% of the frame width. */
+.hx__spin{
+  --d:.373; --cx:.726; --cy:.478;
+  position:absolute; left:calc(var(--cx) * 100%); top:calc(var(--cy) * 100%);
+  width:calc(var(--d) * 100%); aspect-ratio:1; translate:-50% -50%;
+  border-radius:50%; overflow:hidden;
+  transform:rotate(var(--spin,0deg));
+  -webkit-mask-image:radial-gradient(circle closest-side, #000 95%, transparent 100%);
+          mask-image:radial-gradient(circle closest-side, #000 95%, transparent 100%);
+}
+.hx__spin > img{
+  position:absolute; max-width:none;
+  width:calc(100% / var(--d)); height:auto;
+  left:calc((var(--cx) - var(--d) / 2) / var(--d) * -100%);
+  top: calc((var(--cy) * .5625 - var(--d) / 2) / var(--d) * -100%);
+}
+/* moving studio reflections: a soft light field that turns against the stone */
+.hx__spin::after{
+  content:""; position:absolute; inset:-10%; border-radius:50%;
+  background:conic-gradient(from 0deg,
+    transparent 0 8%, rgba(255,255,255,.55) 11%, transparent 15% 34%,
+    rgba(255,240,228,.42) 38%, transparent 43% 61%, rgba(255,255,255,.5) 64%, transparent 69% 86%,
+    rgba(235,215,255,.32) 89%, transparent 93%);
+  mix-blend-mode:soft-light; opacity:.9;
+  transform:rotate(calc(var(--spin,0deg) * -4));
+}
+.hx__glints{ position:absolute; inset:0; z-index:1; }
+.hx__glints i{
+  position:absolute; width:16%; aspect-ratio:1; translate:-50% -50%;
+  background:
+    radial-gradient(circle, #fff 0 4%, rgba(255,255,255,.5) 9%, transparent 26%),
+    linear-gradient(90deg, transparent 0 46%, rgba(255,255,255,.95) 49.5% 50.5%, transparent 54% 100%),
+    linear-gradient(0deg,  transparent 0 46%, rgba(255,255,255,.95) 49.5% 50.5%, transparent 54% 100%);
+  -webkit-mask-image:radial-gradient(circle, #000 0, transparent 70%);
+          mask-image:radial-gradient(circle, #000 0, transparent 70%);
+  mix-blend-mode:screen; opacity:0; transform:scale(.4) rotate(12deg);
+}
+.hx__glints i:nth-child(1){ left:32%; top:28%; }
+.hx__glints i:nth-child(2){ left:71%; top:36%; width:12%; }
+.hx__glints i:nth-child(3){ left:58%; top:72%; width:14%; }
+.hx__glints i:nth-child(4){ left:22%; top:62%; width:10%; }
+.hx__glints i:nth-child(5){ left:50%; top:47%; width:20%; }
+
+/* Masterpiece — the warm champagne rim light behind the stone */
+.hx__rim{
+  position:absolute; left:70%; top:52%; width:42%; aspect-ratio:1.25; translate:-50% -50%;
+  background:radial-gradient(closest-side, rgba(242,217,190,.42), rgba(242,217,190,.12) 52%, transparent 100%);
+  mix-blend-mode:screen; opacity:var(--rim,0);
+  animation:hx-breathe 6s ease-in-out infinite;
+}
+@keyframes hx-breathe{ 50%{ transform:scale(1.06); filter:brightness(1.15); } }
+
+/* ---------------------------------------------- light, atmosphere */
+/* the darkness the first crystal emerges from */
+.hx__night{
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(60% 70% at 72% 52%, rgba(var(--hx-ink-rgb),.35), rgba(var(--hx-ink-rgb),.96) 70%);
+  opacity:var(--night,0);
+}
+/* the gliding reflection that carries Origin into Craft */
+.hx__sheen{
+  /* placed and leaned from JS (stage.js), so the cut can follow it */
+  position:absolute; top:-30%; bottom:-30%; left:0; z-index:2; width:44cqw;
+  pointer-events:none;
+  background:linear-gradient(90deg, transparent,
+    rgba(255,248,240,.10) 30%, rgba(255,250,245,.72) 48%, #fffaf4 50%,
+    rgba(255,250,245,.72) 52%, rgba(255,248,240,.10) 70%, transparent);
+  mix-blend-mode:screen; opacity:0;
+  filter:blur(6px);
+}
+.hx__sparks{ position:absolute; inset:0; z-index:2; width:100%; height:100%; pointer-events:none; }
+/* the highlight match cut from Craft into Reveal */
+.hx__flash{
+  position:absolute; left:0; top:0; z-index:3; width:110cqmax; aspect-ratio:1;
+  translate:-50% -50%; border-radius:50%; pointer-events:none;
+  background:radial-gradient(circle, #fff 0 5%, rgba(255,247,238,.88) 14%, rgba(255,232,214,.42) 32%, rgba(242,217,190,.12) 50%, transparent 66%);
+  opacity:0; transform:scale(.2);
+}
+/* type ground: left column on wide screens, lower third when stacked */
+.hx__shade{
+  position:absolute; inset:0; z-index:4; pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(var(--hx-ink-rgb),.86) 0%, rgba(var(--hx-ink-rgb),.58) 26%, rgba(var(--hx-ink-rgb),.14) 50%, transparent 62%),
+    linear-gradient(to bottom, rgba(var(--hx-ink-rgb),.6) 0%, transparent 20%, transparent 70%, rgba(var(--hx-ink-rgb),.9) 100%);
+}
+.hx__grain{
+  position:absolute; inset:-120%; z-index:5; pointer-events:none;
+  opacity:.1; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='.5'/></svg>");
+  animation:grain 7s steps(6) infinite;
+}
+/* cinematic letterbox: opens as the film starts */
+.hx__bars{ position:absolute; inset:0; z-index:6; pointer-events:none; }
+.hx__bars i{ position:absolute; left:0; right:0; height:13svh; background:#0b0a0a; }
+.hx__bars i:first-child{ top:0; transform-origin:top; }
+.hx__bars i:last-child{ bottom:0; transform-origin:bottom; }
+.no-js .hx__bars, .hx.is-reduced .hx__bars{ display:none; }
+
+/* hero -> journey: the frame's floor fades into the ink the journey opens on */
+.hx__stage::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:16vh; z-index:4; pointer-events:none;
+  background:linear-gradient(to bottom, rgba(var(--hx-ink-rgb),0), var(--hx-ink));
+  opacity:var(--handoff,0);
+}
+
+/* ---------------------------------------------- type */
+.hx__intro, .hx__chapter, .hx__final{
+  position:absolute; z-index:7; left:8vw; top:50%; translate:0 -50%;
+  width:min(40vw,640px);
+  will-change:transform,opacity;
+}
+.hx__intro{ width:min(52vw,860px); }
+/* chapters stay in the accessibility tree; the closing frame's links are
+   hidden outright until they are on screen */
+.js .hx:not(.is-reduced) .hx__chapter{ opacity:0; }
+.js .hx:not(.is-reduced) .hx__final{ opacity:0; visibility:hidden; }
+
+.hx-ln{ display:block; clip-path:inset(-.12em -60vw -.16em -60vw); padding-block:.02em; }
+.hx-ln > span{ display:block; will-change:transform; }
+.hx em{ font-style:italic; color:var(--rose-lt); }
+
+.hx__eyebrow, .hx__mark{
+  display:flex; align-items:center; gap:.9em;
+  font-size:clamp(9.5px,.7vw,11px); font-weight:500;
+  letter-spacing:.34em; text-transform:uppercase; color:var(--rose-lt);
+  margin-bottom:clamp(16px,2.2vw,30px);
+}
+.hx__eyebrow i, .hx__mark i{ width:clamp(22px,2.8vw,48px); height:1px; background:currentColor; opacity:.8; flex:none; }
+.hx__mark b{
+  font-family:var(--display); font-style:italic; font-weight:400;
+  font-size:2.4em; letter-spacing:0; line-height:1; color:var(--bone);
+}
+
+.hx__h1{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(3.1rem,6.1vw,7.8rem);
+  line-height:.92; letter-spacing:-.035em;
+  color:var(--bone); text-shadow:0 2px 50px rgba(var(--hx-ink-rgb),.7);
+}
+.hx__title{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(2.7rem,5.8vw,7rem);
+  line-height:.94; letter-spacing:-.035em;
+  color:var(--bone); text-shadow:0 2px 50px rgba(var(--hx-ink-rgb),.7);
+}
+.hx__lede, .hx__body{
+  margin-top:clamp(18px,2.2vw,30px); max-width:40ch;
+  font-size:clamp(.92rem,1.05vw,1.08rem); line-height:1.72;
+  color:rgba(244,241,234,.84); text-shadow:0 1px 20px rgba(var(--hx-ink-rgb),.9);
+}
+
+/* Reveal — the facet count climbs from a traditional 58 to 100 */
+.hx__meter{
+  display:flex; align-items:center; gap:clamp(14px,1.4vw,22px);
+  margin-top:clamp(20px,2.6vw,34px);
+}
+.hx__meter b{
+  font-family:var(--display); font-weight:400; font-variant-numeric:lining-nums tabular-nums;
+  font-size:clamp(3rem,5vw,5.6rem); line-height:.8; letter-spacing:-.04em;
+  background:linear-gradient(180deg, #fff 10%, var(--rose-lt) 120%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  min-width:2.1ch;
+}
+.hx__meter span{
+  font-size:clamp(9px,.66vw,10.5px); font-weight:500; line-height:1.9;
+  letter-spacing:.26em; text-transform:uppercase; color:rgba(244,241,234,.6);
+  padding-left:clamp(14px,1.4vw,22px); border-left:1px solid rgba(227,191,187,.4);
+}
+
+/* ---------------------------------------------- closing frame */
+.hx__actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:clamp(26px,3.4vw,44px); }
+.hx-btn{
+  position:relative; display:inline-flex; align-items:center; justify-content:center;
+  padding:1.12em 2.2em; border-radius:100px; overflow:hidden; isolation:isolate;
+  border:1px solid rgba(244,241,234,.34);
+  font-size:clamp(10px,.74vw,11.5px); font-weight:500;
+  letter-spacing:.24em; text-transform:uppercase; color:var(--bone); white-space:nowrap;
+  transition:color .45s var(--ease), border-color .45s var(--ease);
+}
+.hx-btn::before{
+  content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit;
+  background:var(--rose); transform:scaleY(0); transform-origin:bottom;
+  transition:transform .55s var(--ease);
+}
+.hx-btn:hover, .hx-btn:focus-visible{ color:var(--ink); border-color:var(--rose); }
+.hx-btn:hover::before, .hx-btn:focus-visible::before{ transform:scaleY(1); transform-origin:top; }
+.hx-btn--solid{ background:var(--bone); color:var(--ink); border-color:var(--bone); }
+.hx-btn:focus-visible{ outline:1px solid var(--rose-lt); outline-offset:4px; }
+
+.hx__facts{
+  display:grid; grid-template-columns:repeat(4,auto); justify-content:start;
+  gap:0; margin:clamp(30px,4vw,52px) 0 0; padding:0; list-style:none;
+}
+.hx__facts li{
+  display:flex; flex-direction:column; gap:.5em;
+  padding:0 clamp(16px,1.8vw,30px); border-left:1px solid rgba(244,241,234,.16);
+}
+.hx__facts li:first-child{ padding-left:0; border-left:0; }
+.hx__facts b{
+  font-family:var(--display); font-weight:400; font-size:clamp(1.5rem,1.9vw,2.1rem);
+  line-height:1; letter-spacing:-.02em; color:var(--bone);
+}
+.hx__facts span{
+  font-size:clamp(8.5px,.6vw,10px); font-weight:500;
+  letter-spacing:.26em; text-transform:uppercase; color:rgba(244,241,234,.55);
+}
+
+/* ---------------------------------------------- chapter rail + hint */
+.hx__rail{
+  position:absolute; z-index:7; left:8vw; right:8vw; bottom:clamp(22px,4.4svh,44px);
+  display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(10px,1.4vw,22px);
+  margin:0; padding:0; list-style:none; opacity:0;
+}
+.hx__rail li{ display:grid; gap:9px; color:rgba(244,241,234,.38); transition:color .5s var(--ease); }
+.hx__rail li.is-on{ color:var(--bone); }
+.hx__rail i{ display:block; height:1px; background:rgba(244,241,234,.16); overflow:hidden; }
+.hx__rail i b{ display:block; height:100%; background:var(--rose-lt); transform:scaleX(0); transform-origin:left; }
+.hx__rail span{
+  font-size:9.5px; font-weight:500; letter-spacing:.28em; text-transform:uppercase; white-space:nowrap;
+}
+.hx__rail em{ font-style:normal; color:var(--rose-lt); margin-right:.6em; }
+.hx__rail small{
+  font-family:var(--display); font-style:italic; font-size:12.5px; letter-spacing:.02em;
+  color:rgba(244,241,234,.38); margin-top:-4px;
+}
+
+.hx__hint{
+  position:absolute; z-index:7; right:8vw; bottom:calc(clamp(22px,4.4svh,44px) + 54px);
+  display:flex; align-items:center; gap:1em;
+  font-size:9px; letter-spacing:.34em; text-transform:uppercase;
+  color:rgba(244,241,234,.5); pointer-events:none; opacity:0;
+}
+.hx__hint i{ display:block; width:1px; height:clamp(26px,4vh,42px); background:rgba(244,241,234,.18); position:relative; overflow:hidden; }
+.hx__hint i::after{
+  content:""; position:absolute; inset:0; background:var(--rose-lt);
+  animation:hx-trickle 2.6s var(--ease-io) infinite;
+}
+@keyframes hx-trickle{ 0%{transform:translateY(-100%)} 55%,100%{transform:translateY(100%)} }
+
+/* ---------------------------------------------- mid widths */
+@media (max-width:1100px){
+  .hx__intro, .hx__chapter, .hx__final{ left:6vw; width:min(52vw,560px); }
+  .hx__rail{ left:6vw; right:6vw; }
+  .hx__rail small{ display:none; }
+}
+
+/* ---------------------------------------------- stacked composition
+   Portrait and square screens. A 16:9 frame cropped to portrait would keep
+   ~30% of its width — a slice of the stone — so the plate is laid across the
+   upper stage instead, feathered into the ink, and the type takes the lower
+   third. The frames' blurred top and bottom bands fall inside the feather. */
+@media (max-aspect-ratio:1/1){
+  .js .hx:not(.is-reduced){ height:480svh; }
+  .hx__plate{
+    --W: min(220cqw, 118cqh);
+    top:calc(31cqh - var(--fy) * var(--H));
+    -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 24%, #000 76%, transparent 100%);
+            mask-image:linear-gradient(to bottom, transparent 0, #000 24%, #000 76%, transparent 100%);
+  }
+  .hx__shade{
+    background:linear-gradient(to bottom,
+      rgba(var(--hx-ink-rgb),.55) 0%, transparent 14%, transparent 44%,
+      rgba(var(--hx-ink-rgb),.72) 60%, rgba(var(--hx-ink-rgb),.94) 78%, var(--hx-ink) 100%);
+  }
+  .hx__night{ background:radial-gradient(70% 40% at 50% 31%, rgba(var(--hx-ink-rgb),.3), rgba(var(--hx-ink-rgb),.96) 70%); }
+  .hx__bars i{ height:9svh; }
+
+  .hx__intro, .hx__chapter, .hx__final{
+    left:6vw; right:6vw; width:auto; top:auto; translate:0 0;
+    bottom:calc(13svh + env(safe-area-inset-bottom));
+  }
+  .hx__h1{ font-size:clamp(2.7rem,12.6vw,5.4rem); letter-spacing:-.04em; }
+  .hx__title{ font-size:clamp(2.5rem,11.4vw,5rem); letter-spacing:-.04em; }
+  .hx__lede, .hx__body{ font-size:clamp(.86rem,3.6vw,1rem); line-height:1.6; max-width:34ch; margin-top:clamp(12px,1.8svh,20px); }
+  .hx__eyebrow, .hx__mark{ letter-spacing:.28em; margin-bottom:clamp(12px,1.8svh,20px); }
+  .hx__meter{ margin-top:clamp(12px,1.8svh,20px); }
+  .hx__meter b{ font-size:clamp(2.6rem,11vw,4rem); }
+  .hx__final .hx__body{ display:none; }
+  .hx__actions{ margin-top:clamp(18px,2.6svh,28px); gap:10px; }
+  .hx-btn{ padding:1em 1.6em; letter-spacing:.16em; }
+  .hx__facts{ grid-template-columns:repeat(4,1fr); margin-top:clamp(20px,3svh,32px); }
+  .hx__facts li{ padding:0 10px; }
+  .hx__facts b{ font-size:clamp(1.15rem,5.2vw,1.6rem); }
+  .hx__facts span{ letter-spacing:.16em; }
+
+  .hx__rail{
+    left:6vw; right:6vw; gap:6px;
+    bottom:calc(clamp(14px,3svh,26px) + env(safe-area-inset-bottom));
+  }
+  .hx__rail span{ font-size:8px; letter-spacing:.16em; }
+  .hx__rail small{ display:none; }
+  .hx__hint{ display:none; }
+}
+@media (max-aspect-ratio:1/1) and (max-width:420px){
+  .hx__rail span{ font-size:0; }
+  .hx__rail em{ font-size:8px; margin:0; }
+  .hx-btn{ font-size:9.5px; padding:1em 1.3em; letter-spacing:.12em; }
+}
+
+/* landscape phones: little height, so the type is smaller and the rail drops its labels */
+@media (min-aspect-ratio:1/1) and (max-height:520px){
+  .hx__intro, .hx__chapter, .hx__final{ width:min(48vw,460px); top:46%; }
+  .hx__h1{ font-size:clamp(2rem,6.4vw,3.4rem); }
+  .hx__title{ font-size:clamp(1.9rem,5.6vw,3rem); }
+  .hx__lede, .hx__body{ font-size:.8rem; line-height:1.55; margin-top:10px; }
+  .hx__eyebrow, .hx__mark{ margin-bottom:10px; }
+  .hx__meter{ margin-top:10px; } .hx__meter b{ font-size:2.4rem; }
+  .hx__final .hx__body, .hx__facts{ display:none; }
+  .hx__actions{ margin-top:14px; } .hx-btn{ padding:.9em 1.5em; }
+  .hx__rail{ bottom:12px; } .hx__rail span{ font-size:8px; } .hx__rail small{ display:none; }
+  .hx__hint{ display:none; }
+}
+
+/* ---------------------------------------------- reduced motion / no JS
+   No pin and no scroll distance: the closing frame stands as the hero, with
+   the h1 and the closing actions laid out in normal flow over it. */
+.hx.is-reduced, .no-js .hx{ height:auto; }
+/* the stage keeps a definite height: it is a size container, and the plate
+   is placed in its units */
+.hx.is-reduced .hx__stage, .no-js .hx__stage{
+  height:max(100svh, 680px); display:flex; flex-direction:column; justify-content:center;
+  padding:clamp(110px,16svh,180px) 0 clamp(60px,10svh,110px);
+}
+.hx.is-reduced .hx__scene:not([data-hx-scene="masterpiece"]),
+.no-js .hx__scene:not([data-hx-scene="masterpiece"]),
+.hx.is-reduced .hx__chapters, .no-js .hx__chapters,
+.hx.is-reduced .hx__rail, .no-js .hx__rail,
+.hx.is-reduced .hx__hint, .no-js .hx__hint,
+.hx.is-reduced .hx__final .hx__mark, .no-js .hx__final .hx__mark,
+.hx.is-reduced .hx__final .hx__title, .no-js .hx__final .hx__title,
+.hx.is-reduced .hx__sparks, .no-js .hx__sparks{ display:none; }
+.hx.is-reduced .hx__rim, .no-js .hx__rim{ --rim:.8; animation:none; }
+.hx.is-reduced .hx__grain, .no-js .hx__grain{ animation:none; }
+.hx.is-reduced .hx__intro, .no-js .hx__intro,
+.hx.is-reduced .hx__final, .no-js .hx__final{
+  position:relative; inset:auto; translate:none; transform:none;
+  left:auto; right:auto; top:auto; bottom:auto;
+  width:auto; max-width:640px; margin-inline:8vw;
+}
+.hx.is-reduced .hx__final .hx__body, .no-js .hx__final .hx__body{ display:none; }
+@media (max-aspect-ratio:1/1){
+  .hx.is-reduced .hx__stage, .no-js .hx__stage{ justify-content:flex-end; }
+  .hx.is-reduced .hx__intro, .no-js .hx__intro,
+  .hx.is-reduced .hx__final, .no-js .hx__final{ margin-inline:6vw; }
+}
