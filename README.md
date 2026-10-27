@@ -41,7 +41,7 @@ The page is built as an argument, not a brochure — each section advances one c
 | # | Section | Job |
 |---|---|---|
 | 00 | Preloader | Counts 0→100 — the brand's whole story in one number |
-| 01 | **Hero — cinematic scroll stage** | Pinned 320vh. Video scrubs with scroll; four statements alternate L/R; stone-only finale |
+| 01 | **Hero — From Innovation to Brilliance** | Pinned 540svh. The lab-grown storyboard played by scroll: Origin → Craft → Reveal → Masterpiece, closing on the CTA |
 | 02 | **The Sparkle** | Pinned 330vh. Dark→light passage, then the 100 vs 57 comparison |
 | 03 | **Anatomy of Brilliance** | Pinned 400vh. The four benefits, one owning the viewport at a time, closing on an aperture into the Light Study |
 | 04 | **A Study in Light** | Pinned 360vh. An aperture opens the light-study film out of the dark, makes room for the type, and closes it back into the beam that hands off to the marquee |
@@ -63,50 +63,50 @@ no opaque container. It dims and lifts with hero progress (`--hdr-dim` / `--hdr-
 rather than restyling into a solid navbar. Under 1000px the nav collapses to a burger
 that opens the full-screen sheet.
 
-**Hero** is a 320vh scroll track with a pinned stage inside it. One master progress
-value from a single ScrollTrigger feeds four independent timelines — video, narrative,
-header, progress — which is what keeps the scrub and the typography exactly in step.
+**Hero** plays the approved four-shot storyboard (*From Innovation to Brilliance*,
+`assets/new/Centurion_Diamond_12_Second_Video_Storyboard.pdf`) as a 540svh scroll
+track with a pinned stage. One master progress value from a single ScrollTrigger
+feeds four independent timelines — stage, narrative, rail, header.
 
-Four editorial statements alternate left → right → left → right while the film scrubs
-underneath, then all typography clears for the closing frame so the stone owns the
-screen with one restrained CTA.
+| Shot | Frame | Camera | Cut into the next |
+|---|---|---|---|
+| 01 The Origin — *Curiosity* | rough lab-grown crystal | emerges from darkness, slow push-in | a gliding reflection; the cut follows the light band |
+| 02 The Craft — *Transformation* | laser cutting head | subtle macro track; contact-point glow + sparks | a highlight bloom from the laser point |
+| 03 The Reveal — *Wonder* | face-on brilliant | the stone alone turns −4°→12°; glints; facet count 58→100 | a pull back through the frame |
+| 04 The Masterpiece — *Desire* | stone in the alcove | slow pull back → still; champagne rim light | closing copy, actions, facts |
+
+The opening h1 ("From innovation to brilliance") sits over the Origin frame; the
+three chapters and the closing frame are real markup in `index.html`.
 
 ```
 assets/js/hero/
-  scenes.js      narrative content + progress windows (data-driven)
-  video.js       scroll-scrubbed video timeline
-  narrative.js   statement choreography
+  math.js        shared progress maths (range / easing)
+  scenes.js      the storyboard in progress space — re-time the hero here
+  stage.js       frames, camera moves, the three cuts, glints, parallax
+  sparks.js      laser sparks (one canvas, fixed pool, idle when not burning)
+  narrative.js   opening title, chapters, closing frame
   header.js      header timeline
-  progress.js    progress rule + scroll hint
-  index.js       orchestrator — owns the single ScrollTrigger
+  progress.js    chapter rail + scroll hint
+  index.js       orchestrator — owns the single ScrollTrigger and the ticker
+assets/css/hero.css
+assets/img/hero/  origin / craft / reveal / masterpiece at 860, 1280, 1920
 ```
 
-Tune the choreography in `scenes.js` (`inA/inB/outA/outB` in 0..1 progress space).
-Nothing else needs touching to re-time or re-word the hero.
+### Placing the frames
 
-### Scrubbing
+The frames are stills, so every overlay is positioned **in image space**. Each
+scene carries its subject's focal point (`--fx`/`--fy`, 0..1 of the 1920×1080
+frame); the plate covers the stage (container units) and is offset so that point
+stays in shot at any aspect ratio. The laser point (66.9%, 46.3%) and the Reveal
+stone (centre 72.6%, 47.8%; diameter 37.3% of the width) were measured from the
+masters — if a frame is replaced, re-measure those.
 
-Seek cost is dominated by distance from a keyframe, so the hero clip is re-encoded
-with a **4-frame GOP** (`dev/encode-scrub.sh`). The supplied master had no keyframes
-past the first, which makes scrubbing unusable. On top of that the engine:
+**Stacked layout** (portrait and square screens): a 16:9 frame cropped to portrait
+keeps ~30% of its width, so the plate is laid across the upper stage at
+`min(220cqw, 118cqh)`, feathered into the ink, and the type takes the lower third.
 
-- never queues a seek while the decoder is still `seeking`
-- damps the target so a fast flick cannot pile up seeks
-- runs on GSAP's ticker, not on raw scroll events
-- primes the video (muted play→pause) on first interaction, so iOS paints
-
-**Mobile gets a dedicated portrait master.** Cropping the 16:9 master to 9:16 shows
-only ~26% of its width — a slice of the stone. Instead the full composition is
-composited into a 720×1280 canvas over a blurred, darkened self-extension with a
-feathered edge, so it reads full-bleed while the framing survives.
-
-That master carries its picture in roughly the top 21–53% of its canvas. Dropped
-8% down the stage on mobile (`.chero__media{ top:8% }`), the band lands at
-29–61% — which opens a type zone above it as well as below, so the four
-statements can alternate **top-left / bottom-right / top-left / bottom-right**
-without ever crossing the facets. The entrance travels on that axis too, not the
-desktop's lateral one. Each master also preloads only where it is used, so a
-phone never pays for the landscape poster.
+Reduced motion and no-JS get the closing frame as a static hero with the h1 and
+the actions in normal flow.
 
 ## The Sparkle section
 

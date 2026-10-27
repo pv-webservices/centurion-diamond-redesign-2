@@ -1,157 +1,117 @@
 /* ============================================================
-   Hero narrative timeline — the alternating editorial statements.
+   Hero narrative — the opening title, three chapters and the closing frame.
 
-   Markup is generated once from CD.heroScenes, then each scene is driven
-   directly from master progress. No ScrollTrigger per scene: one progress
-   value feeds every transform, which keeps the statements perfectly in step
-   with the video scrub.
+   The copy is real markup in index.html (it is the page's h1 and must read
+   without JS); this module only drives it from master progress. Each line
+   sits in a vertical mask (.hx-ln) and rises into place, staggered.
    ============================================================ */
 window.CD = window.CD || {};
 
 CD.heroNarrative = (function () {
   'use strict';
 
-  var scenes = [];
-  var ctaEl = null;
-  var cta = null;
-  var reduced = false;
-  /* Portrait phones compose the narrative top / bottom rather than left /
-     right (see the .chero mobile block), so the entrance travels on the axis
-     the statement actually sits on. Desktop is untouched by this. */
-  var PORTRAIT_Q = '(max-width: 860px) and (orientation: portrait)';
-  var portrait = false;
+  var M = CD.heroMath;
+  var T = null;
+  var intro = null, chapters = [], fin = null;
 
-  function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
-  function range(p, a, b) { return b === a ? (p >= b ? 1 : 0) : clamp01((p - a) / (b - a)); }
-  // luxury-commercial easing: quick settle, no bounce
-  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-  function easeIn(t) { return t * t * t; }
+  function lines(el) { return el.querySelectorAll('.hx-ln > span'); }
 
-  function build(root, data, ctaData) {
-    if (!root) return null;
-    reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    portrait = window.matchMedia(PORTRAIT_Q).matches;
-    window.addEventListener('resize', function () {
-      portrait = window.matchMedia(PORTRAIT_Q).matches;
-    }, { passive: true });
+  function init(root, timeline) {
+    T = timeline;
+    intro = root.querySelector('[data-hx-intro]');
 
-    data.forEach(function (s, i) {
-      var el = document.createElement('article');
-      el.className = 'cscene cscene--' + s.side;
-      el.setAttribute('aria-hidden', 'true');
-
-      var eyebrow = document.createElement('p');
-      eyebrow.className = 'cscene__eyebrow';
-      eyebrow.innerHTML = '<i></i><span>' + s.eyebrow + '</span>';
-
-      var h = document.createElement('h2');
-      h.className = 'cscene__title';
-      s.title.forEach(function (line) {
-        var ln = document.createElement('span');
-        ln.className = 'cscene__ln';
-        var inner = document.createElement('span');
-        inner.textContent = line;
-        ln.appendChild(inner);
-        h.appendChild(ln);
+    var els = root.querySelectorAll('[data-hx-chapter]');
+    for (var i = 0; i < els.length; i++) {
+      chapters.push({
+        cfg: T.chapters[i],
+        el: els[i],
+        lines: lines(els[i]),
+        mark: els[i].querySelector('.hx__mark'),
+        count: els[i].querySelector('[data-hx-count]'),
+        shown: null
       });
-
-      var body = document.createElement('p');
-      body.className = 'cscene__body';
-      body.textContent = s.body;
-
-      el.appendChild(eyebrow);
-      el.appendChild(h);
-      el.appendChild(body);
-      root.appendChild(el);
-
-      scenes.push({
-        cfg: s,
-        el: el,
-        lines: el.querySelectorAll('.cscene__ln > span'),
-        eyebrow: eyebrow,
-        body: body,
-        wasOn: null
-      });
-    });
-
-    if (ctaData) {
-      cta = ctaData;
-      ctaEl = document.createElement('div');
-      ctaEl.className = 'chero__cta';
-      ctaEl.innerHTML =
-        '<a class="cbtn" href="' + ctaData.href + '">' +
-        '<span class="cbtn__fill"></span>' +
-        '<span class="cbtn__label"><i></i>' + ctaData.label + '</span></a>';
-      root.appendChild(ctaEl);
     }
 
-    if (reduced) showAllStatic();
+    var f = root.querySelector('[data-hx-final]');
+    fin = {
+      el: f,
+      lines: lines(f),
+      mark: f.querySelector('.hx__mark'),
+      actions: f.querySelector('[data-hx-actions]'),
+      facts: f.querySelectorAll('[data-hx-facts] li'),
+      shown: null
+    };
     return api;
   }
 
-  /* reduced motion: no scrubbed choreography — every statement simply reads */
-  function showAllStatic() {
-    scenes.forEach(function (s) {
-      s.el.classList.add('is-static');
-      s.el.setAttribute('aria-hidden', 'false');
-    });
-    if (ctaEl) ctaEl.classList.add('is-static');
+  /* per-line mask reveal: v is the block's entrance, 0..1 */
+  function riseLines(list, v) {
+    for (var j = 0; j < list.length; j++) {
+      var d = j * 0.18;
+      var lv = M.easeOut(M.clamp01((v - d * (1 - v)) / (1 - d * 0.5)));
+      list[j].style.transform = 'translate3d(0,' + ((1 - lv) * 112).toFixed(2) + '%,0)';
+    }
+  }
+
+  /* a block drifts up through its window: in from below, out above */
+  function place(el, vIn, vOut) {
+    var vis = vIn * (1 - vOut);
+    var y = (1 - vIn) * 4.5 - vOut * 4;
+    var blur = (1 - vIn) * 6 + vOut * 6;
+    el.style.opacity = vis.toFixed(3);
+    el.style.transform = 'translate3d(0,' + y.toFixed(3) + 'svh,0)';
+    el.style.filter = blur > 0.06 ? 'blur(' + blur.toFixed(2) + 'px)' : 'none';
+    return vis;
   }
 
   function update(p) {
-    if (reduced) return;
+    // the opening title lifts away as the journey starts
+    var vo = M.easeIn(M.range(p, T.intro.outA, T.intro.outB));
+    intro.style.opacity = (1 - vo).toFixed(3);
+    intro.style.transform = 'translate3d(0,' + (-vo * 6).toFixed(3) + 'svh,0)';
+    intro.style.filter = vo > 0.01 ? 'blur(' + (vo * 8).toFixed(2) + 'px)' : 'none';
 
-    for (var i = 0; i < scenes.length; i++) {
-      var s = scenes[i], c = s.cfg;
-      var vIn = easeOut(range(p, c.inA, c.inB));
-      var vOut = easeIn(range(p, c.outA, c.outB));
-      var vis = vIn * (1 - vOut);
+    for (var i = 0; i < chapters.length; i++) {
+      var c = chapters[i], cfg = c.cfg;
+      var vIn = M.easeOut(M.range(p, cfg.inA, cfg.inB));
+      var vOut = M.easeIn(M.range(p, cfg.outA, cfg.outB));
+      var vis = place(c.el, vIn, vOut);
+      riseLines(c.lines, vIn);
+      c.mark.style.letterSpacing = (0.5 - 0.16 * vIn).toFixed(3) + 'em';
 
-      var dir = c.side === 'left' ? -1 : 1;
-      var scale = 0.965 + 0.035 * vIn - 0.02 * vOut;
-      var blur = (1 - vIn) * 7 + vOut * 5;
-      var shift;
-      if (portrait) {
-        /* a top statement drops in and lifts away; a bottom one rises in and
-           settles further down — the axis the composition already reads on */
-        var vdir = c.side === 'left' ? -1 : 1;
-        shift = 'translate3d(0,' + ((1 - vIn) * vdir * 4.2 + vOut * vdir * -3.2).toFixed(3) + 'vh,0)';
-      } else {
-        // enters from its own side, leaves continuing the same direction
-        shift = 'translate3d(' + ((1 - vIn) * dir * 7 + vOut * dir * 5).toFixed(3) + 'vw,0,0)';
+      if (c.count && cfg.count) {
+        var n = Math.round(M.lerp(cfg.count.from, cfg.count.to, M.easeInOut(M.range(p, cfg.count.a, cfg.count.b))));
+        if (c.count.textContent !== String(n)) c.count.textContent = n;
       }
-
-      s.el.style.opacity = vis.toFixed(3);
-      s.el.style.transform = shift + ' scale(' + scale.toFixed(4) + ')';
-      s.el.style.filter = blur > 0.06 ? 'blur(' + blur.toFixed(2) + 'px)' : 'none';
-
-      // per-line mask reveal, staggered
-      for (var j = 0; j < s.lines.length; j++) {
-        var d = j * 0.16;
-        var lv = easeOut(clamp01((vIn - d * (1 - vIn)) / (1 - d * 0.5)));
-        s.lines[j].style.transform = 'translate3d(0,' + ((1 - lv) * 108).toFixed(2) + '%,0)';
-      }
-
-      // letter-spacing tightens as it settles
-      s.eyebrow.style.letterSpacing = (0.42 - 0.14 * vIn).toFixed(3) + 'em';
 
       var on = vis > 0.02;
-      if (on !== s.wasOn) {
-        s.el.setAttribute('aria-hidden', on ? 'false' : 'true');
-        s.el.style.pointerEvents = on ? 'auto' : 'none';
-        s.wasOn = on;
-      }
+      if (on !== c.shown) { c.el.style.pointerEvents = on ? 'auto' : 'none'; c.shown = on; }
     }
 
-    if (ctaEl && cta) {
-      var cv = easeOut(range(p, cta.inA, cta.inB));
-      ctaEl.style.opacity = cv.toFixed(3);
-      ctaEl.style.transform = 'translate3d(0,' + ((1 - cv) * 22).toFixed(2) + 'px,0)';
-      ctaEl.style.pointerEvents = cv > 0.5 ? 'auto' : 'none';
-      ctaEl.setAttribute('aria-hidden', cv > 0.5 ? 'false' : 'true');
+    // the closing frame — enters and stays
+    var fv = M.easeOut(M.range(p, T.final.inA, T.final.inB));
+    place(fin.el, fv, 0);
+    riseLines(fin.lines, fv);
+    fin.mark.style.letterSpacing = (0.5 - 0.16 * fv).toFixed(3) + 'em';
+
+    var cv = M.range(p, T.final.ctaA, T.final.ctaB);
+    var av = M.easeOut(M.range(cv, 0, 0.7));
+    fin.actions.style.opacity = av.toFixed(3);
+    fin.actions.style.transform = 'translate3d(0,' + ((1 - av) * 18).toFixed(2) + 'px,0)';
+    for (var k = 0; k < fin.facts.length; k++) {
+      var fk = M.easeOut(M.range(cv, 0.15 + k * 0.12, 0.6 + k * 0.12));
+      fin.facts[k].style.opacity = fk.toFixed(3);
+      fin.facts[k].style.transform = 'translate3d(0,' + ((1 - fk) * 14).toFixed(2) + 'px,0)';
+    }
+
+    // the actions only become reachable once they can be seen
+    var live = fv > 0.02;
+    if (live !== fin.shown) {
+      fin.el.style.visibility = live ? 'visible' : 'hidden';
+      fin.shown = live;
     }
   }
 
-  var api = { build: build, update: update };
+  var api = { init: init, update: update };
   return api;
 })();

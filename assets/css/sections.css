@@ -128,251 +128,12 @@
   }
 }
 
-/* ---------------------------------------------- HERO — cinematic scroll stage */
-.chero{
-  position:relative;
-  height:320vh;                    /* the scroll track the stage is pinned inside */
-  background:var(--ink);
-}
-.chero__stage{
-  position:relative; height:100svh; width:100%;
-  overflow:hidden; background:var(--ink);
-}
-
-/* --- film --- */
-.chero__media{ position:absolute; inset:0; z-index:0; will-change:transform; }
-.chero__media video{
-  width:100%; height:100%; object-fit:cover; object-position:center;
-  display:block; background:var(--ink);
-  opacity:0; transition:opacity .7s var(--ease);
-}
-.chero__media video.is-ready{ opacity:1; }
-
-/* vignette + edge scrims: keeps the stone bright, gives the type ground */
-.chero__vig{
-  position:absolute; inset:0; z-index:1; pointer-events:none;
-  background:
-    radial-gradient(78% 66% at 50% 48%, transparent 30%, rgba(10,10,11,.34) 74%, rgba(10,10,11,.80) 100%),
-    linear-gradient(to bottom, rgba(10,10,11,.66) 0%, transparent 22%, transparent 66%, rgba(10,10,11,.88) 100%);
-}
-.chero__grain{
-  position:absolute; inset:-120%; z-index:2; pointer-events:none;
-  opacity:.12; mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='.5'/></svg>");
-  animation:grain 7s steps(6) infinite;
-}
+/* film grain drift, shared by every grain layer (the hero's lives in hero.css) */
 @keyframes grain{
   0%{transform:translate(0,0)} 20%{transform:translate(-3%,2%)}
   40%{transform:translate(2%,-3%)} 60%{transform:translate(-2%,-2%)}
   80%{transform:translate(3%,2%)} 100%{transform:translate(0,0)}
 }
-
-/* --- narrative --- */
-.chero__narrative{ position:absolute; inset:0; z-index:3; pointer-events:none; }
-
-.cscene{
-  position:absolute; top:50%; translate:0 -50%;
-  width:min(38vw,620px); opacity:0;
-  will-change:transform,opacity,filter;
-}
-/* localized scrim only — never a rectangular panel. Feathered well past the
-   text so it reads as atmosphere rather than a plate behind the words. */
-.cscene::before{
-  content:""; position:absolute; inset:-20% -28% -24% -28%; z-index:-1;
-  background:radial-gradient(58% 56% at 50% 50%,
-    rgba(10,10,11,.86) 0%, rgba(10,10,11,.62) 38%, rgba(10,10,11,.24) 66%, transparent 84%);
-  pointer-events:none;
-}
-.cscene--left { left:8vw;  text-align:left; }
-/* pushed out so the stone keeps the middle of the frame */
-.cscene--right{ left:61vw; width:min(34vw,560px); text-align:left; }
-
-.cscene__eyebrow{
-  display:flex; align-items:center; gap:.9em;
-  font-size:clamp(9px,.66vw,10.5px); font-weight:500;
-  letter-spacing:.42em; text-transform:uppercase;
-  color:var(--rose); margin-bottom:clamp(14px,1.8vw,24px);
-}
-.cscene__eyebrow i{ width:clamp(20px,2.6vw,46px); height:1px; background:currentColor; flex:none; }
-
-.cscene__title{
-  font-family:var(--display); font-weight:400;
-  font-size:clamp(2.6rem,6.6vw,7.6rem);
-  line-height:.92; letter-spacing:-.035em; text-transform:uppercase;
-  color:var(--bone); text-shadow:0 2px 46px rgba(10,10,11,.8);
-}
-.cscene__ln{ display:block; overflow:hidden; padding-block:.04em; margin-block:-.04em; }
-.cscene__ln > span{ display:block; will-change:transform; }
-
-.cscene__body{
-  margin-top:clamp(16px,2vw,26px); max-width:34ch;
-  font-size:clamp(.88rem,1vw,1.04rem); line-height:1.72;
-  color:rgba(244,241,234,.68); text-shadow:0 1px 20px rgba(10,10,11,.85);
-}
-
-/* --- closing CTA --- */
-.chero__cta{
-  position:absolute; left:50%; bottom:clamp(84px,14vh,150px);
-  translate:-50% 0; z-index:4; opacity:0; text-align:center;
-}
-.cbtn{
-  position:relative; display:inline-flex; align-items:center;
-  padding:1.15em 2.5em; border-radius:100px;
-  border:1px solid rgba(244,241,234,.34);
-  overflow:hidden; isolation:isolate;
-}
-.cbtn__fill{
-  position:absolute; inset:0; z-index:-1; border-radius:inherit;
-  background:var(--rose); transform:scale(0);
-  transition:transform .62s var(--ease);
-}
-.cbtn__label{
-  display:inline-flex; align-items:center; gap:.9em;
-  font-size:clamp(10px,.76vw,12px); font-weight:500;
-  letter-spacing:.26em; text-transform:uppercase; color:var(--bone);
-  transition:color .45s var(--ease);
-}
-.cbtn__label i{ width:6px; height:6px; border-radius:50%; background:var(--rose); transition:background .45s var(--ease), transform .5s var(--ease); }
-.cbtn:hover .cbtn__fill{ transform:scale(1.05); }
-.cbtn:hover .cbtn__label{ color:var(--ink); }
-.cbtn:hover .cbtn__label i{ background:var(--ink); transform:scale(1.7); }
-
-/* --- hint + progress --- */
-.chero__hint{
-  position:absolute; left:50%; translate:-50% 0; bottom:clamp(24px,4.4vh,46px); z-index:4;
-  display:flex; flex-direction:column; align-items:center; gap:.8em;
-  font-size:9px; letter-spacing:.34em; text-transform:uppercase;
-  color:rgba(244,241,234,.4); pointer-events:none;
-}
-.chero__hint i{
-  display:block; width:1px; height:clamp(24px,3.6vh,40px);
-  background:rgba(244,241,234,.18); position:relative; overflow:hidden;
-}
-.chero__hint i::after{
-  content:""; position:absolute; inset:0; background:var(--rose);
-  animation:trickle 2.6s var(--ease-io) infinite;
-}
-@keyframes trickle{ 0%{transform:translateY(-100%)} 55%,100%{transform:translateY(100%)} }
-
-.chero__prog{
-  position:absolute; right:clamp(20px,4vw,68px); bottom:clamp(26px,5vh,54px); z-index:4;
-  display:flex; align-items:center; gap:14px;
-  font-size:9px; letter-spacing:.3em; text-transform:uppercase;
-  color:rgba(244,241,234,.42); font-variant-numeric:tabular-nums;
-}
-.chero__rule{ display:block; width:clamp(70px,10vw,150px); height:1px; background:rgba(244,241,234,.18); overflow:hidden; }
-.chero__rule i{ display:block; height:100%; background:var(--rose); transform:scaleX(0); transform-origin:left; }
-
-/* ---------------------------------------------- HERO responsive
-   Mobile is composed, not shrunk: the stone holds the upper frame and the
-   statements sit in the lower third over a dedicated scrim. */
-@media (max-width:1100px){
-  .cscene{ width:min(46vw,520px); }
-  .cscene--left{ left:7vw; }
-  .cscene--right{ left:52vw; }
-}
-@media (max-width:860px){
-  .chero{ height:300vh; }
-  /* The portrait master is the 16:9 composition laid into a 9:16 canvas: its
-     picture occupies roughly 21–53% of the frame and the rest is the hero's
-     own near-black. Dropped 8% down the stage, that band lands at 29–61% —
-     which is what opens a type zone above it as well as below, so the
-     narrative can alternate top / bottom without ever crossing the facets.
-     The clip runs past the foot of the stage; what is clipped is its black. */
-  .chero__media{ top:8%; bottom:auto; height:100%; }
-  .chero__vig{
-    background:
-      radial-gradient(76% 26% at 50% 45%, transparent 22%, rgba(10,10,11,.24) 68%, rgba(10,10,11,.58) 100%),
-      linear-gradient(to bottom,
-        rgba(10,10,11,.90) 0%, rgba(10,10,11,.74) 22%, rgba(10,10,11,.30) 33%,
-        transparent 44%, transparent 60%, rgba(10,10,11,.58) 72%, rgba(10,10,11,.95) 100%);
-  }
-  /* Portrait composition: the statements alternate top-left / bottom-right
-     rather than left / right, so the stone keeps the middle of the frame
-     the whole way down. */
-  .chero{ --cs-top:calc(10.5vh + env(safe-area-inset-top)); }
-  .cscene{
-    top:auto; bottom:auto; translate:0 0;
-    width:min(84vw,520px); left:auto; right:auto;
-  }
-  .cscene--left{
-    top:var(--cs-top); left:6vw; text-align:left;
-  }
-  .cscene--right{
-    bottom:calc(13vh + env(safe-area-inset-bottom)); right:6vw;
-    width:min(80vw,500px); text-align:right;
-  }
-  .cscene--right .cscene__eyebrow{ justify-content:flex-end; }
-  .cscene--right .cscene__body{ margin-left:auto; margin-right:0; }
-  .cscene::before{ inset:-18% -30% -24% -30%; }
-  /* a dedicated mobile scale, not the desktop ramp shrunk */
-  .cscene__title{ font-size:clamp(2.8rem,12.4vw,4.4rem); letter-spacing:-.042em; line-height:.88; }
-  .cscene__eyebrow{ letter-spacing:.34em; margin-bottom:clamp(11px,1.6vh,18px); }
-  .cscene__body{
-    font-size:clamp(.82rem,3.3vw,.94rem); line-height:1.62;
-    max-width:26ch; margin-top:clamp(13px,1.8vh,20px);
-  }
-  /* The CTA is absolutely positioned from left:50% with no width, so its
-     shrink-to-fit box was only half the stage — which is what broke
-     "Explore our diamonds" onto two lines. */
-  .chero__cta{
-    left:50%; right:auto; width:max-content; max-width:92vw;
-    bottom:calc(clamp(58px,9vh,96px) + env(safe-area-inset-bottom));
-  }
-  .cbtn{ padding:1.02em 1.9em; }
-  .cbtn__label{
-    justify-content:center; white-space:nowrap;
-    font-size:clamp(10px,2.7vw,11.5px); letter-spacing:.11em; gap:.75em;
-  }
-  .chero__prog{
-    right:auto; left:50%; translate:-50% 0;
-    bottom:calc(clamp(14px,2.4vh,24px) + env(safe-area-inset-bottom));
-  }
-  .chero__hint{ display:none; }
-}
-@media (max-width:480px){
-  .cscene{ width:88vw; }
-  .cscene--left{ left:5.5vw; }
-  .cscene--right{ right:5.5vw; width:84vw; }
-  .cscene__title{ font-size:clamp(2.7rem,13.2vw,3.7rem); }
-  .cbtn{ padding:1em 1.7em; }
-  .cbtn__label{ letter-spacing:.1em; }
-}
-/* landscape phones: there is no vertical room for a top/bottom alternation,
-   so the statements go back to sharing the frame with the stone */
-@media (max-width:900px) and (orientation:landscape) and (max-height:520px){
-  .cscene{ top:50%; bottom:auto; translate:0 -50%; width:min(46vw,420px); }
-  .cscene--left{ left:5vw; }
-  .cscene--right{ left:auto; right:5vw; }
-  .cscene__title{ font-size:clamp(1.9rem,6.2vw,2.8rem); }
-  .cscene__body{ font-size:.8rem; max-width:28ch; }
-  .chero__cta{ bottom:clamp(20px,7vh,42px); }
-}
-
-/* ---------------------------------------------- reduced motion
-   No pin, no scrub: the stage becomes a stable frame and every statement
-   is laid out in normal flow so the narrative still reads. */
-.chero.is-reduced{ height:auto; }
-.chero.is-reduced .chero__stage{ height:auto; min-height:100svh; }
-.chero.is-reduced .chero__media{ position:absolute; }
-.chero.is-reduced .chero__narrative{
-  position:relative; display:flex; flex-direction:column;
-  gap:clamp(40px,7vh,90px);
-  padding:calc(clamp(18px,2.2vw,32px) + 90px) clamp(20px,7vw,80px) clamp(60px,10vh,120px);
-}
-.chero.is-reduced .cscene{
-  position:relative; inset:auto; translate:none; transform:none !important;
-  opacity:1 !important; filter:none !important; width:min(100%,560px);
-}
-.chero.is-reduced .cscene--right{ margin-left:auto; }
-.chero.is-reduced .cscene__ln > span{ transform:none !important; }
-.chero.is-reduced .chero__cta{
-  position:relative; left:auto; bottom:auto; translate:none;
-  opacity:1 !important; transform:none !important; margin-top:clamp(30px,6vh,60px);
-}
-.chero.is-reduced .chero__hint{ display:none; }
-.chero.is-reduced .chero__grain{ animation:none; }
-
 
 /* --- expanded sheet --- */
 .sheet{
@@ -2518,55 +2279,6 @@ body.has-cursor .cur{ opacity:1; }
 .pre__diamond{display:block;width:min(38svh,300px);height:min(38svh,300px);margin:-2vh auto 1.5vh;overflow:visible;}
 .pre__count{font-size:clamp(3rem,6vw,5rem);}
 .pre__word{color:rgba(244,241,234,.74);}
-.chero__vig{background:linear-gradient(90deg,rgba(18,17,17,.7),transparent 58%),linear-gradient(0deg,rgba(18,17,17,.5),transparent 60%);}
-.cscene__body{color:rgba(244,241,234,.88);}
-/* Headlines were clipped at the column edge ("EXCELLENC"). Lines now clip
-   vertically only (for the reveal), and the type is sized so the longest
-   word, "EXCELLENCE.", fits its column at every width. */
-.cscene__ln{overflow:visible;clip-path:inset(-.06em -60vw -.06em -60vw);}
-@media (max-width:860px){.cscene__title{font-size:clamp(2.1rem,10.4vw,4rem);}}
-/* Hero film v2: the nine stones settle in the middle of the frame (28-71 % of
-   the film's width, 32-72 % of its height). The statements therefore never
-   share that area.
-   Wide screens: statements take the outer thirds. The film covers the stage
-   by height, so the stones' left edge sits at 0.5W - 0.382H; the column runs
-   from 5vw to 1.5vw short of it, and the type is sized so the widest line
-   ("CRAFTED FOR", 6.2em) fits that column on any wide screen. */
-@media (min-width:861px) and (min-aspect-ratio:29/20){
-  .chero{--hero-col:calc(43.5vw - 38.2vh);}
-  .cscene{top:50%;translate:0 -50%;width:var(--hero-col);}
-  .cscene--left{left:5vw;}
-  .cscene--right{left:auto;right:5vw;width:var(--hero-col);}
-  .cscene__title{font-size:clamp(1.9rem,calc(var(--hero-col) / 6.3),6rem);line-height:.94;}
-  .cscene__body{max-width:none;font-size:clamp(.84rem,.95vw,1rem);}
-  .cscene::before{inset:-18% -14% -22% -14%;}
-  /* both outer thirds carry type now, so both get the same quiet ground;
-     the stones in the middle third stay at full brightness */
-  .chero__vig{background:
-    linear-gradient(90deg,rgba(18,15,16,.72) 0%,rgba(18,15,16,.38) 22%,transparent 34%,transparent 66%,rgba(18,15,16,.38) 78%,rgba(18,15,16,.72) 100%),
-    linear-gradient(to bottom,rgba(18,15,16,.55) 0%,transparent 18%,transparent 78%,rgba(18,15,16,.6) 100%);}
-}
-/* Squarer screens (4:3 tablets, 5:4 monitors): the side columns would be too
-   narrow, so the film becomes a band across the middle of the stage, feathered
-   into the ground, and the statements alternate above / below it, the same
-   composition as phones. */
-@media (min-width:861px) and (max-aspect-ratio:29/20){
-  .chero__media{top:50%;bottom:auto;height:56.25vw;translate:0 -50%;
-    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 16%,#000 84%,transparent 100%);
-            mask-image:linear-gradient(to bottom,transparent 0,#000 16%,#000 84%,transparent 100%);}
-  .chero__vig{background:radial-gradient(80% 40% at 50% 50%,transparent 40%,rgba(21,18,19,.5) 100%);}
-  .cscene{top:auto;bottom:auto;translate:0 0;width:min(62vw,720px);}
-  /* anchored to the stones themselves (32 % and 72 % down the film band),
-     not to the band's edges, so the type may sit over the band's quiet rock */
-  .cscene--left{top:calc(50% - 10.125vw - 2vh);translate:0 -100%;left:6vw;}
-  .cscene--right{top:calc(50% + 12.375vw + 2vh);left:auto;right:6vw;text-align:right;}
-  .cscene--right .cscene__eyebrow{justify-content:flex-end;}
-  .cscene--right .cscene__body{margin-left:auto;}
-  .cscene__title{font-size:clamp(1.7rem,min(4.2vw,4.6vh),4.4rem);}
-  .cscene__eyebrow{margin-bottom:1.2vh;}
-  .cscene__body{max-width:52ch;margin-top:1.4vh;font-size:clamp(.78rem,1.7vh,.95rem);line-height:1.55;}
-}
-.js .chero:not(.is-reduced){height:560svh;}
 .js .sty:not(.is-reduced){height:680svh;}
 .js .plr:not(.is-reduced){height:874svh;}
 .js .exp:not(.is-reduced){height:700svh;}
@@ -2596,7 +2308,6 @@ body.has-cursor .cur{ opacity:1; }
 .dsp__copy{width:31vw;}
 .dsp__case img{object-fit:contain;}
 @media(max-width:900px){
- .js .chero:not(.is-reduced){height:500svh;}
  .js .sty:not(.is-reduced){height:600svh;}
  .js .plr:not(.is-reduced){height:788svh;}
  .js .exp:not(.is-reduced){height:620svh;}
@@ -2630,13 +2341,6 @@ body.has-cursor .cur{ opacity:1; }
 .no-js .pre,.no-js .pre__curtain{display:none;}
 
 
-.no-js .chero{height:auto;}
-.no-js .chero__stage{min-height:100svh;height:auto;background:linear-gradient(90deg,rgba(18,17,17,.7),rgba(18,17,17,.2)),url('../video/hero-scrub-poster.webp') center/cover;}
-.hero-static{position:relative;z-index:5;max-width:760px;padding:24svh 8vw 12svh;}
-.hero-static h1{font-size:clamp(3.2rem,7vw,6rem);margin-block:24px;}
-.hero-static p:not(.label){line-height:1.7;}
-.hero-static .btn{margin-top:28px;}
-.no-js .chero__hint,.no-js .chero__prog{display:none;}
 .plr.is-reduced .plr__photos,.no-js .plr .plr__photos{grid-template-columns:repeat(auto-fit,minmax(100px,1fr));}
 .plr.is-reduced .plr__stone,.no-js .plr .plr__stone{width:100%;}
 /* ---------------------------------------------- 19 Sep client revision
@@ -2734,9 +2438,6 @@ body.has-cursor .cur{ opacity:1; }
 .jny.is-reduced .jny__img,.no-js .jny__img{position:relative;opacity:1;height:auto;aspect-ratio:1;}
 .jny.is-reduced .jny__copy,.no-js .jny__copy{position:relative;left:auto;top:auto;translate:none;margin:0;width:auto;opacity:1;visibility:visible;}
 .jny.is-reduced .jny__note,.no-js .jny__note{position:relative;right:auto;bottom:auto;order:6;}
-/* hero -> journey: the film's bright floor fades into the same ink the journey opens on */
-.chero__stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:20vh;z-index:2;pointer-events:none;
-  background:linear-gradient(to bottom,rgba(21,18,19,0),rgba(21,18,19,.72) 55%,var(--ink));}
 /* ---------------------------------------------- 03 · THE CENTURION CUT — see the difference
    Ground and type colour are driven from JS (--spk-ink), so the section runs
    from the Journey's ink to Anatomy's mineral light without a visible edge. */

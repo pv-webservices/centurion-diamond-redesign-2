@@ -12,7 +12,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Centurion Diamond — 100 Facets of Brilliance">
   <meta property="og:description" content="Cut with 100 facets. Engineered for light. More facets, more brilliance.">
-  <meta property="og:image" content="assets/video/hero-scrub-poster.webp">
+  <meta property="og:image" content="assets/img/hero/masterpiece-1920.webp">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/bodoni-moda-normal-400-latin.woff2" crossorigin>
@@ -23,14 +23,12 @@
   <link rel="icon" href="assets/img/brand/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/sections.css">
+  <link rel="stylesheet" href="assets/css/hero.css">
 
-  <!-- One poster per hero master, so a phone never pays for the landscape one.
-     The conditions mirror CD.heroVideo.pickSource exactly: portrait is a
-     <=860px viewport taller than 1.2x its width. -->
-  <link rel="preload" as="image" href="assets/video/hero-scrub-poster.webp" fetchpriority="high"
-    media="(min-width:861px), (min-aspect-ratio:5/6)">
-  <link rel="preload" as="image" href="assets/video/hero-scrub-portrait.webp" fetchpriority="high"
-    media="(max-width:860px) and (max-aspect-ratio:5/6)">
+  <!-- the opening frame of the hero: on the critical path, so it preloads -->
+  <link rel="preload" as="image" href="assets/img/hero/origin-1280.webp" fetchpriority="high"
+    imagesrcset="assets/img/hero/origin-860.webp 860w, assets/img/hero/origin-1280.webp 1280w, assets/img/hero/origin-1920.webp 1920w"
+    imagesizes="(max-aspect-ratio:1/1) 220vw, 100vw">
   <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 </head>
 
@@ -99,40 +97,145 @@
 
   <main id="top">
 
-    <!-- ============================================ 01 · HERO — cinematic scroll stage
-     A tall scroll track with a pinned stage inside it. One master progress value
-     drives the video scrub, the alternating statements, the header and the
-     progress rule. Scenes come from assets/js/hero/scenes.js. -->
-    <section class="chero" id="chero">
-      <div class="chero__stage">
+    <!-- ============================================ 01 · HERO — From Innovation to Brilliance
+     The approved four-shot storyboard, played by the scroll: a lab-grown
+     crystal emerges (Origin), is laser-cut (Craft), turns face-on (Reveal)
+     and settles in its alcove (Masterpiece). One pinned stage, one master
+     progress value. Timing lives in assets/js/hero/scenes.js; the frames are
+     placed in image space (--fx/--fy = the subject's focal point). -->
+    <section class="hx" id="hero" aria-labelledby="hxTitle">
+      <div class="hx__stage">
 
-        <div class="chero__media">
-          <!-- the poster is set by assets/js/hero/video.js alongside the source it
-           belongs to; the matching preload above is what puts it in cache -->
-          <video data-hero-video muted playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>
+        <div class="hx__scenes" data-hx-scenes>
+          <figure class="hx__scene" data-hx-scene="origin" style="--fx:.73;--fy:.51">
+            <div class="hx__plate">
+              <img src="assets/img/hero/origin-1280.webp"
+                srcset="assets/img/hero/origin-860.webp 860w, assets/img/hero/origin-1280.webp 1280w, assets/img/hero/origin-1920.webp 1920w"
+                sizes="(max-aspect-ratio:1/1) 220vw, 100vw" width="1920" height="1080"
+                alt="A rough lab-grown diamond crystal emerging from darkness" fetchpriority="high" decoding="async">
+            </div>
+          </figure>
+
+          <figure class="hx__scene" data-hx-scene="craft" style="--fx:.67;--fy:.5">
+            <div class="hx__plate">
+              <img src="assets/img/hero/craft-1280.webp"
+                srcset="assets/img/hero/craft-860.webp 860w, assets/img/hero/craft-1280.webp 1280w, assets/img/hero/craft-1920.webp 1920w"
+                sizes="(max-aspect-ratio:1/1) 220vw, 100vw" width="1920" height="1080"
+                alt="A diamond held in a precision fixture beneath a laser cutting head" decoding="async">
+              <!-- the laser's contact point, in image space: sparks and the
+                   highlight flash are emitted from wherever this lands on screen -->
+              <span class="hx__laser" data-hx-laser aria-hidden="true"><i></i></span>
+            </div>
+          </figure>
+
+          <figure class="hx__scene" data-hx-scene="reveal" style="--fx:.726;--fy:.478">
+            <div class="hx__plate">
+              <img src="assets/img/hero/reveal-1280.webp"
+                srcset="assets/img/hero/reveal-860.webp 860w, assets/img/hero/reveal-1280.webp 1280w, assets/img/hero/reveal-1920.webp 1920w"
+                sizes="(max-aspect-ratio:1/1) 220vw, 100vw" width="1920" height="1080"
+                alt="A finished round brilliant diamond, face-on against black" decoding="async">
+              <!-- the stone alone, cut from the same frame, turns on its own axis -->
+              <span class="hx__spin" data-hx-spin aria-hidden="true">
+                <img src="assets/img/hero/reveal-1280.webp"
+                  srcset="assets/img/hero/reveal-860.webp 860w, assets/img/hero/reveal-1280.webp 1280w, assets/img/hero/reveal-1920.webp 1920w"
+                  sizes="(max-aspect-ratio:1/1) 220vw, 100vw" width="1920" height="1080" alt="" decoding="async">
+                <span class="hx__glints"><i></i><i></i><i></i><i></i><i></i></span>
+              </span>
+            </div>
+          </figure>
+
+          <figure class="hx__scene" data-hx-scene="masterpiece" style="--fx:.70;--fy:.56">
+            <div class="hx__plate">
+              <img src="assets/img/hero/masterpiece-1280.webp"
+                srcset="assets/img/hero/masterpiece-860.webp 860w, assets/img/hero/masterpiece-1280.webp 1280w, assets/img/hero/masterpiece-1920.webp 1920w"
+                sizes="(max-aspect-ratio:1/1) 220vw, 100vw" width="1920" height="1080"
+                alt="A Centurion diamond resting on a dark pedestal in an architectural alcove" decoding="async">
+              <span class="hx__rim" data-hx-rim aria-hidden="true"></span>
+            </div>
+          </figure>
         </div>
 
-        <div class="chero__vig" aria-hidden="true"></div>
-        <div class="chero__grain" aria-hidden="true"></div>
+        <span class="hx__night" data-hx-night aria-hidden="true"></span>
+        <span class="hx__sheen" data-hx-sheen aria-hidden="true"></span>
+        <canvas class="hx__sparks" data-hx-sparks aria-hidden="true"></canvas>
+        <span class="hx__flash" data-hx-flash aria-hidden="true"></span>
+        <span class="hx__shade" aria-hidden="true"></span>
+        <span class="hx__grain" aria-hidden="true"></span>
+        <span class="hx__bars" data-hx-bars aria-hidden="true"><i></i><i></i></span>
 
-        <div class="chero__narrative" data-hero-narrative></div>
-        <noscript>
-          <div class="hero-static">
-            <p class="label">01 / 100 Facets of Brilliance</p>
-            <h1>Precision<br>in every facet.</h1>
-            <p>From exceptional rough to masterfully finished diamonds, every facet is shaped by precision.</p><a
-              class="btn" href="#journey">Explore our diamonds</a>
+        <!-- opening title — the page's h1 -->
+        <div class="hx__intro" data-hx-intro>
+          <p class="hx__eyebrow"><i></i><span>Centurion Diamond &nbsp;·&nbsp; Lab-Grown</span></p>
+          <h1 class="hx__h1" id="hxTitle">
+            <span class="hx-ln"><span>From innovation</span></span>
+            <span class="hx-ln"><span>to <em>brilliance.</em></span></span>
+          </h1>
+          <p class="hx__lede">The journey from a single lab-grown crystal to one hundred facets of light.</p>
+        </div>
+
+        <!-- the three chapters the scroll walks through -->
+        <div class="hx__chapters">
+          <article class="hx__chapter" data-hx-chapter>
+            <p class="hx__mark"><b>01</b><i></i><span>The Origin</span></p>
+            <h2 class="hx__title">
+              <span class="hx-ln"><span>Grown,</span></span>
+              <span class="hx-ln"><span>not <em>mined.</em></span></span>
+            </h2>
+            <p class="hx__body">Every Centurion diamond begins as a single crystal grown in the lab — chemically,
+              physically and optically a real diamond, created through innovation rather than excavation.</p>
+          </article>
+
+          <article class="hx__chapter" data-hx-chapter>
+            <p class="hx__mark"><b>02</b><i></i><span>The Craft</span></p>
+            <h2 class="hx__title">
+              <span class="hx-ln"><span>Shaped by</span></span>
+              <span class="hx-ln"><span><em>precision.</em></span></span>
+            </h2>
+            <p class="hx__body">Each crystal is mapped, laser-planned and finished by master craftsmen to the
+              proprietary 100-facet Centurion design.</p>
+          </article>
+
+          <article class="hx__chapter" data-hx-chapter>
+            <p class="hx__mark"><b>03</b><i></i><span>The Reveal</span></p>
+            <h2 class="hx__title">
+              <span class="hx-ln"><span>Brilliance,</span></span>
+              <span class="hx-ln"><span><em>multiplied.</em></span></span>
+            </h2>
+            <p class="hx__meter"><b data-hx-count>100</b><span>Facets<br>vs. 58 in a traditional cut</span></p>
+            <p class="hx__body">Nearly twice the facets of a traditional brilliant — engineered to capture and
+              return more light, more fire, more sparkle.</p>
+          </article>
+        </div>
+
+        <!-- the closing frame: the camera has settled, the stone holds -->
+        <div class="hx__final" data-hx-final>
+          <p class="hx__mark"><b>04</b><i></i><span>The Masterpiece</span></p>
+          <h2 class="hx__title">
+            <span class="hx-ln"><span>Engineered</span></span>
+            <span class="hx-ln"><span>to <em>shine.</em></span></span>
+          </h2>
+          <p class="hx__body">Lab-grown, GSI-certified and cut with one hundred facets — a diamond engineered for
+            the way light moves.</p>
+          <div class="hx__actions" data-hx-actions>
+            <a class="hx-btn hx-btn--solid" href="#cut"><span>Discover the cut</span></a>
+            <a class="hx-btn" href="#contact"><span>Inquire now</span></a>
           </div>
-        </noscript>
-
-        <div class="chero__hint" data-hero-hint aria-hidden="true">
-          <span>Scroll to discover</span><i></i>
+          <ul class="hx__facts" role="list" data-hx-facts>
+            <li><b>100</b><span>Facets</span></li>
+            <li><b>F+</b><span>Colour</span></li>
+            <li><b>VS+</b><span>Clarity</span></li>
+            <li><b>GSI</b><span>Certified</span></li>
+          </ul>
         </div>
 
-        <div class="chero__prog" data-hero-progress aria-hidden="true">
-          <span data-prog-num>01 / 04</span>
-          <span class="chero__rule"><i data-prog-bar></i></span>
-        </div>
+        <ol class="hx__rail" data-hx-rail aria-hidden="true">
+          <li><i><b></b></i><span><em>01</em> Origin</span><small>Curiosity</small></li>
+          <li><i><b></b></i><span><em>02</em> Craft</span><small>Transformation</small></li>
+          <li><i><b></b></i><span><em>03</em> Reveal</span><small>Wonder</small></li>
+          <li><i><b></b></i><span><em>04</em> Masterpiece</span><small>Desire</small></li>
+        </ol>
+
+        <div class="hx__hint" data-hx-hint aria-hidden="true"><span>Scroll to begin the journey</span><i></i></div>
 
       </div>
     </section>
@@ -668,8 +771,10 @@
   <script defer src="assets/js/diamond-assets.js"></script>
   <script defer src="assets/js/preloader.js"></script>
   <script defer src="assets/js/journey/index.js"></script>
+  <script defer src="assets/js/hero/math.js"></script>
   <script defer src="assets/js/hero/scenes.js"></script>
-  <script defer src="assets/js/hero/video.js"></script>
+  <script defer src="assets/js/hero/stage.js"></script>
+  <script defer src="assets/js/hero/sparks.js"></script>
   <script defer src="assets/js/hero/narrative.js"></script>
   <script defer src="assets/js/hero/header.js"></script>
   <script defer src="assets/js/hero/progress.js"></script>

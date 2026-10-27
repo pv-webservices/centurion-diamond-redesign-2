@@ -1,32 +1,49 @@
 /* ============================================================
-   Progress indicator + scroll hint.
-   A thin rule that fills with hero progress, plus the phase readout.
+   Chapter rail + scroll hint.
+   Four segments — Origin / Craft / Reveal / Masterpiece — each filling
+   across its own stretch of the hero; the current one is lit.
    ============================================================ */
 window.CD = window.CD || {};
 
 CD.heroProgress = (function () {
   'use strict';
-  var bar = null, num = null, hint = null, total = 0;
 
-  function init(root, sceneCount) {
-    if (!root) return null;
-    bar = root.querySelector('[data-prog-bar]');
-    num = root.querySelector('[data-prog-num]');
-    hint = document.querySelector('[data-hero-hint]');
-    total = sceneCount;
+  var M = CD.heroMath;
+  var items = [], bars = [], bounds = null, hint = null, active = -1;
+  var gate = 0, last = 0;   // gate: the hint's own entrance, run once on load
+
+  function init(root, timeline) {
+    var rail = root.querySelector('[data-hx-rail]');
+    if (!rail) return null;
+    items = Array.prototype.slice.call(rail.querySelectorAll('li'));
+    bars = items.map(function (li) { return li.querySelector('b'); });
+    bounds = timeline.rail;
+    hint = root.querySelector('[data-hx-hint]');
     return api;
   }
 
   function update(p) {
-    if (bar) bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
-    if (num) {
-      var idx = Math.min(total, Math.floor(p * total) + 1);
-      var s = String(idx).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
-      if (num.textContent !== s) num.textContent = s;
+    var now = 0;
+    for (var i = 0; i < items.length; i++) {
+      var t = M.range(p, bounds[i], bounds[i + 1]);
+      bars[i].style.transform = 'scaleX(' + t.toFixed(4) + ')';
+      if (p >= bounds[i]) now = i;
     }
-    if (hint) hint.style.opacity = Math.max(0, 1 - p / 0.06).toFixed(3);
+    if (now !== active) {
+      items.forEach(function (li, i) { li.classList.toggle('is-on', i === now); });
+      active = now;
+    }
+    last = p;
+    paintHint();
   }
 
-  var api = { init: init, update: update };
+  /* the hint only shows as far as scroll allows: a visitor already past the
+     opening (restored scroll, anchor jump) never sees it over a later frame */
+  function paintHint() {
+    if (hint) hint.style.opacity = (gate * Math.max(0, 1 - last / 0.03)).toFixed(3);
+  }
+  function revealHint(v) { gate = v; paintHint(); }
+
+  var api = { init: init, update: update, revealHint: revealHint };
   return api;
 })();
