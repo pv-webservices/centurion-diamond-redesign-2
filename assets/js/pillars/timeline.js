@@ -1,5 +1,5 @@
 /* ============================================================
-   03 · ANATOMY OF BRILLIANCE — the timeline.
+   04 · ANATOMY OF BRILLIANCE — the timeline.
 
    Pure maths: master progress in, a plain description of the frame out.
    Nothing here touches the DOM, so the choreography can be reasoned about

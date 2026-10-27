@@ -15,8 +15,11 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
   const data=await page.evaluate(()=>{ScrollTrigger.refresh();return {triggers:ScrollTrigger.getAll().length,overflow:document.documentElement.scrollWidth-innerWidth};});
   assert.equal(data.triggers,count);assert.equal(data.overflow,0);
  }
- // Sample both sides of every seam and ensure adjacent section boxes touch.
- assert.deepEqual(await page.evaluate(()=>{const sections=[...document.querySelectorAll('section[id]')];return sections.slice(1).filter((s,i)=>Math.abs(s.getBoundingClientRect().top-sections[i].getBoundingClientRect().bottom)>2).map(s=>s.id);}),[]);
+ // Every visible section starts where the previous one ends: no gap. The three
+ // handoff sections (study, exclusive, finale) overlap the one before by a
+ // viewport on purpose, so their pinned stages cross-fade instead of cutting.
+ assert.deepEqual(await page.evaluate(()=>{const overlap=new Set(['study','exclusive','retail-showcase']);const sections=[...document.querySelectorAll('section[id]')].filter(s=>s.getBoundingClientRect().height>0);
+  return sections.slice(1).filter((s,i)=>{const gap=s.getBoundingClientRect().top-sections[i].getBoundingClientRect().bottom;return overlap.has(s.id)?gap>2:Math.abs(gap)>2;}).map(s=>s.id);}),[]);
  // Explicit internal fixtures validate registration/masking without pretending
  // that missing client photographs exist. Nothing is written to production config.
  await page.setRequestInterception(true);
@@ -27,6 +30,8 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
   }else req.continue();
  });
  await page.reload({waitUntil:'networkidle0'});await page.waitForFunction(()=>getComputedStyle(document.getElementById('pre')).display==='none'&&!document.body.classList.contains('is-locked'),{timeout:20000});await wait(600);
+ // At Retail ships parked (`hidden`); switch it on here to exercise its 10-to-25 path.
+ await page.evaluate(()=>{const d=document.getElementById('display');d.hidden=false;CD.initDisplay();ScrollTrigger.refresh();});await wait(600);
  assert.equal(await page.$eval('#display',e=>e.dataset.retailMode),'10-to-25');
  for(const [width,height] of [[1440,900],[390,844]]){
   await page.setViewport({width,height});await wait(350);await page.waitForFunction(()=>{const n=document.getElementById('display');const t=ScrollTrigger.getAll().find(s=>s.trigger===n);return t&&Math.abs(t.start-n.offsetTop)<2;},{timeout:5000});await wait(250);

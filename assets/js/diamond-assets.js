@@ -13,8 +13,12 @@ window.CD = window.CD || {};
     cut('elongated-cushion', 'Elongated Cushion'), cut('marquise', 'Marquise'),
     cut('emerald', 'Emerald'), cut('pear', 'Pear'), cut('heart', 'Heart'), cut('princess', 'Princess')
   ];
-  /* The feature rotation, in the order the client asked for. */
-  CD.diamondShapes = CD.diamondFamily.slice(0, 5);
+  /* The feature rotation, in the order the client asked for (Oct 2026):
+     two cuts per Anatomy benefit, 01 to 03. */
+  var FEATURE = ['round', 'oval', 'radiant', 'elongated-cushion', 'emerald', 'pear'];
+  CD.diamondShapes = FEATURE.map(function (key) {
+    return CD.diamondFamily.filter(function (s) { return s.key === key; })[0];
+  });
 })();
 CD.retailAssets = {
   /* The 10-piece display: ten stands, ten rings, the same tray as the finale film.

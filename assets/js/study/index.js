@@ -1,5 +1,5 @@
 /* ============================================================
-   04 · A STUDY IN LIGHT — orchestrator.
+   03 · A STUDY IN LIGHT — orchestrator.
 
    One pinned ScrollTrigger produces a single master progress value; the
    timeline turns it into a frame, the renderer writes it, and the same
@@ -7,10 +7,10 @@
    section and Anatomy of Brilliance, so all four share the page's one
    Lenis/GSAP setup and never open a scroll listener of their own.
 
-   The chapter inherits the exact frame Anatomy of Brilliance closes on —
-   one hairline across ink — and opens by parting it. The section overlaps
-   Anatomy by a viewport (sections.css), so this pin starts the moment that
-   one ends; the stage stays hidden until then (`is-live`).
+   The chapter opens on the ink The Cut closes on, draws one hairline across
+   it and parts it. The section overlaps The Cut by a viewport (sections.css),
+   so this pin starts the moment that one ends; the stage stays hidden until
+   then (`is-live`).
    ============================================================ */
 window.CD = window.CD || {};
 

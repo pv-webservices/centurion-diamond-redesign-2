@@ -1,5 +1,5 @@
 /* ============================================================
-   03 · ANATOMY OF BRILLIANCE — orchestrator.
+   04 · ANATOMY OF BRILLIANCE — orchestrator.
 
    One pinned ScrollTrigger produces a single master progress value; the
    timeline turns it into a frame and the renderer writes it. Same shape as
@@ -52,6 +52,10 @@ CD.initPillars = function initPillars() {
     F.render(fam, fp, narrow);
   }
 
+  /* overlaps A Study in Light by a viewport (sections.css): hidden until its
+     own pin takes over, so it never slides over the Study's closing frame */
+  function live(self) { root.classList.toggle('is-live', self.scroll() >= self.start - 2); }
+
   ScrollTrigger.create({
     trigger: root,
     start: 'top top',
@@ -59,7 +63,9 @@ CD.initPillars = function initPillars() {
     pin: el.stage,
     pinSpacing: false,
     anticipatePin: 1,
-    onUpdate: function (self) { paint(self.progress); }
+    onToggle: live,
+    onRefresh: live,
+    onUpdate: function (self) { live(self); paint(self.progress); }
   });
 
   /* narrow/wide changes the composition, so re-read it on resize. main.js

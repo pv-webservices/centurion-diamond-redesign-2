@@ -1,5 +1,5 @@
 /* ============================================================
-   04 · A STUDY IN LIGHT — the scrub engine.
+   03 · A STUDY IN LIGHT — the scrub engine.
 
    The clip is seeked, never played, so that scrolling *is* the observation
    rather than something happening alongside it. Two things make that
@@ -53,7 +53,7 @@ CD.studyVideo = (function () {
   /* A seekable clip has to be buffered, so it cannot be fetched lazily at
      the section's own edge — but nor should it compete with the hero's
      master for the first paint. It starts loading three viewports
-     out, which on this page is Anatomy of Brilliance's benefits. */
+     out, which on this page is The Cut's comparison. */
   function begin() {
     if (video.src) return;
     pickSource(video);          // assigning src is what starts the fetch

@@ -1,5 +1,5 @@
 /* ============================================================
-   04 · A STUDY IN LIGHT — content timing + choreography,
+   03 · A STUDY IN LIGHT — content timing + choreography,
    expressed in master-progress space (0..1).
 
    The copy itself lives in index.html so the chapter still reads with
@@ -27,10 +27,10 @@ CD.study = {
       {inA:.86,inB:.88,outA:.95,outB:.965}
     ],
 
-    /* the aperture's own hairline. It is already drawn at 0 — it is the
-       line Anatomy's family finale closes on — splits as the shutters part,
-       recedes to a frame, returns as they shut, then folds to a point */
-    edge:   { open: [-0.02, 0.000], settle: [0.030, 0.160],
+    /* the aperture's own hairline. It draws across the ink The Cut closes
+       on, splits as the shutters part, recedes to a frame, returns as they
+       shut, then folds to a point */
+    edge:   { open: [0.002, 0.045], settle: [0.050, 0.160],
               close: [0.950, 0.982], gone: [0.982, 0.998] },
 
     /* light crossing the stone: once as the aperture first opens, once
@@ -40,12 +40,12 @@ CD.study = {
       { inA: 0.428, inB: 0.452, outA: 0.578, outB: 0.612 }
     ],
 
-    /* the close: a glint where the line folds away, and the ground easing
-       to the Experience chapter's own, so that chapter opens on this frame */
+    /* the close: a glint where the line folds away, on the ink Anatomy of
+       Brilliance opens on, so that chapter starts from this frame */
     spark:  [0.980, 1.000],
     ground: [0.975, 1.000]
   },
-  groundTo: [28, 22, 23],   // = .exp .exc__stage
+  groundTo: [21, 18, 19],   // = --ink, Anatomy's first frame
 
   /* ---------------------------------------------------------- optics
      Technical traces, each held for a short beat and never more than one

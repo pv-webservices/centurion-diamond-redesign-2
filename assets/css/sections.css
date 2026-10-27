@@ -23,6 +23,34 @@
 .pre__bar{ width:min(240px,42vw); height:1px; background:var(--rule); margin:1.5em auto 0; overflow:hidden; }
 .pre__bar i{ display:block; height:100%; width:100%; background:var(--rose); transform:scaleX(0); transform-origin:left; }
 .pre__curtain{ position:fixed; inset:0; z-index:999; background:var(--ink); transform-origin:top; pointer-events:none; }
+/* the count and the invitation share one cell, so the stone never moves */
+.pre__stack{ display:grid; place-items:center; }
+.pre__stack > *{ grid-area:1/1; }
+.pre__enter{
+  position:relative; display:inline-flex; flex-direction:column; align-items:center; gap:.85em;
+  padding:1.05em 3em 1.15em; border:1px solid rgba(227,191,187,.45); border-radius:100px;
+  background:transparent; color:var(--bone); cursor:pointer; overflow:hidden; isolation:isolate;
+  transition:color .5s var(--ease), border-color .5s var(--ease);
+}
+.pre__enter[hidden]{ display:none; }
+.pre__enter::before{                     /* a slow glint across the pill */
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,240,236,.22) 50%,transparent 65%) 0 0/250% 100% no-repeat;
+  animation:preGlint 3.2s cubic-bezier(.45,0,.2,1) infinite;
+}
+.pre__enter::after{
+  content:""; position:absolute; inset:0; z-index:-2; border-radius:inherit; background:var(--rose);
+  transform:scaleY(0); transform-origin:bottom; transition:transform .55s var(--ease);
+}
+.pre__enter:hover,.pre__enter:focus-visible{ color:var(--ink); border-color:var(--rose); }
+.pre__enter:hover::after,.pre__enter:focus-visible::after{ transform:scaleY(1); transform-origin:top; }
+.pre__enter:hover .pre__enter-sub,.pre__enter:focus-visible .pre__enter-sub{ color:var(--ink); }
+.pre__enter-label{
+  font-family:var(--display); font-weight:400; font-size:clamp(1.5rem,2.4vw,2.2rem);
+  line-height:1; letter-spacing:.42em; padding-left:.42em; text-transform:uppercase;
+}
+.pre__enter-sub{ font-size:9px; font-weight:500; letter-spacing:.36em; text-transform:uppercase; color:var(--rose-lt); transition:color .5s var(--ease); }
+@keyframes preGlint{ 0%,40%{ background-position:120% 0; } 85%,100%{ background-position:-20% 0; } }
 
 /* ---------------------------------------------- SIDE RAILS */
 .rail{
@@ -423,15 +451,17 @@
    ============================================================ */
 .plr{
   --plr-ink:#1A1917;                    /* deep graphite on the mineral ground */
-  --plr-dim:rgba(26,25,23,.62);
-  --plr-faint:rgba(26,25,23,.34);
-  --plr-rule:rgba(26,25,23,.15);
-  --plr-champagne:#B9A88C;
+  /* Oct 2026 (client): text on the beige ground read too pale. Body, labels
+     and the champagne figure are all a step darker. */
+  --plr-dim:rgba(26,25,23,.84);
+  --plr-faint:rgba(26,25,23,.62);
+  --plr-rule:rgba(26,25,23,.18);
+  --plr-champagne:#86704F;
   position:relative; height:400vh; background:var(--ink);
 }
 .plr__stage{
   position:relative; height:100svh; width:100%; overflow:hidden;
-  background:rgb(236,233,228);          /* the Sparkle section's last frame */
+  background:var(--ink);                /* A Study in Light's last frame */
   display:grid; place-items:center;
   color:var(--plr-ink);
 }
@@ -499,7 +529,7 @@
 .plr__ln{ display:block; padding-block:.06em; margin-block:-.06em; }
 .plr__ln > span{ display:block; will-change:transform,opacity; }
 .plr__h2 .is-em,
-.plr__t .is-em{ font-style:italic; color:var(--rose-dp); text-transform:none; }
+.plr__t .is-em{ font-style:italic; color:#94625F; text-transform:none; }
 
 /* --- the four benefits --- */
 .plr__scene{
@@ -525,7 +555,7 @@
 .plr__scene[data-side="center"] .plr__n{ justify-content:center; }
 .plr__n b{
   font-family:var(--display); font-weight:500; font-size:1.9em;
-  letter-spacing:.04em; color:var(--rose-dp);
+  letter-spacing:.04em; color:#94625F;
 }
 .plr__n i{ width:clamp(26px,3.4vw,62px); height:1px; background:currentColor; opacity:.5; }
 
@@ -561,7 +591,7 @@
   letter-spacing:-.04em; text-transform:uppercase;
   color:var(--plr-ink); white-space:nowrap;
 }
-.plr__word[data-plr-word="1"]{ color:var(--rose-dp); font-style:italic; text-transform:none; }
+.plr__word[data-plr-word="1"]{ color:#94625F; font-style:italic; text-transform:none; }
 .plr__word[data-plr-word="2"]{ font-size:clamp(1.8rem,5vw,5.4rem); }
 
 /* --- handoff into the family finale: an aperture closing on the Round --- */
@@ -715,7 +745,7 @@
   filter:none; transform:none !important;
 }
 .plr.is-reduced .plr__photos,.no-js .plr .plr__photos{
-  position:relative; inset:auto; display:grid; grid-template-columns:repeat(5,minmax(0,1fr));
+  position:relative; inset:auto; display:grid; grid-template-columns:repeat(6,minmax(0,1fr));
   align-items:end; gap:clamp(10px,2.2vw,28px);
 }
 .plr.is-reduced .plr__shape-photo,.no-js .plr .plr__shape-photo{
@@ -2531,13 +2561,13 @@ body.has-cursor .cur{ opacity:1; }
    Wide screens: statements take the outer thirds. The film covers the stage
    by height, so the stones' left edge sits at 0.5W - 0.382H; the column runs
    from 5vw to 1.5vw short of it, and the type is sized so the widest line
-   ("CRAFTED FOR", 6.2em) fits that column on any wide screen. */
+   ("OF ARTISANAL", 6.9em) fits that column on any wide screen. */
 @media (min-width:861px) and (min-aspect-ratio:29/20){
   .chero{--hero-col:calc(43.5vw - 38.2vh);}
   .cscene{top:50%;translate:0 -50%;width:var(--hero-col);}
   .cscene--left{left:5vw;}
   .cscene--right{left:auto;right:5vw;width:var(--hero-col);}
-  .cscene__title{font-size:clamp(1.9rem,calc(var(--hero-col) / 6.3),6rem);line-height:.94;}
+  .cscene__title{font-size:clamp(1.9rem,calc(var(--hero-col) / 7.1),6rem);line-height:.94;}
   .cscene__body{max-width:none;font-size:clamp(.84rem,.95vw,1rem);}
   .cscene::before{inset:-18% -14% -22% -14%;}
   /* both outer thirds carry type now, so both get the same quiet ground;
@@ -2571,15 +2601,15 @@ body.has-cursor .cur{ opacity:1; }
 .js .plr:not(.is-reduced){height:874svh;}
 .js .exp:not(.is-reduced){height:700svh;}
 .js .dsp:not(.is-reduced){height:440svh;}
-.plr__shape-label{color:#514343;}
-.exp .exc__stage{background:#1c1617;color:var(--bone);}
+.plr__shape-label{color:#3f3434;}
+.exp .exc__stage{background:var(--ink);color:var(--bone);}
 .exp__frame{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:7vw 4vw;opacity:0;visibility:hidden;}
 .exp__frame .label{margin-bottom:5svh;color:#d5bcbc;}
 .exp__frame h2,.exp__frame h3{font-family:var(--display);font-weight:400;font-size:clamp(3rem,8.4vw,9rem);line-height:1.04;letter-spacing:-.035em;text-transform:uppercase;}
 .exp__frame em{color:var(--brand-blush);font-weight:400;text-transform:none;}
 .exp__mineral{background:#f3f0e9;color:#211a1a;}
 .exp__mineral h3{font-size:clamp(2.8rem,7.7vw,8.5rem);}
-.exp__mineral em{color:#9b6d6d;}
+.exp__mineral em{color:#8a5b5b;}
 .exp__unshoppable{background:#221b1c;}
 .exp__cta{margin-top:6svh;}
 /* the retailer's case: a two-row ledger beside the two claims */
@@ -2746,12 +2776,12 @@ body.has-cursor .cur{ opacity:1; }
 .spk__sweep{position:absolute;top:-20%;bottom:-20%;left:0;width:46vw;z-index:1;opacity:0;pointer-events:none;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.55) 45%,rgba(255,244,240,.75) 50%,rgba(255,255,255,.55) 55%,transparent);filter:blur(28px);}
 .spk__intro{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:0;}
-.spk__eyebrow{display:flex;align-items:center;gap:.9em;margin-bottom:4svh;font-size:10.5px;font-weight:500;letter-spacing:.42em;text-transform:uppercase;color:inherit;opacity:.72;}
+.spk__eyebrow{display:flex;align-items:center;gap:.9em;margin-bottom:4svh;font-size:10.5px;font-weight:500;letter-spacing:.42em;text-transform:uppercase;color:inherit;opacity:.9;}
 .spk__eyebrow i{width:42px;height:1px;background:currentColor;}
 .spk__eyebrow b{font-weight:600;color:var(--brand-blush);}
 .spk__h2{font-family:var(--display);font-weight:400;font-size:clamp(3rem,7.4vw,8.4rem);line-height:.98;letter-spacing:-.035em;text-transform:uppercase;}
 .spk__h2 span{display:block;}
-.spk__h2 .is-em{font-style:italic;text-transform:none;color:#a0706f;}
+.spk__h2 .is-em{font-style:italic;text-transform:none;color:#94625f;}
 /* the comparison */
 .spk__pair{position:absolute;inset:0;z-index:3;visibility:hidden;}
 .spk__cut{position:absolute;left:50%;top:41%;width:var(--spk-d);margin:0;translate:-50% -50%;will-change:transform,opacity;opacity:0;}
@@ -2777,19 +2807,19 @@ body.has-cursor .cur{ opacity:1; }
 .spk__wipe b{position:absolute;left:50%;top:50%;width:16px;height:16px;translate:-50% -50%;rotate:45deg;background:#f4f1ea;border:1.5px solid #b07f7d;}
 /* the figure is the disc; its caption hangs below, so the disc itself is centred */
 .spk__meta{position:absolute;left:50%;top:100%;translate:-50% 0;width:max-content;display:flex;flex-direction:column;align-items:center;margin-top:5svh;text-align:center;color:#1a1917;}
-.spk__label{font-size:11px;font-weight:600;letter-spacing:.42em;text-transform:uppercase;color:#6d6560;}
-.spk__num{font-family:var(--display);font-size:clamp(3.8rem,min(6.6vw,11svh),8.4rem);line-height:.9;letter-spacing:-.04em;margin-top:1.4svh;color:#8d8580;transition:color .35s;font-variant-numeric:lining-nums tabular-nums;}
-.spk__unit{margin-top:1.4svh;font-size:10.5px;font-weight:500;letter-spacing:.42em;text-transform:uppercase;color:#6d6560;}
-.spk__note{margin-top:.9svh;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#9a918b;}
+.spk__label{font-size:11px;font-weight:600;letter-spacing:.42em;text-transform:uppercase;color:#4a433f;}
+.spk__num{font-family:var(--display);font-size:clamp(3.8rem,min(6.6vw,11svh),8.4rem);line-height:.9;letter-spacing:-.04em;margin-top:1.4svh;color:#6a625d;transition:color .35s;font-variant-numeric:lining-nums tabular-nums;}
+.spk__unit{margin-top:1.4svh;font-size:10.5px;font-weight:500;letter-spacing:.42em;text-transform:uppercase;color:#4a433f;}
+.spk__note{margin-top:.9svh;font-size:10px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#5c5450;}
 .spk.is-centurion [data-spk-cut="centurion"] .spk__num{color:#1a1917;}
-.spk.is-centurion [data-spk-cut="centurion"] .spk__label{color:#a0706f;}
+.spk.is-centurion [data-spk-cut="centurion"] .spk__label{color:#8c5b59;}
 .spk__cut--trad .spk__img img{filter:saturate(.85);}
 .spk__cut--trad .spk__disc::before{box-shadow:0 22px 40px -10px rgba(60,44,40,.16),0 6px 12px -4px rgba(60,44,40,.07);}
-.spk__lede{position:absolute;left:50%;bottom:7svh;translate:-50% 0;z-index:4;width:min(88vw,46ch);text-align:center;font-size:clamp(.92rem,1.05vw,1.08rem);line-height:1.7;color:#4d4642;opacity:0;visibility:hidden;}
+.spk__lede{position:absolute;left:50%;bottom:7svh;translate:-50% 0;z-index:4;width:min(88vw,46ch);text-align:center;font-size:clamp(.92rem,1.05vw,1.08rem);line-height:1.7;color:#332d2a;opacity:0;visibility:hidden;}
 /* the close */
 .spk__outro{position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;}
 .spk__close{font-family:var(--display);font-weight:400;font-size:clamp(3.2rem,9.4vw,11rem);line-height:.95;letter-spacing:-.04em;text-transform:uppercase;color:#1a1917;text-align:center;}
-.spk__close em{display:block;font-style:italic;text-transform:none;color:#a0706f;}
+.spk__close em{display:block;font-style:italic;text-transform:none;color:#94625f;}
 @media(max-width:900px){
  .js .spk:not(.is-reduced){height:600svh;}
  .spk{--spk-d:min(64vw,34svh);}
@@ -2815,8 +2845,6 @@ body.has-cursor .cur{ opacity:1; }
    centre in turn. Timing and motion: assets/js/pillars/family.js. */
 .plr__family{position:absolute;inset:0;z-index:4;opacity:0;visibility:hidden;pointer-events:none;color:var(--bone);
   --fam-cy:7svh;--fam-hero:min(30vw,34svh);--fam-orb:min(12vw,15svh);}
-.fam__line{position:absolute;left:0;right:0;top:50%;height:1px;z-index:5;opacity:0;transform:scaleX(0);will-change:transform,opacity;
-  background:linear-gradient(90deg,transparent,rgba(238,240,246,.92) 12%,rgba(238,240,246,.92) 88%,transparent);box-shadow:0 0 22px 1px rgba(226,232,244,.42);}
 .fam__glow{position:absolute;left:50%;top:calc(50% + var(--fam-cy));width:calc(var(--fam-hero) * 3.2);aspect-ratio:1;translate:-50% -50%;opacity:0;
   background:radial-gradient(circle,rgba(244,226,222,.20) 0%,rgba(227,191,187,.09) 30%,rgba(21,18,19,0) 64%);}
 /* title */
@@ -2890,20 +2918,65 @@ body.has-cursor .cur{ opacity:1; }
 @media (prefers-reduced-motion:reduce){.fam__ring,.fam__shine,.fam__glints i{animation:none;}}
 
 /* ---------------------------------------------- seamless chapter handoffs
-   Anatomy -> Study -> Experience share one frame at each join: each chapter
-   ends on exactly the frame the next one opens on. Overlapping each section
-   by one viewport makes the next pin begin the moment the last one ends,
-   instead of both stages sliding through a screen of empty ink. The later
-   stage stays hidden until its own pin takes it (study/index.js,
-   exclusive/index.js), so it never slides over the pinned one. */
+   The Cut -> Study -> Anatomy -> Experience -> Retail share one frame at each
+   join: each chapter ends on exactly the frame the next one opens on (ink,
+   for the first three joins). Overlapping each section by one viewport makes
+   the next pin begin the moment the last one ends, instead of both stages
+   sliding through a screen of empty ink. The later stage stays hidden until
+   its own pin takes it (study/, pillars/, exclusive/ and finale/index.js),
+   so it never slides over the pinned one. */
 .js .sty:not(.is-reduced){margin-top:-100svh;z-index:2;background:transparent;}
-.js .exc.exp:not(.is-reduced){margin-top:-100svh;z-index:3;background:transparent;}
-.js .fin:not(.is-reduced){margin-top:-100svh;z-index:4;background:transparent;}
+.js .plr:not(.is-reduced){margin-top:-100svh;z-index:3;background:transparent;}
+.js .exc.exp:not(.is-reduced){margin-top:-100svh;z-index:4;background:transparent;}
+.js .fin:not(.is-reduced){margin-top:-100svh;z-index:5;background:transparent;}
 .js .sty:not(.is-reduced) .sty__stage,
+.js .plr:not(.is-reduced) .plr__stage,
 .js .exc.exp:not(.is-reduced) .exc__stage,
 .js .fin:not(.is-reduced) .fin__stage{visibility:hidden;}
 .js .sty.is-live .sty__stage,
+.js .plr.is-live .plr__stage,
 .js .exc.exp.is-live .exc__stage,
 .js .fin.is-live .fin__stage{visibility:visible;}
 /* 07 · At Retail is hidden for now (the `hidden` attribute in index.html) */
 .dsp[hidden]{display:none !important;}
+
+/* ---------------------------------------------- October 2026 client revision */
+/* Experience lost its title frame to Anatomy's family finale: less track. */
+.js .exp:not(.is-reduced){height:740svh;}
+@media(max-width:900px){ .js .exp:not(.is-reduced){height:660svh;} }
+
+/* the family title runs to three lines; the chapter number rides the eyebrow */
+.fam__eyebrow b{font-weight:600;color:var(--brand-blush);}
+/* clear of the fixed header, and above the top of the orbit */
+.fam__head{top:max(12svh,96px);}
+.fam__title{font-size:clamp(1.6rem,min(2.7vw,4.6svh),3.2rem);line-height:1.04;}
+@media(max-width:900px){
+ .fam__head{top:max(11svh,84px);}
+ .fam__title{font-size:clamp(1.5rem,min(6.4vw,4.2svh),2.6rem);}
+}
+
+/* Unshoppable: why, and the two ways forward */
+.exp__note{max-width:46ch;margin-top:3.4svh;font-size:clamp(.92rem,1.05vw,1.08rem);line-height:1.7;color:rgba(244,241,234,.82);}
+.exp__ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 18px;margin-top:5svh;}
+.exp__ctas .exp__cta{margin-top:0;}
+.exp__cta--fill{background:var(--brand-blush);border-color:var(--brand-blush);color:var(--ink);}
+.exp__cta--fill::after{background:var(--bone);}
+.exp__cta--fill:hover{border-color:var(--bone);}
+@media(max-width:900px){ .exp__note{font-size:.9rem;} .exp__ctas{margin-top:3.4svh;} }
+
+/* the close: two paths, the buyer and the jeweller */
+.contact__title{font-size:clamp(2.8rem,6vw,6.2rem);}
+.contact__paths{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2vw,28px);width:min(100%,1180px);margin-top:clamp(40px,7vh,80px);text-align:left;}
+.cpath{position:relative;display:flex;flex-direction:column;gap:1.4rem;padding:clamp(28px,3.6vw,56px);border:1px solid rgba(244,241,234,.14);border-radius:2px;overflow:hidden;isolation:isolate;transition:border-color .6s var(--ease);}
+.cpath::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(120% 90% at 0% 0%,rgba(204,156,156,.16),transparent 60%);opacity:0;transition:opacity .6s var(--ease);}
+.cpath:hover{border-color:rgba(227,191,187,.55);}
+.cpath:hover::before{opacity:1;}
+.cpath__k{font-size:10.5px;font-weight:500;letter-spacing:.34em;text-transform:uppercase;color:var(--brand-blush-light);}
+.cpath__t{font-family:var(--display);font-size:clamp(2rem,3.2vw,3.4rem);line-height:1.02;letter-spacing:-.02em;color:var(--brand-white);}
+.cpath__t em{font-style:italic;color:var(--brand-blush);}
+.cpath__b{max-width:40ch;font-size:clamp(.92rem,1.02vw,1.04rem);line-height:1.7;color:rgba(244,241,234,.74);}
+.cpath__go{display:inline-flex;align-items:center;gap:1em;margin-top:auto;padding-top:.6rem;font-size:11px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--brand-white);}
+.cpath__go i{position:relative;width:34px;height:1px;background:currentColor;transition:width .5s var(--ease);}
+.cpath__go i::after{content:"";position:absolute;right:0;top:-3px;width:7px;height:7px;border-top:1px solid currentColor;border-right:1px solid currentColor;rotate:45deg;}
+.cpath:hover .cpath__go i{width:52px;}
+@media(max-width:760px){ .contact__paths{grid-template-columns:1fr;} }

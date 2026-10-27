@@ -38,9 +38,9 @@ const sizes = (process.env.SIZES || '1440x900,1366x768,1280x720,1024x768,430x932
       return {
         top:fin.offsetTop,
         height:fin.offsetHeight,
-        order:exc.offsetTop < display.offsetTop && display.offsetTop < fin.offsetTop && fin.offsetTop < contact.offsetTop,
+        /* At Retail (#display) is parked with the `hidden` attribute, so it has no box */
+        order:exc.offsetTop < fin.offsetTop && fin.offsetTop < contact.offsetTop,
         numbers:[
-          display.querySelector('.dsp__eyebrow b')?.textContent.trim(),
           exc.querySelector('.exp__opening .label b')?.textContent.trim(),
           fin.querySelector('.fin__eyebrow b')?.textContent.trim(),
           contact.querySelector('.label b')?.textContent.trim()
@@ -98,7 +98,7 @@ const sizes = (process.env.SIZES || '1440x900,1366x768,1280x720,1024x768,430x932
     const reverseDecreasing = reverse.every((value,index) => !index || value <= reverse[index - 1]);
     const correctSet = width < 900 ? result.mobileAssets && !result.desktopAssets : result.desktopAssets && !result.mobileAssets;
     const expectedLast = width < 900 ? 79 : 95;
-    const ok = !errors.length && before === 0 && geometry.order && geometry.numbers === '07,06,08,09' &&
+    const ok = !errors.length && before === 0 && geometry.order && geometry.numbers === '06,07,08' &&
       geometry.finCentered && geometry.contactCentered && geometry.anchorTargetsForward && nonDecreasing && reverseDecreasing &&
       forward[0] === 0 && forward[forward.length - 1] === expectedLast && result.canvasReady &&
       result.canvasPayload > 5000 && result.overflow <= 1 && result.ctaPointer === 'auto' &&

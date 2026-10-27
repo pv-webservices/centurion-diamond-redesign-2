@@ -1,5 +1,5 @@
 /* ============================================================
-   03 · THE CENTURION CUT — see the difference.
+   02 · THE CENTURION CUT — see the difference.
    Master progress 0..1 across the pinned stage. Every beat has an entrance,
    a long hold and an exit, so nothing reads as rushed (client note: "the
    scroll after this is too fast").
@@ -8,8 +8,9 @@
 window.CD = window.CD || {};
 
 CD.sparkle = {
-  /* ground: the Journey's ink -> warm mineral light. It ends on exactly the
-     tone Anatomy of Brilliance opens on, so the two read as one space. */
+  /* ground: the Journey's ink -> warm mineral light, and back to ink as the
+     close clears. A Study in Light opens on that ink and draws its hairline
+     across it. */
   bgStops: [
     { p: 0.00, c: [21, 18, 19] },     // --ink, continuous with the Journey
     { p: 0.05, c: [30, 26, 27] },
@@ -17,7 +18,9 @@ CD.sparkle = {
     { p: 0.17, c: [222, 218, 212] },
     { p: 0.22, c: [243, 241, 238] },
     { p: 0.90, c: [243, 241, 238] },
-    { p: 1.00, c: [236, 233, 228] }   // = Anatomy's first frame
+    { p: 0.955, c: [236, 233, 228] },
+    { p: 0.99, c: [21, 18, 19] },     // --ink = the Study's first frame
+    { p: 1.00, c: [21, 18, 19] }
   ],
   /* type colour follows the ground: bone on dark, graphite on light */
   inkLight: [244, 241, 234],
@@ -32,7 +35,7 @@ CD.sparkle = {
     split:   { inA: 0.62, inB: 0.70 },                 // the two side by side
     lede:    { inA: 0.68, inB: 0.73, outA: 0.80, outB: 0.83 },
     pairOut: { inA: 0.80, inB: 0.85 },
-    outro:   { inA: 0.84, inB: 0.89 }                  // See the difference, held to the end
+    outro:   { inA: 0.84, inB: 0.89, outA: 0.93, outB: 0.958 }  // See the difference, held until the light goes
   },
   counts: { from: 57, to: 100 }
 };

@@ -1,5 +1,5 @@
 /* ============================================================
-   04 · A STUDY IN LIGHT — the timeline.
+   03 · A STUDY IN LIGHT — the timeline.
 
    Pure maths: master progress in, a plain description of the frame out.
    Nothing here touches the DOM, so the choreography can be retimed without
@@ -169,7 +169,7 @@ CD.studyTimeline = (function () {
 
     /* ---------- the close ----------
        The shut line folds to a point, a glint marks where it went, and the
-       ground settles on the Experience chapter's own colour, so the next
+       ground settles on the ink Anatomy of Brilliance opens on, so the next
        stage opens on exactly this frame. */
     st.spark = Math.sin(Math.PI * range(p, B.spark[0], B.spark[1]));
     var g = smooth(range(p, B.ground[0], B.ground[1])), G = cfg.groundTo;

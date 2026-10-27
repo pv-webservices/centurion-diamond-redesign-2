@@ -1,5 +1,5 @@
 /* ============================================================
-   03 · ANATOMY OF BRILLIANCE — content timing + choreography,
+   04 · ANATOMY OF BRILLIANCE — content timing + choreography,
    expressed in master-progress space (0..1).
 
    The four benefit texts live in index.html so the chapter still reads
@@ -11,11 +11,14 @@
 window.CD = window.CD || {};
 
 CD.pillars = {
-  /* the mineral ground. Opens on exactly the tone the Sparkle section
-     closes on, so the two sections share one continuous light. */
+  /* the mineral ground. Opens on the ink A Study in Light closes on, and
+     the light arrives with the sweep, as it does in The Cut. */
   bgStops: [
-    { p: 0.00, c: [236, 233, 228] },   // = .spk's final frame
-    { p: 0.09, c: [243, 241, 238] },   // warm mineral white
+    { p: 0.000, c: [21, 18, 19] },     // = the Study's final frame (--ink)
+    { p: 0.012, c: [21, 18, 19] },
+    { p: 0.050, c: [110, 105, 102] },
+    { p: 0.075, c: [222, 218, 212] },
+    { p: 0.095, c: [243, 241, 238] },  // warm mineral white
     { p: 0.80, c: [243, 241, 238] },
     { p: 0.90, c: [246, 243, 238] },   // final statement runs a shade warmer
     { p: 1.00, c: [246, 243, 238] }    // the aperture, not the ground, goes dark
@@ -23,11 +26,11 @@ CD.pillars = {
 
   beats: {
     sweep:    { inA: 0.000, inB: 0.045, outA: 0.070, outB: 0.115 },
-    /* already set when the stage arrives, so The Cut's close hands straight
-       to this title with no empty frame between the two */
-    intro:    { inA: -0.040, inB: 0.000, outA: 0.170, outB: 0.198 },
+    /* arrives once the light has turned the ground, so dark type never
+       sits on the ink */
+    intro:    { inA: 0.055, inB: 0.090, outA: 0.178, outB: 0.204 },
     /* the four scenes divide this window evenly */
-    scenes:   { inA: 0.198, outB: 0.800 },
+    scenes:   { inA: 0.204, outB: 0.800 },
     final:    { inA: 0.808, outB: 0.958 }
   },
 
@@ -40,11 +43,13 @@ CD.pillars = {
     { key: 'gimmick',    side: 'center', motion: 'scale' }
   ],
 
-  /* The only cut families in the current Collection. Each name maps in DOM
-     order to a supplied, background-isolated product photograph. */
+  /* Six cuts across benefits 01-03, two to each: the stone turns as it
+     arrives at each pose. Past outB it holds on the last cut (Pear) through
+     benefit 04. Each name maps in DOM order to a supplied,
+     background-isolated product photograph. */
   shapes: {
-    inA: 0.205,
-    outB: 0.790,
+    inA: 0.235,
+    outB: 0.640,
     items: CD.diamondShapes.filter(function (shape) { return !!shape.src; })
   },
 
@@ -52,7 +57,7 @@ CD.pillars = {
      poses it passes through, lerped with a smoothstep between neighbours.
      x is vw, y is vh, r is degrees, o is opacity, sh is sheen intensity. */
   stone: [
-    { p: 0.110, x:   4, y:  12, s: 0.66, r: -7, o: 0.00, sh: 0 },
+    { p: 0.170, x:   4, y:  12, s: 0.66, r: -7, o: 0.00, sh: 0 },   // waits for the title to clear
     { p: 0.235, x:  25, y:   5, s: 0.90, r: -4, o: 1.00, sh: 1 },   // 01 · right
     { p: 0.312, x:  26, y:  -1, s: 0.97, r: -1, o: 1.00, sh: 0 },
     { p: 0.362, x:  -4, y:   2, s: 1.05, r:  1, o: 0.88, sh: 0 },   // crossing
@@ -76,7 +81,7 @@ CD.pillars = {
      desktop's left/right recomposition turned through 90 degrees, not a
      stacked article. */
   mobileStone: [
-    { p: 0.110, x:   0, y:  30, s: 0.70, r:  0, o: 0.00, sh: 0 },
+    { p: 0.170, x:   0, y:  30, s: 0.70, r:  0, o: 0.00, sh: 0 },
     { p: 0.235, x:  13, y:  26, s: 0.92, r: -2, o: 1.00, sh: 1 },   // 01 · lower-right
     { p: 0.312, x:  14, y:  24, s: 0.96, r: -1, o: 1.00, sh: 0 },
     { p: 0.362, x:   0, y:  25, s: 1.00, r:  0, o: 0.86, sh: 0 },   // crossing

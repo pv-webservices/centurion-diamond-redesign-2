@@ -1,14 +1,15 @@
 /* ============================================================
-   03 · ANATOMY OF BRILLIANCE — the family finale ("One philosophy.
-   Every shape.").
+   04 · ANATOMY OF BRILLIANCE — the family finale ("One philosophy.
+   Every shape. 100 facets."). It also opens 05 · the Centurion
+   Experience, whose own title frame it replaced.
 
    Runs on its own progress (0..1), the last share of the chapter's pin:
      aperture   the light frame closes around the Round, the ground turns ink
      ring       100 facet ticks light around the stone, the title rises
      orbit      the other cuts spiral out from behind the Round
      showcase   each cut in turn takes the centre at hero size
-     exit       the family gathers into the Round, and the Round into one
-                line of light: the line the Light Study opens on
+     exit       the family gathers into the Round, and the Round folds to a
+                point on the ink the Experience chapter opens on
 
    Builds its own DOM from CD.diamondFamily; only transform / opacity are
    written per frame, plus the ring's lit count when it changes.
@@ -35,8 +36,7 @@ CD.pillarsFamily = (function () {
     orbit:    [0.26, 0.36],               // first relative; each next one +ORBIT_STEP
     showcase: [0.52, 0.86],
     exit:     [0.87, 0.94],               // everything gathers to the centre
-    collapse: [0.92, 0.97],               // the Round folds to a point
-    line:     [0.93, 0.995]               // which draws out into the hairline
+    collapse: [0.92, 0.97]                // the Round folds to a point
   };
   var ORBIT_STEP = 0.022;
 
@@ -83,14 +83,13 @@ CD.pillarsFamily = (function () {
     var shapes = CD.diamondFamily.filter(function (s) { return !!s.src; });
 
     host.appendChild(el('div', 'fam__glow'));
-    var line = el('i', 'fam__line');
-    host.appendChild(line);
 
     var head = el('div', 'fam__head');
-    var eyebrow = el('p', 'fam__eyebrow', '<i></i><span>The Centurion family</span><i></i>');
+    var eyebrow = el('p', 'fam__eyebrow', '<i></i><b>05</b><span>The Centurion Experience</span><i></i>');
     var title = el('h3', 'fam__title',
       '<span class="fam__ln"><span>One philosophy.</span></span>' +
-      '<span class="fam__ln"><span><em>Every shape.</em></span></span>');
+      '<span class="fam__ln"><span><em>Every shape.</em></span></span>' +
+      '<span class="fam__ln"><span>100 facets.</span></span>');
     head.appendChild(eyebrow); head.appendChild(title);
     host.appendChild(head);
 
@@ -124,7 +123,7 @@ CD.pillarsFamily = (function () {
     });
 
     var m = {
-      host: host, head: head, eyebrow: eyebrow, line: line,
+      host: host, head: head, eyebrow: eyebrow,
       lines: Array.prototype.slice.call(title.querySelectorAll('.fam__ln > span')),
       glow: host.querySelector('.fam__glow'),
       core: core, ring: ring, ticks: ticks, show: show, stack: stack,
@@ -169,8 +168,8 @@ CD.pillarsFamily = (function () {
   }
 
   function render(m, fp, narrow) {
-    /* held at 1 too: the finished hairline stays drawn until the Light
-       Study's stage, which opens on that same line, takes the frame */
+    /* held at 1 too: the folded point stays until the Experience stage,
+       which overlaps this one, takes the frame */
     var active = fp > 0;
     m.host.style.visibility = active ? 'visible' : 'hidden';
     m.irisSvg.style.visibility = fp > 0 && fp < B.unveil[1] ? 'visible' : 'hidden';
@@ -182,13 +181,8 @@ CD.pillarsFamily = (function () {
 
     var exit = T.easeIO(T.range(fp, B.exit[0], B.exit[1]));
     var collapse = T.easeIn(T.range(fp, B.collapse[0], B.collapse[1]));
-    var drawn = T.easeIO(T.range(fp, B.line[0], B.line[1]));
     m.host.style.opacity = 1;
     m.host.classList.toggle('is-live', fp > B.orbit[1] && exit < 0.2);
-
-    /* the hairline: the Study's opening frame, drawn from the Round's centre */
-    m.line.style.opacity = Math.min(1, drawn * 4).toFixed(3);
-    m.line.style.transform = 'scaleX(' + drawn.toFixed(4) + ')';
 
     /* --- aperture: dark rect with a hole, closing on the Round --- */
     var ap = T.easeIO(T.range(fp, B.aperture[0], B.aperture[1]));

@@ -1,5 +1,5 @@
 /* ============================================================
-   03 · ANATOMY OF BRILLIANCE — the renderer.
+   04 · ANATOMY OF BRILLIANCE — the renderer.
 
    Takes a frame from CD.pillarsTimeline and writes it to the DOM. Only
    Transform / opacity / background-color are touched per frame, plus one

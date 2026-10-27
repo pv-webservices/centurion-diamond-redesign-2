@@ -1,5 +1,5 @@
 /* ============================================================
-   03 · THE CENTURION CUT — engine.
+   02 · THE CENTURION CUT — engine.
    One pinned ScrollTrigger; every frame is a pure function of progress, so
    scrolling back reverses exactly. Only transform, opacity, clip-path,
    colour and one text node change while scrolling.
@@ -64,7 +64,24 @@ CD.initSparkle = function initSparkle() {
   }
 
   var narrow = matchMedia('(max-width: 900px)').matches, lastCount = -1, lastSide = '';
-  window.addEventListener('resize', function () { narrow = matchMedia('(max-width: 900px)').matches; }, { passive: true });
+  var meta = el.cen.querySelector('.spk__meta'), lift = 0;
+
+  /* The closing line sits under the pair while the captions hang below each
+     stone; on shorter viewports the two met. Measure how far the captions
+     reach (offsets ignore the per-frame transforms) and lift the pair by
+     just that much while the line shows, never past the header. */
+  function measureLift() {
+    var s = narrow ? 0.6 : 1, h = el.cen.offsetHeight;
+    var captionsEnd = el.cen.offsetTop + (meta.offsetTop + meta.offsetHeight - h / 2) * s;
+    var room = el.cen.offsetTop - h * 0.61 * s - 72;       // the tick ring's top vs the header
+    lift = Math.max(0, Math.min(captionsEnd + 28 - el.lede.offsetTop, room));
+  }
+  window.addEventListener('resize', function () {
+    narrow = matchMedia('(max-width: 900px)').matches;
+    measureLift();
+  }, { passive: true });
+  measureLift();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureLift);
 
   function render(p) {
     /* ground, type colour and the passing light */
@@ -119,19 +136,20 @@ CD.initSparkle = function initSparkle() {
     el.trad.style.opacity = split.toFixed(3);
     el.trad.style.visibility = split < 0.01 ? 'hidden' : 'visible';
 
+    var lv = band(p, B.lede);
     el.pair.style.opacity = (1 - out).toFixed(3);
     el.pair.style.visibility = out > 0.99 || single < 0.01 ? 'hidden' : 'visible';
-    el.pair.style.transform = 'translate3d(0,' + (-out * 8).toFixed(2) + 'svh,0) scale(' + (1 - out * 0.06).toFixed(4) + ')';
+    el.pair.style.transform = 'translate3d(0,calc(' + (-out * 8).toFixed(2) + 'svh - ' + (lift * smooth(range(p, B.lede.inA - 0.03, B.lede.inB))).toFixed(1) + 'px),0) scale(' + (1 - out * 0.06).toFixed(4) + ')';
 
-    var lv = band(p, B.lede);
     el.lede.style.opacity = lv.toFixed(3);
     el.lede.style.visibility = lv < 0.01 ? 'hidden' : 'visible';
 
-    /* the close: held until the section hands over to Anatomy */
-    var ov = smooth(range(p, B.outro.inA, B.outro.inB));
+    /* the close: held, then it clears as the ground returns to ink for the
+       Light Study */
+    var oin = smooth(range(p, B.outro.inA, B.outro.inB)), ov = band(p, B.outro);
     el.outro.style.opacity = ov.toFixed(3);
     el.outro.style.visibility = ov < 0.01 ? 'hidden' : 'visible';
-    el.outro.style.transform = 'translate3d(0,' + ((1 - ov) * 30).toFixed(1) + 'px,0) scale(' + (0.96 + ov * 0.04).toFixed(4) + ')';
+    el.outro.style.transform = 'translate3d(0,' + ((1 - oin) * 30).toFixed(1) + 'px,0) scale(' + (0.96 + ov * 0.04).toFixed(4) + ')';
   }
 
   ScrollTrigger.create({

@@ -1,5 +1,5 @@
 /* ============================================================
-   04 · A STUDY IN LIGHT — the renderer.
+   03 · A STUDY IN LIGHT — the renderer.
 
    Takes a frame from CD.studyTimeline and writes it to the DOM. Per frame
    it touches transform and opacity only, plus one `filter` string on the

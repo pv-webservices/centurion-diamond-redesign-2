@@ -25,7 +25,7 @@ CD.heroScenes = [
   {
     side: 'left',
     eyebrow: 'Mastered Craft',
-    title: ['100', 'facets of', 'excellence.'],
+    title: ['100 facets', 'of artisanal', 'cutting.'],
     body: 'Precision manufacturing meets generations of diamond expertise.',
     inA: 0.60, inB: 0.64, outA: 0.77, outB: 0.81
   },

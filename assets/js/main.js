@@ -11,7 +11,8 @@
   gsap.registerPlugin(ScrollTrigger);
   if (window.SplitText) gsap.registerPlugin(SplitText);
 
-  document.getElementById('yr').textContent = new Date().getFullYear();
+  var yr = document.getElementById('yr');
+  if (yr) yr.textContent = new Date().getFullYear();
 
   /* ---------------------------------------------- smooth scroll */
   var lenis = null;
@@ -63,9 +64,37 @@
 
 
   /* ---------------------------------------------- preloader
-     Deliberately brief. The old build showed ~5s of black before the hero
-     appeared, which read as a broken page rather than a considered intro. */
-  function runPreloader(done) { CD.runFacetPreloader(done, REDUCED); }
+     The facet count, then the Enter gate. Shown once per visit: coming back
+     to the homepage from another page of the site opens straight onto it. */
+  var ENTERED_KEY = 'cd-entered';
+  function hasEntered() {
+    try { return sessionStorage.getItem(ENTERED_KEY) === '1'; } catch (e) { return false; }
+  }
+  function markEntered() {
+    try { sessionStorage.setItem(ENTERED_KEY, '1'); } catch (e) { /* private mode: the gate shows again next time */ }
+  }
+  function runPreloader(done) {
+    var pre = document.getElementById('pre');
+    if (!pre || !CD.runFacetPreloader) { done(); return; }
+    if (hasEntered()) {
+      pre.style.display = 'none';
+      document.getElementById('curtain').style.display = 'none';
+      done();
+      return;
+    }
+    /* once the gate has faded (about a second), honour any #chapter link */
+    CD.runFacetPreloader(done, REDUCED, function () { markEntered(); setTimeout(scrollToHash, 1000); });
+  }
+
+  /* a link from another page to a homepage chapter (index.html#cut) lands on
+     it once the pins have measured themselves */
+  function scrollToHash() {
+    var t = location.hash.length > 1 && document.querySelector(location.hash);
+    if (!t) return;
+    ScrollTrigger.refresh();
+    if (lenis) lenis.scrollTo(t, { immediate: true, force: true });
+    else t.scrollIntoView();
+  }
 
   /* hero lives in assets/js/hero/* — see CD.initHero */
 
@@ -211,19 +240,24 @@
     initCounters();
     initVideos();
     initHeader();
+    /* page order, so each pin measures after the ones above it */
     if (window.CD && CD.initJourney) CD.initJourney();
+    if (window.CD && CD.initSparkle) CD.initSparkle();
     if (window.CD && CD.initStudy) CD.initStudy();
     if (window.CD && CD.initPillars) CD.initPillars();
-    if (window.CD && CD.initSparkle) CD.initSparkle();
     if (window.CD && CD.initExclusive) CD.initExclusive();
     if (window.CD && CD.initDisplay) CD.initDisplay();
     if (window.CD && CD.initFinale) CD.initFinale();
+    if (window.CD && CD.initPage) CD.initPage();       // retail / contact / store locator
     ScrollTrigger.refresh();
   }
 
   window.addEventListener('load', function () {
-    runPreloader(function () { if (window.CD && CD.initHero) CD.initHero(); });
     start();
+    runPreloader(function () {
+      if (window.CD && CD.initHero) CD.initHero();
+      if (!document.body.classList.contains('is-locked')) scrollToHash();
+    });
   });
 
   var rt;
