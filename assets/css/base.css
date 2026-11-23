@@ -1,20 +1,21 @@
 /* ============================================================
    CENTURION DIAMOND — Design tokens & base
    Aesthetic: dark cinematic luxury editorial
-   Type: Bodoni Moda (Didone display) + Jost (geometric sans)
+   Type: Centurion Display (Cinzel + Cormorant Garamond italic) + Jost
    ============================================================ */
 
 :root{
   /* --- Centurion brand palette ---------------------------------------
+     Placeholders, raised for readability on dark and cream grounds.
      Replace with official Pantone-derived values when supplied by client.
      The RGB companions are for progress-rendered light calculations. */
   --brand-black:       #0A0A0B;
   --brand-black-rgb:   10,10,11;
-  --brand-blush:       #CC9C9C;
-  --brand-blush-rgb:   204,156,156;
-  --brand-blush-light: #E3BFBB;
-  --brand-blush-dark:  #A87A7A;
-  --brand-white:       #F4F1EA;
+  --brand-blush:       #E2B6B2;
+  --brand-blush-rgb:   226,182,178;
+  --brand-blush-light: #F1D6D2;
+  --brand-blush-dark:  #744242;
+  --brand-white:       #FAF8F3;
 
   /* --- ink / ground --- */
   /* working ground: a warm, softened black. --brand-black stays for the
@@ -34,18 +35,18 @@
   --rose-lt:    var(--brand-blush-light);
   --rose-dp:    var(--brand-blush-dark);
   --platinum:   #C6CBD2;
-  --gold:       #C9A876;
+  --gold:       #DEC08C;
 
   /* --- semantic (dark default) --- */
   --bg:         var(--ink);
   --fg:         var(--bone);
-  --fg-dim:     rgba(244,241,234,.60);
-  --fg-faint:   rgba(244,241,234,.30);
-  --rule:       rgba(244,241,234,.14);
+  --fg-dim:     rgba(244,241,234,.96);
+  --fg-faint:   rgba(244,241,234,.84);
+  --rule:       rgba(244,241,234,.30);
   --accent:     var(--rose);
 
   /* --- type --- */
-  --display: "Bodoni Moda", "Didot", "Bodoni MT", Georgia, serif;
+  --display: "Centurion Display", "Cinzel", "Cormorant Garamond", Georgia, serif;
   --sans:    "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
 
   /* --- rhythm --- */
@@ -62,8 +63,8 @@
 /* light zone inversion */
 .zone-light{
   --bg: var(--bone); --fg: var(--ink); 
-  --fg-dim: rgba(10,10,11,.62); --fg-faint: rgba(10,10,11,.32);
-  --rule: rgba(10,10,11,.15); --accent: var(--rose-dp);
+  --fg-dim: rgba(10,10,11,.94); --fg-faint: rgba(10,10,11,.80);
+  --rule: rgba(10,10,11,.30); --accent: var(--rose-dp);
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
@@ -79,8 +80,8 @@ body{
   background:var(--ink);
   color:var(--bone);
   font-family:var(--sans);
-  font-size:clamp(15px,1.02vw,17px);
-  font-weight:300;
+  font-size:clamp(17px,1.1vw,18.5px);
+  font-weight:400;
   line-height:1.62;
   letter-spacing:.005em;
   overflow-x:hidden;
@@ -95,10 +96,10 @@ body.is-locked{ overflow:hidden; height:100vh; }
   font-family:var(--display);
   font-weight:400;
   line-height:.92;
-  letter-spacing:-.02em;
+  letter-spacing:0;
   text-wrap:balance;
 }
-.d1{ font-size:clamp(3.4rem, 11.5vw, 12.5rem); line-height:.86; letter-spacing:-.03em; }
+.d1{ font-size:clamp(3.4rem, 11.5vw, 12.5rem); line-height:.86; letter-spacing:0; }
 .d2{ font-size:clamp(2.6rem, 6.6vw, 6.4rem);  line-height:.94; }
 .d3{ font-size:clamp(1.9rem, 3.5vw, 3.4rem);  line-height:1.02; }
 
@@ -107,7 +108,7 @@ body.is-locked{ overflow:hidden; height:100vh; }
 /* small tracked label — "001 / THE CUT" */
 .label{
   font-family:var(--sans);
-  font-size:clamp(9.5px,.72vw,11px);
+  font-size:clamp(12px,.85vw,13px);
   font-weight:500;
   text-transform:uppercase;
   letter-spacing:.26em;
@@ -123,10 +124,10 @@ body.is-locked{ overflow:hidden; height:100vh; }
 
 .lede{
   font-size:clamp(1.02rem,1.32vw,1.28rem);
-  line-height:1.68; font-weight:300;
+  line-height:1.68; font-weight:400;
   color:var(--fg-dim); max-width:46ch; text-wrap:pretty;
 }
-.body-sm{ font-size:clamp(.9rem,1.02vw,1rem); line-height:1.72; color:var(--fg-dim); }
+.body-sm{ font-size:clamp(1.02rem,1.12vw,1.1rem); line-height:1.72; color:var(--fg-dim); }
 
 .hl{ color:var(--accent); }
 .num{ font-family:var(--display); font-weight:500; font-variant-numeric:tabular-nums; }
@@ -154,7 +155,7 @@ body.is-locked{ overflow:hidden; height:100vh; }
   --bd: currentColor;
   position:relative; display:inline-flex; align-items:center; gap:1em;
   padding:1.05em 2.1em;
-  font-size:clamp(10px,.78vw,11.5px); font-weight:500;
+  font-size:clamp(12.5px,.88vw,13px); font-weight:500;
   text-transform:uppercase; letter-spacing:.22em;
   border:1px solid var(--rule); border-radius:100px;
   color:var(--fg); background:transparent;

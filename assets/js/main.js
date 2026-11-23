@@ -244,6 +244,7 @@
     if (window.CD && CD.initJourney) CD.initJourney();
     if (window.CD && CD.initSparkle) CD.initSparkle();
     if (window.CD && CD.initStudy) CD.initStudy();
+    if (window.CD && CD.initLight) CD.initLight();
     if (window.CD && CD.initPillars) CD.initPillars();
     if (window.CD && CD.initExclusive) CD.initExclusive();
     if (window.CD && CD.initDisplay) CD.initDisplay();

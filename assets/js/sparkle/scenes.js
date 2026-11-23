@@ -23,7 +23,11 @@ CD.sparkle = {
     { p: 1.00, c: [21, 18, 19] }
   ],
   /* type colour follows the ground: bone on dark, graphite on light */
-  inkLight: [244, 241, 234],
+  inkLight: [250, 248, 243],
+  /* the rose accent (italic line, chapter number) follows the same switch:
+     light blush on the ink, deep rose on the cream */
+  emLight: [226, 182, 178],
+  emDark: [116, 66, 66],
   inkDark: [26, 25, 23],
   inkSwitch: [0.10, 0.16],
 

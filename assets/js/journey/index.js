@@ -12,7 +12,9 @@ CD.journey = {
   swaps: [0.24, 0.49, 0.74],
   swap: 0.08,
   /* caption windows: [inA, inB, outA, outB] */
-  captions: [[-1, 0, 0.19, 0.23], [0.31, 0.35, 0.44, 0.48], [0.56, 0.60, 0.69, 0.73], [0.81, 0.85, 2, 2]],
+  /* three captions: grown, mapped + shaped (one caption across stages 2-3,
+     client Nov 2026), finished */
+  captions: [[-1, 0, 0.19, 0.23], [0.31, 0.35, 0.69, 0.73], [0.81, 0.85, 2, 2]],
   ticks: 100,
   /* ember (rough) -> diamond white (finished) */
   glowFrom: [196, 126, 92],

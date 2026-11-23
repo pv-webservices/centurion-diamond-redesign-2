@@ -11,7 +11,8 @@ CD.runFacetPreloader = function (done, reduced, onEnter) {
   svg.setAttribute('viewBox','-100 -100 680 680');
   svg.setAttribute('aria-hidden','true');svg.classList.add('pre__diamond');
   svg.innerHTML='<defs><pattern id="facetPhoto" patternUnits="userSpaceOnUse" width="480" height="480"><image href="assets/img/diamond-shapes/round-480.webp" width="480" height="480" preserveAspectRatio="xMidYMid slice"/></pattern></defs>';
-  pre.querySelector('.pre__inner').prepend(svg);
+  var inner=pre.querySelector('.pre__inner');
+  inner.insertBefore(svg,inner.querySelector('.pre__stack'));   // logo, then the stone, then Enter
   var facets=[];
   function pt(r,i){var a=i/20*Math.PI*2;return [240+Math.cos(a)*r,240+Math.sin(a)*r];}
   function triangle(a,b,c){

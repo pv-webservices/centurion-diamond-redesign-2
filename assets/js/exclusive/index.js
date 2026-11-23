@@ -6,7 +6,7 @@ CD.initExclusive=function(){
  /* the close eases the ground to the finale's own black, which Centurion at
     Retail opens on before its film irises in. It opens on --ink, the frame
     Anatomy's family finale folds away on. */
- var from=[21,18,19],to=[10,10,11],lastG='';
+ var from=[21,18,19],to=[21,18,19],lastG='';   // no finale after it any more: stays on --ink
  function ground(p){var t=CD.exclusiveTimeline.range(p,.95,1),g='rgb('+from.map(function(c,i){return Math.round(c+(to[i]-c)*t);}).join(',')+')';
   if(g!==lastG){el.stage.style.backgroundColor=g;lastG=g;}}
  function render(p){V.render(el,CD.exclusiveTimeline.frame(p,counts));ground(p);}

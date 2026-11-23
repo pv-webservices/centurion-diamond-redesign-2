@@ -59,9 +59,10 @@
 
 /* Reveal — the stone itself, lifted out of the same frame so it can turn on
    its own axis while the floor and its reflection stay put. Measured from
-   the master: centre (72.6%, 47.8%), diameter 37.3% of the frame width. */
+   the Nov 2026 master (reveal-master-updaetd.png): centre (72.3%, 45.5%),
+   diameter 38.1% of the frame width. */
 .hx__spin{
-  --d:.373; --cx:.726; --cy:.478;
+  --d:.381; --cx:.723; --cy:.455;
   position:absolute; left:calc(var(--cx) * 100%); top:calc(var(--cy) * 100%);
   width:calc(var(--d) * 100%); aspect-ratio:1; translate:-50% -50%;
   border-radius:50%; overflow:hidden;
@@ -182,7 +183,7 @@
 
 .hx__eyebrow, .hx__mark{
   display:flex; align-items:center; gap:.9em;
-  font-size:clamp(9.5px,.7vw,11px); font-weight:500;
+  font-size:clamp(12px,.83vw,13px); font-weight:500;
   letter-spacing:.34em; text-transform:uppercase; color:var(--rose-lt);
   margin-bottom:clamp(16px,2.2vw,30px);
 }
@@ -195,19 +196,19 @@
 .hx__h1{
   font-family:var(--display); font-weight:400;
   font-size:clamp(3.1rem,6.1vw,7.8rem);
-  line-height:.92; letter-spacing:-.035em;
+  line-height:.92; letter-spacing:0;
   color:var(--bone); text-shadow:0 2px 50px rgba(var(--hx-ink-rgb),.7);
 }
 .hx__title{
   font-family:var(--display); font-weight:400;
   font-size:clamp(2.7rem,5.8vw,7rem);
-  line-height:.94; letter-spacing:-.035em;
+  line-height:.94; letter-spacing:0;
   color:var(--bone); text-shadow:0 2px 50px rgba(var(--hx-ink-rgb),.7);
 }
 .hx__lede, .hx__body{
   margin-top:clamp(18px,2.2vw,30px); max-width:40ch;
-  font-size:clamp(.92rem,1.05vw,1.08rem); line-height:1.72;
-  color:rgba(244,241,234,.84); text-shadow:0 1px 20px rgba(var(--hx-ink-rgb),.9);
+  font-size:clamp(1.04rem,1.16vw,1.19rem); line-height:1.72;
+  color:rgba(244,241,234,.96); text-shadow:0 1px 20px rgba(var(--hx-ink-rgb),.9);
 }
 
 /* Reveal — the facet count climbs from a traditional 58 to 100 */
@@ -217,15 +218,15 @@
 }
 .hx__meter b{
   font-family:var(--display); font-weight:400; font-variant-numeric:lining-nums tabular-nums;
-  font-size:clamp(3rem,5vw,5.6rem); line-height:.8; letter-spacing:-.04em;
+  font-size:clamp(3rem,5vw,5.6rem); line-height:.8; letter-spacing:0;
   background:linear-gradient(180deg, #fff 10%, var(--rose-lt) 120%);
   -webkit-background-clip:text; background-clip:text; color:transparent;
   min-width:2.1ch;
 }
 .hx__meter span{
-  font-size:clamp(9px,.66vw,10.5px); font-weight:500; line-height:1.9;
-  letter-spacing:.26em; text-transform:uppercase; color:rgba(244,241,234,.6);
-  padding-left:clamp(14px,1.4vw,22px); border-left:1px solid rgba(227,191,187,.4);
+  font-size:clamp(12px,.79vw,12.5px); font-weight:500; line-height:1.9;
+  letter-spacing:.26em; text-transform:uppercase; color:rgba(244,241,234,.96);
+  padding-left:clamp(14px,1.4vw,22px); border-left:1px solid rgba(241,214,210,.4);
 }
 
 /* ---------------------------------------------- closing frame */
@@ -234,7 +235,7 @@
   position:relative; display:inline-flex; align-items:center; justify-content:center;
   padding:1.12em 2.2em; border-radius:100px; overflow:hidden; isolation:isolate;
   border:1px solid rgba(244,241,234,.34);
-  font-size:clamp(10px,.74vw,11.5px); font-weight:500;
+  font-size:clamp(12.5px,.84vw,13px); font-weight:500;
   letter-spacing:.24em; text-transform:uppercase; color:var(--bone); white-space:nowrap;
   transition:color .45s var(--ease), border-color .45s var(--ease);
 }
@@ -259,11 +260,11 @@
 .hx__facts li:first-child{ padding-left:0; border-left:0; }
 .hx__facts b{
   font-family:var(--display); font-weight:400; font-size:clamp(1.5rem,1.9vw,2.1rem);
-  line-height:1; letter-spacing:-.02em; color:var(--bone);
+  line-height:1; letter-spacing:0; color:var(--bone);
 }
 .hx__facts span{
-  font-size:clamp(8.5px,.6vw,10px); font-weight:500;
-  letter-spacing:.26em; text-transform:uppercase; color:rgba(244,241,234,.55);
+  font-size:clamp(12px,.75vw,13px); font-weight:500;
+  letter-spacing:.26em; text-transform:uppercase; color:rgba(244,241,234,.94);
 }
 
 /* ---------------------------------------------- chapter rail + hint */
@@ -272,24 +273,24 @@
   display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(10px,1.4vw,22px);
   margin:0; padding:0; list-style:none; opacity:0;
 }
-.hx__rail li{ display:grid; gap:9px; color:rgba(244,241,234,.38); transition:color .5s var(--ease); }
+.hx__rail li{ display:grid; gap:9px; color:rgba(244,241,234,.87); transition:color .5s var(--ease); }
 .hx__rail li.is-on{ color:var(--bone); }
 .hx__rail i{ display:block; height:1px; background:rgba(244,241,234,.16); overflow:hidden; }
 .hx__rail i b{ display:block; height:100%; background:var(--rose-lt); transform:scaleX(0); transform-origin:left; }
 .hx__rail span{
-  font-size:9.5px; font-weight:500; letter-spacing:.28em; text-transform:uppercase; white-space:nowrap;
+  font-size:12px; font-weight:500; letter-spacing:.28em; text-transform:uppercase; white-space:nowrap;
 }
 .hx__rail em{ font-style:normal; color:var(--rose-lt); margin-right:.6em; }
 .hx__rail small{
   font-family:var(--display); font-style:italic; font-size:12.5px; letter-spacing:.02em;
-  color:rgba(244,241,234,.38); margin-top:-4px;
+  color:rgba(244,241,234,.87); margin-top:-4px;
 }
 
 .hx__hint{
   position:absolute; z-index:7; right:8vw; bottom:calc(clamp(22px,4.4svh,44px) + 54px);
   display:flex; align-items:center; gap:1em;
-  font-size:9px; letter-spacing:.34em; text-transform:uppercase;
-  color:rgba(244,241,234,.5); pointer-events:none; opacity:0;
+  font-size:12px; letter-spacing:.34em; text-transform:uppercase;
+  color:rgba(244,241,234,.92); pointer-events:none; opacity:0;
 }
 .hx__hint i{ display:block; width:1px; height:clamp(26px,4vh,42px); background:rgba(244,241,234,.18); position:relative; overflow:hidden; }
 .hx__hint i::after{
@@ -330,9 +331,9 @@
     left:6vw; right:6vw; width:auto; top:auto; translate:0 0;
     bottom:calc(13svh + env(safe-area-inset-bottom));
   }
-  .hx__h1{ font-size:clamp(2.7rem,12.6vw,5.4rem); letter-spacing:-.04em; }
-  .hx__title{ font-size:clamp(2.5rem,11.4vw,5rem); letter-spacing:-.04em; }
-  .hx__lede, .hx__body{ font-size:clamp(.86rem,3.6vw,1rem); line-height:1.6; max-width:34ch; margin-top:clamp(12px,1.8svh,20px); }
+  .hx__h1{ font-size:clamp(2.7rem,12.6vw,5.4rem); letter-spacing:0; }
+  .hx__title{ font-size:clamp(2.5rem,11.4vw,5rem); letter-spacing:0; }
+  .hx__lede, .hx__body{ font-size:clamp(1rem,3.96vw,1.1rem); line-height:1.6; max-width:34ch; margin-top:clamp(12px,1.8svh,20px); }
   .hx__eyebrow, .hx__mark{ letter-spacing:.28em; margin-bottom:clamp(12px,1.8svh,20px); }
   .hx__meter{ margin-top:clamp(12px,1.8svh,20px); }
   .hx__meter b{ font-size:clamp(2.6rem,11vw,4rem); }
@@ -348,14 +349,14 @@
     left:6vw; right:6vw; gap:6px;
     bottom:calc(clamp(14px,3svh,26px) + env(safe-area-inset-bottom));
   }
-  .hx__rail span{ font-size:8px; letter-spacing:.16em; }
+  .hx__rail span{ font-size:12px; letter-spacing:.16em; }
   .hx__rail small{ display:none; }
   .hx__hint{ display:none; }
 }
 @media (max-aspect-ratio:1/1) and (max-width:420px){
   .hx__rail span{ font-size:0; }
-  .hx__rail em{ font-size:8px; margin:0; }
-  .hx-btn{ font-size:9.5px; padding:1em 1.3em; letter-spacing:.12em; }
+  .hx__rail em{ font-size:12px; margin:0; }
+  .hx-btn{ font-size:12px; padding:1em 1.3em; letter-spacing:.12em; }
 }
 
 /* landscape phones: little height, so the type is smaller and the rail drops its labels */
@@ -363,12 +364,12 @@
   .hx__intro, .hx__chapter, .hx__final{ width:min(48vw,460px); top:46%; }
   .hx__h1{ font-size:clamp(2rem,6.4vw,3.4rem); }
   .hx__title{ font-size:clamp(1.9rem,5.6vw,3rem); }
-  .hx__lede, .hx__body{ font-size:.8rem; line-height:1.55; margin-top:10px; }
+  .hx__lede, .hx__body{ font-size:.9rem; line-height:1.55; margin-top:10px; }
   .hx__eyebrow, .hx__mark{ margin-bottom:10px; }
   .hx__meter{ margin-top:10px; } .hx__meter b{ font-size:2.4rem; }
   .hx__final .hx__body, .hx__facts{ display:none; }
   .hx__actions{ margin-top:14px; } .hx-btn{ padding:.9em 1.5em; }
-  .hx__rail{ bottom:12px; } .hx__rail span{ font-size:8px; } .hx__rail small{ display:none; }
+  .hx__rail{ bottom:12px; } .hx__rail span{ font-size:12px; } .hx__rail small{ display:none; }
   .hx__hint{ display:none; }
 }
 

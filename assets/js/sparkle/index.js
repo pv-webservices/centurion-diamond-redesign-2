@@ -86,7 +86,9 @@ CD.initSparkle = function initSparkle() {
   function render(p) {
     /* ground, type colour and the passing light */
     el.stage.style.backgroundColor = bgAt(p);
-    el.stage.style.setProperty('--spk-ink', mixc(cfg.inkLight, cfg.inkDark, smooth(range(p, cfg.inkSwitch[0], cfg.inkSwitch[1]))));
+    var inkT = smooth(range(p, cfg.inkSwitch[0], cfg.inkSwitch[1]));
+    el.stage.style.setProperty('--spk-ink', mixc(cfg.inkLight, cfg.inkDark, inkT));
+    el.stage.style.setProperty('--spk-em', mixc(cfg.emLight, cfg.emDark, inkT));
     var sw = band(p, B.sweep);
     el.sweep.style.opacity = sw.toFixed(3);
     el.sweep.style.transform = 'translate3d(' + (-60 + 150 * smooth(range(p, 0.02, 0.21))).toFixed(2) + '%,0,0) skewX(-14deg)';
